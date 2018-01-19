@@ -1,0 +1,48 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Shopping cart totals template
+ * @var $block \Magento\Checkout\Block\Cart\Totals
+ */
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$checkout_session = $om->get('Magento\Checkout\Model\Session');
+$quote = $om->get('Magento\Quote\Model\Quote')->load($checkout_session->getData('quote_id_1'));
+?>
+
+<div id="cart-totals" class="cart-totals" data-bind="scope:'block-totals'">
+    <table class="data table totals">
+        <tr class="totals sub">
+            <th data-bind="i18n: title" class="mark" scope="row">Subtotal</th>
+            <td class="amount">
+                <span class="price" data-bind="text: getValue(), attr: {'data-th': title}" data-th="Subtotal"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getSubtotal()) ?></span>
+            </td>
+        </tr>
+        <tr class="totals-tax">
+            <th data-bind="text: title" class="mark" colspan="1" scope="row">Tax</th>
+            <td data-bind="attr: {'data-th': title}" class="amount" data-th="Tax">
+                <span class="price" data-bind="text: getValue()"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(($quote->getGrandTotal() - $quote->getSubtotal())) ?></span>
+            </td>
+        </tr>
+        <tr class="grand totals">
+            <th class="mark" scope="row">
+                <strong data-bind="i18n: title">Order Total</strong>
+            </th>
+            <td data-bind="attr: {'data-th': title}" class="amount" data-th="Order Total">
+                <strong><span class="price" data-bind="text: getValue()"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getGrandTotal()) ?></span></strong>
+            </td>
+        </tr>
+    </table>
+    <!-- ko template: getTemplate() --><!-- /ko
+    <script type="text/x-magento-init">
+            {
+                "#cart-totals": {
+                    "Magento_Ui/js/core/app": <?= /* @escapeNotVerified */ $block->getJsLayout() ?>
+                }
+            }
+    </script> -->
+</div>

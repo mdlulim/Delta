@@ -1,0 +1,24 @@
+﻿<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="order_plugin" type="Consnet\Erporder\Plugin\ErpOrder" sortOrder="1" disabled="false" />
+    </type>
+    <type name="Magento\Quote\Model\Quote"><!--Magento\Checkout\Model\Cart   Magento\Checkout\Block\Cart\AbstractCart-->
+        <plugin name="order_simulation_plugin" type="Consnet\Erporder\Plugin\AdminOrderSimulator" sortOrder="1" disabled="false" />
+    </type>
+    <type name="Magento\Sales\Model\Service\OrderService">
+        <plugin name="order_cancellation_plugin" type="Consnet\Erporder\Plugin\OrderCancellation" sortOrder="1" disabled="false" />
+    </type>
+
+
+<preference for="Magento\Customer\Model\ResourceModel\Grid\Collection" type="Magento\Customer\Model\ResourceModel\Grid\Collection2" />
+<virtualType name="Magento\Customer\Model\ResourceModel\Grid\Collection2" type="Consnet\Promotions\Ui\Component\Listing\CustomerDataProvider">
+    <arguments>
+        <argument name="mainTable" xsi:type="string">customer_grid_flat</argument>
+        <argument name="resourceModel" xsi:type="string">Magento\Customer\Model\ResourceModel\Customer</argument>
+    </arguments>
+</virtualType>
+
+
+</config>
+
+

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="consnet" translate="label" sortOrder="10">
+            <label>SAP ECC Web Services</label>
+        </tab>
+        <section id="consnet_1" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>SAP ECC Web Services</label>
+            <tab>consnet</tab>
+            <resource>Consnet_Api::consnet_configuration</resource>
+            
+            
+             <group id="wsdls" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Web services Configuration</label>
+                <field id="initial_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Initial Replication  </label>
+                    <comment>Value is iether empty( nothing ) or X ( x means yes ) </comment>
+                </field>
+
+                 <field id="namespace_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>System name space </label>
+                    <comment>system name space </comment>
+                </field>
+
+                <field id="customer_file_location_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Customer File Location</label>
+                    <comment>file pathe  e.g  /var/import/customer/customer.csv (must be writable/readable)</comment>
+                </field>
+
+
+
+                <field id="size_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Initial Replication Rows per load </label>
+                    <comment>Value is iether empty( nothing ) or number e.g 100</comment>
+                </field>
+
+                   <field id="last_row_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Last line replicated </label>
+                    <comment>Value is iether 0 or number e.g 100</comment>
+                </field>
+
+                <field id="halt_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Halt replicated on size reached </label>
+                    <comment>Value is iether 0 (false) or 1(true) </comment>
+                </field>
+
+                <field id="user_name" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>SAP ECC RFC USER </label>
+                    <comment>sap ecc rfc username </comment>
+                </field>
+                <field id="password" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>SAP  ECC RFC PASSWORD</label>
+                    <comment>sap ecc rfc password  </comment>
+                </field>
+            
+                <field id="replication_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Replication Wsdl </label>
+                    <comment>for Module /Api </comment>
+                </field>
+
+                <field id="sales_order_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Sales order Wsdl </label>
+                    <comment>for Module /ERPORDER </comment>
+                </field>
+
+                <field id="crm_service_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>CRM Service Requests Wsdl </label>
+                    <comment>for Module /Contact </comment>
+                </field>
+
+                 <field id="promotions_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Promotions Wsdl </label>
+                    <comment>for Module /Promotuions </comment>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

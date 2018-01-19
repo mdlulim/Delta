@@ -1,0 +1,81 @@
+<div class="order-sidebar">
+<table class="admin__table-secondary data-table">
+    <thead> 
+        <tr>
+            
+            <td>Promotion </td>
+            <td>product</td> 
+           
+            <td>from</td> 	
+            <td>To</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+                   
+            $om = \Magento\Framework\App\ObjectManager::getInstance();
+            $customerSession = $om->get('Magento\Customer\Model\Session');
+            $adminsessionquote = $om->get('Magento\Backend\Model\Session\Quote');
+        
+            $custID = '' ;  
+            $companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
+            if (($adminsessionquote->getQuote()->getCustomerId()) != NULL) {
+                     $stp_id = $companymanagement->getByCustomerId($adminsessionquote->getCustomerId())->getData("STP_ID");
+                     echo 'Customer STP: '.$companymanagement->getByCustomerId($adminsessionquote->getQuote()->getCustomerId())->getData("STP_ID");
+                     $custID = $stp_id ;
+            }
+            //echo $custID ;
+        $myJob =  new \Consnet\Promotions\Controller\Index\CronJobPromotion() ;
+        $_demoCollection =  $myJob->getDataFromErp($custID) ;
+        
+        // foreach ($block->getPromoItems() as $item)
+          foreach ( $_demoCollection as $item): ?>
+        <tr>
+             
+        <td><?php echo $item->getTitle(); ?></td>
+        <td> <?php echo $item->getUpdate_time(); ?></td>
+
+        <td>        
+             <?php echo $item->getBotext_DescriptionOfAgreement(); ?></td>
+            <td><?php echo $item->getKnumh_ConditionRecordNumber(); ?> </td>
+        </tr>
+    </tbody>
+    <?php endforeach; ?>
+</table>
+</div>
+<p>    <?php echo $block->getHeader(); ?></p>
+
+<!--<table class="admin__table-secondary data-table">
+    <tbody>
+        <tr class="row-totals">
+            <td style="" class="admin__total-mark" colspan="1">
+                     </td>
+            <td style="" class="admin__total-amount">
+                <span class="price"> </span>    
+            </td>
+        </tr>
+        <tr class="giftwrapping row-totals">
+            <td style="" class="admin__total-mark" colspan="1">
+                             </td>
+            <td style="" class="admin__total-amount">
+                <span class="price">  </span>            
+            </td>
+        </tr>
+
+        <tr class="row-totals">
+            <td style="" class="admin__total-mark" colspan="1">
+                <strong> </strong>
+            </td>
+            <td style="" class="admin__total-amount">
+                <strong>
+                    <span class="price"> </span>
+                </strong>
+            </td>
+        </tr>
+    </tbody>
+</table>-->
+
+
+
+
+

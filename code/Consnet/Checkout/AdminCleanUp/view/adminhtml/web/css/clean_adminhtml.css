@@ -1,0 +1,69 @@
+/** 
+-this module it cleean up admin side using css most of the block that are 
+note needed are hidden using css
+
+1. Cleaning up customer
+*/
+#tab_address, .admin__page-nav-link{
+    display: none;
+}
+#tab_wishlist_content, .admin__page-nav-link{
+    display: none;
+}
+#tab_giftregistry_content, .admin__page-nav-link{
+    display: none;
+}
+#tab_giftregistry_content, .admin__page-nav-link{
+    display: none;
+}
+#tab_newsletter_content, .admin__page-nav-link{
+    display: none;
+}
+#tab_reviews_content, .admin__page-nav-link{
+    display: none;
+}
+#tab_customer_edit_tab_reward_content, .admin__page-nav-link{
+    display: none;
+}                              
+#tab_customer_edit_tab_agreements_content, .admin__page-nav-link{
+    display: none;
+}
+#tab_customer_edit_tab_rma_content, .admin__page-nav-link{
+    display: none;
+}
+#customer-delete-button{
+    display: none;
+}
+#tab_customer_edit_tab_rma_content, .admin__page-nav-link{
+    display: none;
+}
+
+
+/**----------------------------------Orders---------------------------------- 
+.order-view-billing-shipping{
+  display: none;
+}*/
+#sales_order_view_tabs_order_shipments{
+    display: none;
+}
+#sales_order_view_tabs_order_invoices{
+    display: none;
+}
+#sales_order_view_tabs_order_history{
+    display: none;
+}
+#edit-order-comments-block-title{
+    display: none;
+}
+#sales_order_view_tabs_order_creditmemos{
+    display: none;
+}
+.order-methods-overlay{
+    display: none;
+}
+.order-discounts{
+    display: none;
+}
+.row-gift-options{
+    display: none;
+}

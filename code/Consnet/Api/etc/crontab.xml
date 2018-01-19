@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="replication">
+        <job name="replication_job" instance="Consnet\Api\Controller\Index\Index" method="execute">
+            <schedule>10 10 10 10 10</schedule>
+        </job>
+    </group>
+    <group id="sales_orders">
+        <job name="update_sales_orders" instance="Consnet\Api\Controller\Index\Orders" method="execute">
+            <schedule>10 * * * *</schedule>
+        </job>
+    </group>
+</config>

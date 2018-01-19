@@ -1,0 +1,29 @@
+<table>
+    <tr>
+        
+        <td>Promotion </td>
+        <td>product</td> 
+        <td>#</td> 
+        <td>from</td> 	
+        <td>To</td>
+    </tr>
+    <?php foreach ($block->getDemoItems() as $item): ?>
+        <tr>
+             
+            <td><?php echo $item->getTitle(); ?></td>
+
+            <td><?php echo $item->getCreation_time(); ?> </td>
+            <td><?php echo $item->getUpdate_time(); ?></td>
+
+            <td><?php echo $item->getBotext_DescriptionOfAgreement(); ?></td>
+                <td><?php echo $item->getKnumh_ConditionRecordNumber(); ?> </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+<p><?php echo $block->getHeader(); ?></p>
+
+
+<hr>
+
+    

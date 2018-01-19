@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout="1column" xsi:noNamespaceSchemaLocation=
+"urn:magento:framework:View/Layout/etc/
+page_configuration.xsd">
+    <head>
+        <title>Delta Promotion</title>
+    </head>
+    <body>
+        <referenceContainer name="content">
+ 
+            
+             <block class="Consnet\Promotions\Block\PromoList"
+                   name="PromoList" template="Magento_Promotions::promolist.phtml" />
+            
+        </referenceContainer>
+    </body>
+</page>

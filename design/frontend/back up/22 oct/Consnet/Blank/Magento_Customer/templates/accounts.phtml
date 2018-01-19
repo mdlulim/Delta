@@ -1,0 +1,37 @@
+<?php
+
+
+  $accounts  =  $block->getLinkedAccounts();
+
+
+
+?>
+
+
+<table>
+
+<tr>
+  <th>Acount id</th>
+  <th>Custormer Name</th>
+  <th>Action</th>
+
+</tr>
+
+<?php
+
+$loop_count = 0 ;
+
+foreach ( $accounts  as  $account ) {
+$loop_count ++ ;
+echo "<tr>";
+echo "<td >".$account['company_id']."</td> ";
+echo "<td >".$account['name']."</td> ";
+echo "<td ><form action='index' method='post' ><input type='hidden' name='id' value=".$account['company_id']." /><input type='submit' class='action login primary' value='Use this ?' /></form></td> ";
+echo "</tr>";
+
+}
+?>
+
+
+
+</table>

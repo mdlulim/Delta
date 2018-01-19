@@ -1,0 +1,349 @@
+
+<?php
+
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+            $showiFRAME  = true;
+            $data = null;
+            $om = \Magento\Framework\App\ObjectManager::getInstance();
+            $customerSession = $om->get('Magento\Customer\Model\Session');
+
+
+//###########################################CUSTOMER CREDIT
+$companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
+$stp_id = $companymanagement->getByCustomerId(746);//$customerSession->getId())->getData("STP_ID");
+$soldtoparty_number = $stp_id['STP_ID'];//$customerData['stp_id'];
+
+$wsdlUrl = "http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/bndg_url/sap/bc/srt/rfc/sap/zcustomercreditinformation/300/zcustomercreditinformation/zcustomercreditinformation_binding?sap-client=300";
+
+//Creat SOAP client instance
+$soapClient  = new \Zend\Soap\Client($wsdlUrl,array("soap_version" => SOAP_1_2));
+
+//Set Login details
+
+$helper =  $om->create('Consnet\Api\Helper\Data');
+$username = $helper->getGeneralConfig('user_name');
+$password = $helper->getGeneralConfig('password');
+
+$soapClient->setHttpLogin($username);
+$soapClient->setHttpPassword($password);
+
+         //Set Parameters
+$parameters = array(
+                "Partner" => $soldtoparty_number//"0000000003"//
+                );
+
+
+                
+$creditInfo = $soapClient->ZcrmCreditInfo($parameters);
+##########################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $customer_model = $om->create('Magento\Customer\Model\Customer');//->
+            $customer_model->setWebsiteId(1);
+            $customer = $customer_model->load($customerSession->getId());
+            $customerData = $customer->getData();
+
+            $companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
+
+            
+
+            $stp_id = $companymanagement->getByCustomerId($customerSession->getId())->getData("STP_ID");
+            $soldtoparty_number = $stp_id;//$customerData['stp_id'];
+
+            //$wsdlUrl = dirname(__FILE__)."/wsdl/zcustomercreditinformation_binding.xml";
+
+            //Creat SOAP client instance
+            //$soapClient  = new \Zend\Soap\Client($wsdlUrl,array("soap_version" => SOAP_1_2));
+           
+            $optionList  = [];
+            $select_o    = '<select name="s_month" class"form-control" id="s_month" >';
+            $select_c    = '</select>';
+
+            try{
+
+         
+            
+
+		    /**   GET CUSTOMER STATEMENT **/		    
+            $wsqlUrl = "http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/bndg_url/sap/bc/srt/rfc/sap/zzget_cust_statement_v6/300/zget_customer_statement_v6/zget_customer_statement_v6_binding?sap-client=300";
+            $soapClient  = new \Zend\Soap\Client($wsqlUrl,array("soap_version" => SOAP_1_2));
+            $soapClient->setHttpLogin($username);
+            $soapClient->setHttpPassword($password);
+            
+            
+
+
+
+            if(isset($_POST['s_month'])) {
+
+              $optionList = [];
+
+              $_mo    = $_POST['s_month'] ;
+              $_ye    = $_POST['s_year'] ;
+              $year   = date("Y");
+              $start  = 1;
+              $ends   = cal_days_in_month(CAL_GREGORIAN, $_mo , $_ye);
+              $fdate  =  '01.'.$_mo.'.'.$_ye ;
+              $tdate  =  $ends.'.'.$_mo.'.'.$_ye ;
+              $Adate  =  date('d.m.Y');
+
+              $parameters2 = array(
+                                 "Adate" =>  $Adate,
+                                 "Bukrs" => '6076',
+                                 "Fdate" =>  $fdate,
+                                 "Tdate" => $tdate ,
+                            "Kunnr" => $soldtoparty_number, //'210196'//$soldtoparty_number
+
+            );
+
+
+
+             $optionList = setSelected($_mo);
+              $_POST      = array();
+
+         
+
+            $tab_result   = $soapClient->ZzcustomerStatementPdf($parameters2);
+
+
+            $data         =  base64_encode($tab_result->Pdf);
+            $showiFRAME  = true;
+            if (empty($data)){
+                $showiFRAME  = false;
+            }
+            $data         = 'data:application/pdf;base64,'.$data;
+            
+            $decoded   = base64_encode($tab_result->Pdf);
+
+
+
+            }else{
+               $_POST     = array();
+               $optionList = setSelected('');
+
+               //var_dump($optionList);
+            }
+         }catch (Exception $ex) {
+
+            var_dump($ex->getMessage());
+           
+       }
+
+             function setSelected($line){
+
+                $optionList = [];
+
+                if($line != '')
+                {
+                    $_month = getMonth($line);
+                    $option = "<option value='".$line."' selected>".$_month."</option>";
+
+                    array_push($optionList,$option);
+
+                    for ($x = 1 ;$x<=11 ; $x++) {
+
+                    $_month = getMonth($x);
+                    if($x <= 9){
+                     $_mo = '0'.$x ;
+                    }else{
+                       $_mo  = $x  ;
+                    }
+
+                    $option = "<option value='".$_mo."'>".$_month."</option>";
+                    array_push($optionList,$option);
+
+                }
+                $line = '';
+                $_POST['s_month'] = '';
+
+            }else{
+
+                for ($x = 1 ;$x<=12 ; $x++){
+
+                 $_month = getMonth($x);
+                 if($x <= 9){
+                     $_mo = '0'.$x ;
+                    }else{
+                       $_mo  = $x  ;
+                    }
+                 $option = "<option value='".$_mo."'>".$_month."</option>";
+                 array_push($optionList,$option);
+
+                }
+
+
+
+            }
+
+
+        return $optionList;
+        }
+
+
+
+
+       function getMonth($x){
+                $monthName = date("F", mktime(0, 0, 0, $x, 10));
+               // var_dump($monthName);
+               return $monthName ;
+
+
+        }
+
+
+
+            ?>
+
+<?php 
+  if($_SESSION['ZTERM'] == 'ACCO') { ?>
+<!--<div class="block block-balance">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Balance'); ?></strong>
+    </div>
+    <div class="block-content">
+        <p>
+            <span class="balance-price-label"><?php /* @escapeNotVerified */ echo __('Licence Number:'); ?></span>
+            <?php /* @escapeNotVerified */echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($block->getBalance()); ?>
+        </p>
+    </div>
+</div>-->
+
+<div class="block block-balance">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Credit Limit'); ?></strong>
+    </div>
+    <div class="block-content">
+        <p>
+            <span class="balance-price-label"><?php /* @escapeNotVerified */ echo __('Credit Limit'); ?></span>
+            <?php /* @escapeNotVerified */ echo($this->helper('Magento\Framework\Pricing\Helper\Data')->currency($creditInfo->ExCredInfo->item->LvCredLim)); ?>
+        </p>
+    </div>
+</div>
+
+<div class="block block-balance">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Balance:'); ?></strong>
+    </div>
+    <div class="block-content">
+        <p>
+            <span class="balance-price-label"><?php /* @escapeNotVerified */ echo __('Balance:'); ?></span>
+            <?php /* @escapeNotVerified */ echo($this->helper('Magento\Framework\Pricing\Helper\Data')->currency($creditInfo->ExCredInfo->item->LvCredBal)); ?>
+        </p>
+    </div>
+</div>
+
+<div class="block block-balance">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Last Pay:'); ?></strong>
+    </div>
+    <div class="block-content">
+        <p>
+            <span class="balance-price-label"><?php /* @escapeNotVerified */ echo __('Last Pay:'); ?></span>
+            <?php /* @escapeNotVerified */ echo($this->helper('Magento\Framework\Pricing\Helper\Data')->currency($creditInfo->ExCredInfo->item->LvLastPay)); ?>
+        </p>
+    </div>
+</div>
+
+  <?php }else{ ?>
+    
+
+
+    <?php } ?>
+
+    <div class="block block-balance">
+        <div class="block-title">
+            <strong><?php /* @escapeNotVerified */ echo __('Account Statement: ');?><button id="getStatement" style="backgroud-color:#7fbaf4;" >Get Statement </button></strong> 
+        </div>
+
+    <div class="block-content">
+        <div class="container">
+           <div class="jumbotron">
+                <div class="bootstrap-iso">
+                    <link rel="stylesheet" type="text/css" href="<?php echo '../../../../resources/bootstrap/css/bootstrap-iso.css';?>">
+
+                    <form class="form-inline" id="f_month" action="" method="POST">
+                        <div class="form-group">
+
+                         <label for="s_year">Year </label>
+                        <input type="numer" class="form-control" name="s_year" id="s_year" value="" required>
+
+       
+                        </div>
+
+                         <div class="form-group">
+           
+                            <?php
+
+                            echo $select_o;
+                            foreach ($optionList as $opt) {
+                            echo $opt ;
+                            }
+                            echo $select_c;
+
+                        ?> 
+
+                    </div>
+
+                </form>
+
+                <?php  if ($showiFRAME) { echo'<iframe src="'.$data.'" style="width:900px; height:300px;" frameborder="0"></iframe>';}else{ echo '<br><br><br><br><div class="block-title"> <strong>No Data Found..</strong> </div>';} ?>
+
+          </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script >
+    require(['jquery', 'jquery/ui'], function($){
+        //your js code here
+
+
+
+        $("#getStatement").click(function(e) {
+            if($("#s_year").val() == ''){
+                alert('Year is required');
+            }else{
+            var _MO = $("#s_month :selected").val();      
+
+            //$.ajax({
+            // type: 'POST',
+              //   url: <?php// echo "'".$_SERVER['REQUEST_URI']."'"; ?>,
+              //  data: {'month': _MO },
+              //  });
+
+           // _mo = '';
+
+            $("#f_month").submit();
+            }
+
+        });
+
+    });
+</script>
+<script type="text/javascript">
+  require(["bootstrap3"], function(){
+   });
+</script>
+

@@ -1,0 +1,203 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+$defualt_delivery_date = date_create();//date('Y-m-d');
+date_modify($defualt_delivery_date, '+1 day');
+$defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
+?>
+</script>
+<?php /** @var $block \Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Method\Form */ ?>
+<?php $_shippingRateGroups = $block->getShippingRates(); ?>
+<div class="bootstrap-iso">
+<h3>Delivery Date Confirmaion</h3>
+<link rel="stylesheet" type="text/css" href="<?php echo '../../../../../resources/bootstrap/css/bootstrap-iso.css';?>"/>
+
+<div class="form-group">
+    <label for="delivery_date">Delivery Date:</label>
+    <input type="date" class="form-control" name="delivery_date" id="delivery_date" onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"
+     value="<?php echo $defualt_delivery_date; ?>">
+    <a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>
+</div>
+
+
+<?php if ($_shippingRateGroups): ?>
+    <div id="order-shipping-method-choose" class="control" style="display: none;">
+    
+        <dl class="admin__order-shipment-methods">
+          <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
+            <!-- dt class="admin__order-shipment-methods-title"><?= $block->escapeHtml($block->getCarrierName($code)) ?></dt -->
+            <dd class="admin__order-shipment-methods-options">
+            <ul class="admin__order-shipment-methods-options-list">
+                <?php foreach ($_rates as $_rate): ?>
+                    <?php $_radioProperty = 'name="order[shipping_method]" type="radio" onclick="order.setShippingMethod(this.value)"' ?>
+                    <?php $_code = $_rate->getCode() ?>
+                    <li class="admin__field-option">
+                       <?php if ($_rate->getErrorMessage()): ?>
+                           <div class="messages">
+                               <div class="message message-error error">
+                                   <div><?= $block->escapeHtml($_rate->getErrorMessage()) ?></div>
+                               </div>
+                           </div>
+                       <?php else: ?>
+                            <?php $_checked = $block->isMethodActive($_code) ? 'checked="checked"' : '' ?>
+                            <input <?= /* @escapeNotVerified */ $_radioProperty ?> value="<?= /* @escapeNotVerified */ $_code ?>"
+                            id="s_method_<?= /* @escapeNotVerified */ $_code ?>" <?= /* @escapeNotVerified */ $_checked ?>
+                            class="admin__control-radio"/>
+                            <label class="admin__field-label" for="s_method_<?= /* @escapeNotVerified */ $_code ?>">
+                            confirm delivery date
+                               <strong style="display: none;">
+                                    <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
+                                    <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
+
+                                    <?= /* @escapeNotVerified */ $_excl ?>
+                                    <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                        (<?= /* @escapeNotVerified */ __('Incl. Tax') ?> <?= /* @escapeNotVerified */ $_incl ?>)
+                                    <?php endif; ?>
+                                </strong>
+                            </label>
+                       <?php endif ?>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            </dd>
+        <?php endforeach; ?>
+        </dl>
+    </div>
+    <?php if ($_rate = $block->getActiveMethodRate()): ?>
+        <div id="order-shipping-method-info" class="order-shipping-method-info">
+            <dl class="admin__order-shipment-methods">
+                <dd class="admin__order-shipment-methods-options">
+                   <b>Delivery Date confirmed </b>
+                    <strong style="display: none;">
+                        <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
+                        <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
+
+                        <?= /* @escapeNotVerified */ $_excl ?>
+                        <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            (<?= /* @escapeNotVerified */ __('Incl. Tax') ?> <?= /* @escapeNotVerified */ $_incl ?>)
+                        <?php endif; ?>
+                    </strong>
+                </dd>
+            </dl>
+            <a href="#"
+               onclick="$('order-shipping-method-info').hide();$('order-shipping-method-choose').show();return false"
+               class="action-default">
+                <!-- span><?= /* @escapeNotVerified */ __('Click to change shipping method') ?></span -->
+            </a>
+        </div>
+    <?php else: ?>
+        <script>
+require(['prototype'], function(){
+    $('order-shipping-method-choose').show();
+});
+</script>
+    <?php endif; ?>
+<?php elseif ($block->getIsRateRequest()): ?>
+    <div class="order-shipping-method-summary">
+        <strong class="order-shipping-method-not-available"><?= /* @escapeNotVerified */ __('Sorry, no quotes are available for this order.') ?></strong>
+    </div>
+<?php else: ?>
+    <div id="order-shipping-method-summary" class="order-shipping-method-summary">
+        <a id="ship-method" href="#" onclick="order.loadShippingRates();return true" class="action-default">
+            <span><?= /* @escapeNotVerified */ __('Confirm Delivery Date') ?></span>
+        </a>
+        <input type="hidden" name="order[has_shipping]" value="" class="required-entry" />
+    </div>
+<?php endif; ?>
+<div style="display: none;" id="shipping-method-overlay" class="order-methods-overlay">
+    <span><?= /* @escapeNotVerified */ __('You don\'t need to select a shipping method.') ?></span>
+    <input type="text" name="quote_number" id="quote_number" value="<?php echo $block->getQuote()->getId(); ?>"/>
+</div>
+</div>
+<script>
+
+  /*function confirmDate(){
+
+    var delivery_date = document.getElementById('delivery_date').value;
+    var quote_number = document.getElementById("quote_number").value;
+
+    var url = 'http://10.2.10.93/deltaqa01/admin/erporder/index/index?delivery='+ delivery_date +'&quote='+quote_number;
+    var newName = 'John Smith',
+    xhr = new XMLHttpRequest();
+
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200 ) {
+            alert('Something went wrong. ' + xhr.responseText);
+        }
+        else if (xhr.status !== 200) {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+xhr.send(null);
+      
+  }
+
+
+
+
+  require(["jQuery321"], function(){
+        jQuery(document).ready(function(){
+            console.log('strng');
+            order.loadShippingRates();//return true;
+            document.getElementById('s_method_flatrate_flatrate').checked=true;
+        });
+    });
+
+    require(["jqueryNoConflict"], function(){
+    });
+    require(["jqueryNoConflict"], function(){
+        require(["jQuery321"], function(){
+              function confirmDate() {
+
+
+
+                var pageurl = '';
+                var url = jQuery(window.location).attr('href').split( '/' );
+                for(i = 0; i < url.length - 6; i++) { 
+                pageurl += url[i] + '/';
+                }
+
+                var delivery_date = document.getElementById('delivery_date').value;
+                var quote_number = document.getElementById("quote_number").value;
+                console.log("Ajax call on delivery_date change");
+                jQuery.ajax({
+                    type: 'post',
+                    url: 'http://10.2.10.93/deltaqa01/admin/'+'erporder/index/index',
+                    data: {'delivery_date':delivery_date,'quote_number':quote_number},
+                    success: function (data) {
+                        
+                        if(data == 1){
+                            
+                            console.log(delivery_date);
+                            console.log(data);
+                        }
+                        else{
+                            console.log(data);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            };        
+        });
+    });*/
+    
+
+    require(["Magento_Sales/order/create/form"], function(){
+        
+        order.overlay('shipping-method-overlay', <?php if ($block->getQuote()->isVirtual()): ?>false<?php else: ?>true<?php endif; ?>);
+        order.overlay('address-shipping-overlay', <?php if ($block->getQuote()->isVirtual()): ?>false<?php else: ?>true<?php endif; ?>);
+
+        <?php if ($block->getQuote()->isVirtual()): ?>
+            order.isOnlyVirtualProduct = true;
+        <?php endif; ?>
+    });
+</script>

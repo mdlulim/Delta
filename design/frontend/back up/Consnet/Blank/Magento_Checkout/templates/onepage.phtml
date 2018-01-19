@@ -1,0 +1,142 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ 
+ 
+
+
+// @codingStandardsIgnoreFile
+?>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
+<?php
+     $om = \Magento\Framework\App\ObjectManager::getInstance();
+     $customerSession = $om->get('Magento\Customer\Model\Session');
+     $companydata = $block->getCompanyData($customerSession->getId());
+?>
+
+<div class="bootstrap-iso">
+<link rel="stylesheet" type="text/css" href="<?php echo '../../../../../resources/bootstrap/css/bootstrap-iso.css';?>"/>
+
+
+
+<div id="checkout" data-bind="scope:'checkout'" class="checkout-container">
+    <div id="checkout-loader" data-role="checkout-loader" class="loading-mask" data-mage-init='{"checkoutLoader": {}}'>
+        <div class="loader">
+            <img src="<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+                 alt="<?= /* @escapeNotVerified */ __('Loading...') ?>"
+                 style="position: absolute;">
+        </div>
+    </div>
+
+    <script>
+        window.checkoutConfig = <?= /* @escapeNotVerified */ $block->getSerializedCheckoutConfig() ?>;
+        // Create aliases for customer.js model from customer module
+        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+        window.customerData = window.checkoutConfig.customerData;
+        
+    </script>
+    
+    <script>
+        console.log(window.checkoutConfig.customerData);
+        console.log(window.checkoutConfig);
+        console.log(window.location.href);
+        console.log(window.checkoutConfig.quoteData.entity_id);
+        console.log(window.checkoutConfig.quoteItemData);
+    </script>
+
+<div ng-app="appchk">
+    <div class="row" ng-controller="checkoutCtrlr">
+        <div class="h2"><b>Order Summary</b></div>
+        <br>
+        <div class="col-lg-8">
+            <table class="table">
+                <tr>
+                    <th>Sku</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="item in itemlist">
+                    <td>{{ item.sku }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.custom_price }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td><img  ng-src="{{ item.thumbnail }}"/></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <!--<div class="h4">{{ firstname }} {{ lastname }}</div>
+            <div class="h4">{{ email }}</div>
+                <br>-->
+            <div class="h4"><b>Company</b></div>
+            <div class="h4"><?php echo $companydata['company_name']; ?></div>
+            <div class="h4"><?php echo $companydata['company_email']; ?></div>
+            <div class="h4"><?php echo $companydata['telephone']; ?></div>
+            <div class="h4"><?php echo $companydata['street'].' '.$companydata['city'].' '.$companydata['country_id'].' '.
+            $companydata['region'].' '.$companydata['postcode']; ?></div>
+            <br>     
+            <!--<div class="h4"><b>Address</b></div>
+            <div class="h4"></div>
+            <div class="h4"></div>
+                <br>-->    
+            <div class="h4"><b>Order Total {{ total }} </b></div>
+            <div class="h4">{{ itemcount }} Items in Cart</div>
+            <br>
+            <div class="form-group">
+                <label for="po_number">PO no.:</label>
+                <input type="text" class="form-control" ng-model="po_number">
+            </div>
+                <br>
+            <div class="form-group">
+                <label for="delivery_date">Delivery Date:</label>
+                <input type="date" class="form-control" ng-model="delivery_date">
+            </div>
+            <div class="form-group">
+                <button id="btncheckout" type="button" class="btn btn-primary btn-lg" ng-click="checkout()"> Place Order
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    require(["angular"], function(){
+        var app = angular.module('appchk', []);
+        app.controller('checkoutCtrlr', function($scope, $http) {
+            console.log('fromcontroler');
+            $scope.itemlist = window.checkoutConfig.quoteItemData;//['Thato','Madihlaba'];
+            $scope.total = window.checkoutConfig.totalsData.grand_total;
+            $scope.itemcount = window.checkoutConfig.quoteItemData.length;
+            $scope.lastname = window.checkoutConfig.customerData.lastname;
+            $scope.firstname = window.checkoutConfig.customerData.firstname;
+            $scope.email = window.checkoutConfig.customerData.email;
+
+            $scope.checkout = function(){
+                date = 12;
+                //console.log($scope.po_number);
+                //console.log($scope.delivery_date);
+                $http({
+                    method:'POST',
+                    data: {quote_id : window.checkoutConfig.quoteData.entity_id, 
+                           delivery_date: $scope.delivery_date,
+                           po_number: $scope.po_number},
+                    url: 'http://10.2.10.93/deltaqa/placeorder/index/index'
+                }).then(function successCallback(response){
+                            console.log(response);
+                            window.location = "http://10.2.10.93/deltaqa/sales/order/view/order_id/"+response.data+"/";
+                        },
+                        function errorCallback(response){
+                            console.log(response);
+                        });
+            };
+        });
+    });
+</script>
+    
+</div>
+</div>

@@ -1,0 +1,41 @@
+/** 
+-this module it cleean up admin side using css most of the block that are 
+note needed are hidden using css
+1. Cleaning up customer
+*/
+.nav-sections {
+    margin-bottom: 0px !important;
+}
+.page-header .panel.wrapper {
+    border-bottom: 0px solid #093260 !important;
+    background-color: #093260 !important;
+}
+.page-header {
+    background-color: #093260 !important;
+}
+.navigation .level0 > .level-top {
+    color: #f8f0f0 !important;
+}
+.navigation {
+    background: #caaa66 !important;
+}
+.nav-sections-item-content {
+    display: block !important;
+    background-color: #caaa66 !important;
+}
+.page-footer {
+    background: #caaa66 !important;
+}
+.copyright {
+    background-color: #093260 !important;
+}
+.footer.content .links a {
+    color: white !important;
+    text-decoration: none;
+}
+action.primary {
+    background-image: none;
+    background: #0a3a5f !important;
+    border: 1px solid #1979c3;
+    color: #fff;
+}

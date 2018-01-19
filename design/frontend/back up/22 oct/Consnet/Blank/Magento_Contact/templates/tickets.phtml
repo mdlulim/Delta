@@ -1,0 +1,89 @@
+<?php
+
+
+$tickets = $block->getTickets();
+
+rsort($tickets);
+?>
+
+
+<div class="block block-new-customer">
+    <div class="block-title">
+        <strong id="block-new-customer-heading" role="heading" aria-level="2">Your Tickets</strong>
+    </div>
+
+  <table>
+
+  <tr>
+    <th>Ticket</th>
+    <th>Created on</th>
+    <th>Description</th>
+    <th>Status</th>
+  </tr>
+
+  <?php
+
+  $loop_count = 0 ;
+  foreach ($tickets  as  $Ticket) {
+  $loop_count ++ ;
+  echo "<tr>";
+  echo "<td >".$Ticket->header->item->ObjectId."</td> ";
+  echo "<td >".$Ticket->header->item->PostingDate."</td> ";
+  echo "<td >".$Ticket->header->item->Description."</td> ";
+  echo "<td >".$Ticket->status->item[0]->Txt30."</td> ";
+  echo "</tr>";
+  //foreach ($Ticket->text->item->Lines->item as $text  ) {
+//  echo "<p>".$text->Tdline."</p>";
+
+//  }
+  //echo "body";
+//  echo '</div>';
+//  echo '</div>';
+//  echo '</div>';
+
+  }
+  ?>
+
+
+
+</table>
+
+
+</div>
+<script >
+    require(['jquery', 'jquery/ui'], function ($) {
+        //your js code here
+
+        $(document).ready(function () {
+
+
+            $('#text_about').val($('#s_about :selected').text());
+            $('#text_desc').val($('#s_decr1 :selected').text());
+
+        });
+
+        var options = $("#s_decr1").html();
+        $("#s_about").change(function (e) {
+
+            var text = $("#s_about :selected").val();
+
+            $('#text_about').val($('#s_about :selected').text());
+
+            $("#s_decr1").html(options);
+            //if(text == "All") return;
+            $('#s_decr1 :not([value^="' + text.substring(0, 4) + '"])').remove();
+        });
+
+
+
+        $("#s_decr1").change(function (e) {
+
+
+
+            $('#text_desc').val($('#s_decr1 :selected').text());
+
+
+        });
+
+    });
+</script>

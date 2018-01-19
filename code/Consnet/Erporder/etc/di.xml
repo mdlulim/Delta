@@ -1,0 +1,24 @@
+﻿<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Sales\Block\Adminhtml\Order\View" type="Consnet\Erporder\Block\Adminhtml\Order\View"/>
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="order_plugin" type="Consnet\Erporder\Plugin\ErpOrder" sortOrder="1" disabled="false" />
+    </type>
+    <type name="Magento\Quote\Model\Quote"><!--Magento\Checkout\Model\Cart   Magento\Checkout\Block\Cart\AbstractCart-->
+        <plugin name="order_simulation_plugin" type="Consnet\Erporder\Plugin\AdminOrderSimulator" sortOrder="1" disabled="false" />
+    </type>
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="order_cancellation_plugin" type="Consnet\Erporder\Plugin\OrderCancellation" sortOrder="1" disabled="false" />
+    </type>
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Create" type="Consnet\Erporder\Controller\Adminhtml\Order\Create"/>
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Create\Save" type="Consnet\Erporder\Controller\Adminhtml\Order\Create\Save"/>
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Edit\Save" type="Consnet\Erporder\Controller\Adminhtml\Order\Edit\Save"/>
+    <preference for="Magento\Sales\Block\Adminhtml\Order\View\Info" type="Consnet\Erporder\Block\Adminhtml\Order\View\Info"/>
+    <preference for="Magento\Sales\Block\Order\Totals" type="Consnet\Erporder\Block\Order\Totals"/>
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Totals" type="Consnet\Erporder\Block\Adminhtml\Order\Totals"/>
+    <preference for="Magento\Sales\Block\Order\Recent" type="Consnet\Erporder\Block\Order\Recent"/>
+    <preference for="Magento\Sales\Block\Order\History" type="Consnet\Erporder\Block\Order\History"/>
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Totals" type="Consnet\Erporder\Block\Adminhtml\Order\Create\Totals"/>
+    
+  
+                             
+</config>

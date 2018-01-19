@@ -1,0 +1,6 @@
+﻿<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Create" type="Consnet\AdminProductFilter\Controller\Adminhtml\Order\Create" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid" type="Consnet\AdminProductFilter\Block\Adminhtml\Order\Create\Search\Grid"/>
+</config>
+
+

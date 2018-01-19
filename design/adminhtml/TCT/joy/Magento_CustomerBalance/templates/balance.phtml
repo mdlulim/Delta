@@ -1,0 +1,125 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * @see \Magento\CustomerBalance\Block\Adminhtml\Customer\Edit\Tab\Customerbalance\Balance
+ */
+?>
+
+<div class="fieldset-wrapper">
+    <div class="fieldset-wrapper-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Credit Information') ?></span>
+    </div>
+    <!--<?= $block->getChildHtml('grid') ?>-->
+    <!--<?= /* @escapeNotVerified */ $block->getDeleteOrphanBalancesButton() ?>-->
+    <div>
+    </div>
+</div>
+        <?php /*echo($this->getLayout()
+        ->createBlock('Magento\CustomerBalance\Block\Account\Balance')
+        ->setTemplate('Magento_CustomerBalance::balance.phtml')
+        ->toHtml()); */?>
+        <?php
+        $om = \Magento\Framework\App\ObjectManager::getInstance();
+        //$customerSession = $om->get('Magento\Customer\Model\Session');
+        /*$customer = $om->get('\Magento\Customer\Block\Adminhtml\Edit\Tab\View');
+        var_dump(get_class_methods($adminsession));
+        var_dump(get_class_methods($adminsession->getData()));*/
+        
+        /*$customer_id = $adminsession->getCustomerId();
+        $customer_model = $om->create('Magento\Customer\Model\Customer');
+        $customer_model->setWebsiteId(1);
+        $customer = $customer_model->load($customer_id);*/
+        /*$customer = $om->get('\Magento\Customer\Block\Adminhtml\Edit\Tab\View')->getCustomer();
+        $customer_model = $om->create('Magento\Customer\Model\Customer');//->
+        $adminsession = $om->get(\Magento\Backend\Model\Session\Quote::class);
+        $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        //var_dump($actual_link);
+        $customer_id = 0;
+        $previous = false;
+        foreach(explode("/", $actual_link) as $item){
+            
+            if($previous){
+               
+                $customer_id = $item;
+                break;
+            }
+            if($item == 'id'){
+                $previous = true;
+            }
+            
+        }
+        //$customer_id = 1;//$adminsession->getCustomerId();
+        $customer_model->setWebsiteId(1); 
+        $customer = $customer_model->load($customer_id);//$customerSession->getId());
+        $customerData = $customer->getData();
+
+        $companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
+        $stp_id = $companymanagement->getByCustomerId($customer_id);//$customerSession->getId())->getData("STP_ID");
+        $soldtoparty_number = $stp_id['STP_ID'];//$customerData['stp_id'];
+
+        $wsdlUrl = "http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/bndg_url/sap/bc/srt/rfc/sap/zcustomercreditinformation/300/zcustomercreditinformation/zcustomercreditinformation_binding?sap-client=300";
+
+        //Creat SOAP client instance
+        $soapClient  = new \Zend\Soap\Client($wsdlUrl,array("soap_version" => SOAP_1_2));
+
+        //Set Login details
+        $helper =  $om->create('Consnet\Api\Helper\Data');
+        $username = $helper->getGeneralConfig('user_name');
+        $password = $helper->getGeneralConfig('password');
+
+        $soapClient->setHttpLogin($username);
+        $soapClient->setHttpPassword($password);
+
+                 //Set Parameters
+        $parameters = array(
+                        "Partner" => $soldtoparty_number//"0000000003"//
+                        );
+
+
+                        
+        $creditInfo = $soapClient->ZcrmCreditInfo($parameters);*/
+
+   ?>
+
+
+
+<div class="block block-balance">
+<div class="block-title">
+    <strong><?php /* @escapeNotVerified  echo __('Credit Limit');*/ ?></strong>
+</div>
+<div class="block-content">
+    <p>
+        <span class="balance-price-label"><?php /* @escapeNotVerified  echo __('Credit Limit');*/ ?></span>
+        <?php /* @escapeNotVerified echo($this->helper('Magento\Framework\Pricing\Helper\Data')->currency($creditInfo->ExCredInfo->item->LvCredLim)); */ ?>
+    </p>
+</div>
+</div>
+
+<div class="block block-balance">
+<div class="block-title">
+    <strong><?php /* @escapeNotVerified  echo __('Balance:'); */?></strong>
+</div>
+<div class="block-content">
+    <p>
+        <span class="balance-price-label"><?php /* @escapeNotVerified  echo __('Balance:'); */?></span>
+        <?php /* @escapeNotVerified  echo($this->helper('Magento\Framework\Pricing\Helper\Data')->currency($creditInfo->ExCredInfo->item->LvCredBal));*/ ?>
+    </p>
+</div>
+</div>
+
+<div class="block block-balance">
+<div class="block-title">
+    <strong><?php /* @escapeNotVerified  echo __('Last Pay:');*/ ?></strong>
+</div>
+<div class="block-content">
+    <p>
+        <span class="balance-price-label"><?php /* @escapeNotVerified  echo __('Last Pay:');*/ ?></span>
+        <?php /* @escapeNotVerified  echo($this->helper('Magento\Framework\Pricing\Helper\Data')->currency($creditInfo->ExCredInfo->item->LvLastPay));*/ ?>
+    </p>
+</div>
+</div>

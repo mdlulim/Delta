@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Email/etc/email_templates.xsd">
+    <template id="customer_account_activate"
+              label="Customer Account Activate"
+              file="customer_account_activate.html"
+              type="html"
+              module="Consnet_Api"
+              area="frontend"/>
+</config>

@@ -1,0 +1,143 @@
+.page-wrapper{
+    width: 86% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+.magestore-bannerslider, .page-main{
+    background-color: white !important;
+}
+ body {
+    
+    
+    background-repeat: no-repeat;
+
+    background: rgba(9,50,96,1);
+    background: -moz-linear-gradient(top, rgba(9,50,96,1) 0%, rgba(9,50,96,1) 11%, rgba(202,170,102,1) 43%, rgba(219,209,105,1) 97%, rgba(219,209,105,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(9,50,96,1)), color-stop(11%, rgba(9,50,96,1)), color-stop(43%, rgba(202,170,102,1)), color-stop(97%, rgba(219,209,105,1)), color-stop(100%, rgba(219,209,105,1)));
+    background: -webkit-linear-gradient(top, rgba(9,50,96,1) 0%, rgba(9,50,96,1) 11%, rgba(202,170,102,1) 43%, rgba(219,209,105,1) 97%, rgba(219,209,105,1) 100%);
+    background: -o-linear-gradient(top, rgba(9,50,96,1) 0%, rgba(9,50,96,1) 11%, rgba(202,170,102,1) 43%, rgba(219,209,105,1) 97%, rgba(219,209,105,1) 100%);
+    background: -ms-linear-gradient(top, rgba(9,50,96,1) 0%, rgba(9,50,96,1) 11%, rgba(202,170,102,1) 43%, rgba(219,209,105,1) 97%, rgba(219,209,105,1) 100%);
+    background: linear-gradient(to bottom, rgba(9,50,96,1) 0%, rgba(9,50,96,1) 11%, rgba(202,170,102,1) 43%, rgba(219,209,105,1) 97%, rgba(219,209,105,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#093260', endColorstr='#dbd169', GradientType=0 );
+
+    
+}
+.flex-viewport{
+    height: 325px !important;
+}
+@media (max-width: 767px) {
+    .page-wrapper,{
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        background-color: white;
+    }
+    .nav-sections{
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    .flex-viewport{
+        height: 115px !important;
+    }
+    .logo {
+        margin-left: 36px !important;
+        margin-top: 16px !important;
+    }
+    .page-header {
+        background: #0a3a5f !important;
+    }
+}
+
+
+.dashboard-store-stats{
+  border-right: 0.2rem solid #CAAA66;
+  border-left: 0.2rem solid #CAAA66;
+  border-bottom: 0.2rem solid #CAAA66;
+}
+.dashboard-store-stats .ui-tabs {
+  margin-bottom: 0;
+  position: relative;
+}
+.dashboard-store-stats .ui-tabs:before {
+  background-color: #093260;
+  height: 4.8rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2rem;
+}
+.dashboard-store-stats .ui-tabs-panel {
+  background: url(../images/ajax-loader-small.gif) no-repeat 50% 50%;
+  min-height: 4.5rem;
+}
+.dashboard-store-stats .tabs-horiz {
+  border-right: 1px solid #093260;
+  float: left;
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  background-color: #093260;
+}
+.dashboard-store-stats .tabs-horiz .ui-state-default {
+  display: inline-block;
+  float: none;
+  margin-right: .1rem;
+}
+.tabs-horiz {
+  margin: 0;
+  padding: 0;
+}
+.tabs-horiz .ui-state-default {
+  background: #093260;
+border: 0.1rem solid #1c2b98;
+  float: left;
+  letter-spacing: .0183em;
+  list-style: none;
+  margin-right: .4rem;
+}
+.tabs-horiz .ui-state-hover {
+  background: #d6d6d6;
+}
+.tabs-horiz .ui-state-active {
+  background: #ffffff;
+  border-bottom: 0;
+  font-weight: 600;
+  letter-spacing: normal;
+  margin-bottom: -.1rem;
+}
+
+.tabs-horiz .ui-state-active .ui-tabs-anchor {
+  border-bottom: 0.1rem solid #ffffff;
+  border-top: 0.4rem solid #CAAA66;
+  padding-top: 1.1rem;
+}
+.tabs-horiz .ui-tabs-anchor {
+ color: #CAAA66;
+  display: block;
+  padding: 1.5rem 1.8rem 1.3rem;
+  text-decoration: none;
+}
+.tabs-horiz .ui-tabs-anchor:hover {
+  color: #41362f;
+  text-decoration: none;
+}
+.ui-tabs-panel {
+  margin-top: -1px;
+  padding: 2rem;
+}
+.page-layout-1column .block.widget .products-grid .product-item {
+    margin-left: calc((100% - 5 * (100%/6)) / 4);
+    width: 15.667% !important;
+  }
+@media (max-width: 767px) {
+    .page-layout-1column .block.widget .products-grid .product-item {
+        margin-left: calc((100% - 5 * (100%/6)) / 4);
+        width: 45% !important;
+    }
+    .page-wrapper {
+        width: 82% !important;
+        margin-left: 73px !important;
+        margin-right: auto !important;
+    }
+}  

@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Customer\Block\Form\Login\Info $block */
+?>
+<?php if ($block->getRegistration()->isAllowed()): ?>
+<div class="block block-new-customer">
+    <div class="block-title">
+        <strong id="block-new-customer-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Account Activation')) ?></strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-new-customer-heading">
+        <form method="post" action="<?= $block->escapeUrl($block->getCreateAccountUrl()) ?>" >
+        <p><?= $block->escapeHtml(__('Please provide your email for your account to be activated , You will receive an email to create a password ')) ?></p>
+        <input name="email_activate" type="email" value="" placeholder="Your email address" />
+        <div class="actions-toolbar">
+            <div class="primary">
+                <input type="submit" class="action create primary"  value="<?= $block->escapeHtml(__('Activate Account')) ?>" />
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<?php endif; ?>

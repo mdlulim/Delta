@@ -1,0 +1,21 @@
+{
+    "name": "consnet/module-setup",
+    "description": "setup all categories and attributes required by the other moduels",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Consnet\\Setup\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Magento/Widget/etc/widget.xsd">
+	<widget id="consnet_logoShowcase" class="Consnet\LogoShowcase\Block\Widget\LogoShowcase">
+		<label translate="true">Logo Showcase Widget</label>
+		<description>Logo Showcase Widget in Magento2</description>
+		<parameters>
+           <parameter name="posts" sort_order="10" visible="true" xsi:type="text">
+               <label>Logo Showcase Widget in Magento2</label>
+           </parameter>
+       </parameters>
+	</widget>
+</widgets>

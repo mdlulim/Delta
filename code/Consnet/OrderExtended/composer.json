@@ -1,0 +1,25 @@
+{
+    "name": "consnet/module-companyextended",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        },
+        {
+            "name": "Mlamuli Zondo",
+            "email": "mlamulizondo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Consnet\\CompanyExtended\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

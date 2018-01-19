@@ -1,0 +1,211 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// @codingStandardsIgnoreFile
+
+$db_deliverydate = $block->getOrder()->getData('DELIVERY_DATE');
+
+$year = substr ($db_deliverydate, 4);
+$day = substr ($db_deliverydate, 0, 2);
+$month = substr ($db_deliverydate, 2, 2);
+?>
+
+<style type="text/css">
+#orderitems{
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  
+
+}
+#orderitems::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#orderitems::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#orderitems::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="<?php echo '../../../../../resources/bootstrap/css/bootstrap-iso.css';?>"/>
+<div class="bootstrap-iso">
+
+<?php $_order = $block->getOrder() ?>
+<?php $_giftMessage; ?>
+
+<div class="row">
+<div class="col-lg-9">
+    <div class="table table-wrapper order-items" id='orderitems' name='orderitems'>
+        <table class="data table table-order-items" id="my-orders-table" summary="<?php /* @escapeNotVerified */ echo __('Items Ordered') ?>">
+            <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Items Ordered') ?></caption>
+            <thead>
+                <tr>
+                    <th class="col name"><?php /* @escapeNotVerified */ echo __('Product Name') ?></th>
+                    <th class="col sku"><?php /* @escapeNotVerified */ echo __('SKU') ?></th>
+                    <th class="col price"><?php /* @escapeNotVerified */ echo __('Price') ?></th>
+                    <th class="col qty"><?php /* @escapeNotVerified */ echo __('Qty') ?></th>
+                    <th class="col subtotal"><?php /* @escapeNotVerified */ echo __('Subtotal') ?></th>
+                </tr>
+            </thead>
+            <?php $_items = $_order->getItemsCollection(); ?>
+            <?php $_index = 0; ?>
+            <?php $_count = $_items->count(); ?>
+            <?php $_giftMessage = ''?>
+            <?php foreach ($_items as $_item): ?>
+                <?php if ($_item->getParentItem()) {
+        continue;
+    } ?>
+                <tbody>
+                    <?php echo $block->getItemHtml($_item) ?>
+                    <?php if ($this->helper('Magento\GiftMessage\Helper\Message')->isMessagesAllowed('order_item', $_item) && $_item->getGiftMessageId()): ?>
+                        <?php $_giftMessage = $this->helper('Magento\GiftMessage\Helper\Message')->getGiftMessageForEntity($_item); ?>
+                        <tr>
+                            <td class="col options" colspan="5">
+                                <a href="#"
+                                id="order-item-gift-message-link-<?php /* @escapeNotVerified */ echo $_item->getId() ?>"
+                                class="action show"
+                                aria-controls="order-item-gift-message-<?php /* @escapeNotVerified */ echo $_item->getId() ?>"
+                                data-item-id="<?php /* @escapeNotVerified */ echo $_item->getId() ?>">
+                                    <?php /* @escapeNotVerified */ echo __('Gift Message') ?>
+                                </a>
+                                <?php $_giftMessage = $this->helper('Magento\GiftMessage\Helper\Message')->getGiftMessageForEntity($_item); ?>
+                                <div class="order-gift-message" id="order-item-gift-message-<?php /* @escapeNotVerified */ echo $_item->getId() ?>" role="region" aria-expanded="false" tabindex="-1">
+                                    <a href="#"
+                                    title="<?php /* @escapeNotVerified */ echo __('Close') ?>"
+                                    aria-controls="order-item-gift-message-<?php /* @escapeNotVerified */ echo $_item->getId()?>"
+                                    data-item-id="<?php /* @escapeNotVerified */ echo $_item->getId()?>"
+                                    class="action close">
+                                        <?php /* @escapeNotVerified */ echo __('Close') ?>
+                                    </a>
+                                    <dl class="item-options">
+                                        <dt class="item-sender"><strong class="label"><?php /* @escapeNotVerified */ echo __('From') ?></strong><?php echo $block->escapeHtml($_giftMessage->getSender()) ?></dt>
+                                        <dt class="item-recipient"><strong class="label"><?php /* @escapeNotVerified */ echo __('To') ?></strong><?php echo $block->escapeHtml($_giftMessage->getRecipient()) ?></dt>
+                                        <dd class="item-message"><?php /* @escapeNotVerified */ echo $this->helper('Magento\GiftMessage\Helper\Message')->getEscapedGiftMessage($_item) ?></dd>
+                                    </dl>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endif ?>
+                </tbody>
+            <?php endforeach; ?>
+        </table>        
+
+        <form id="updateorderform" method="post" action="" >
+        <table id="neworder" class="hidden fields additional deletableItem">
+            <thead>
+            <td>SKU</td>
+            <td>Qty</td>
+            <td></td>
+            </thead>
+            <tbody>
+            <?php $i = 1;
+                foreach ($block->getOrder()->getItemsCollection() as $singleitem) {
+                    echo "<tr class='form-group'>";
+                    echo "<td><input type='text' class='form-control' onkeypress ='return event.charCode >= 48 && event.charCode <= 57' name='sku".$i."' value='".$singleitem->getSku()."'/></td>";
+                    echo "<td><input type='text' class='form-control' onkeypress ='return event.charCode >= 48 && event.charCode <= 57' name='qty".$i."' value='".(int)$singleitem->getQtyOrdered()."'/></td>";
+                    echo "<td><a id='".$i."' onclick='removerow(this.id)'>Remove<a/></td>";      
+                    echo "</tr>";
+                    $i++;
+            }?>
+            </tbody>
+            <tfoot>
+            <?php echo "<input class='hidden' type='text' id ='orderid' name='orderid' value='".$block->getOrder()->getId()."'/>"; ?>
+            <input type="text" id="changed_deliverydate" name='changed_deliverydate' class="hidden"/>
+            </tfoot>
+        </table>
+        </form>
+    </div>
+</div>
+
+<div class="col-lg-3">
+    <div class="form-group pull-right">
+        <label for="delivery_date">Delivery Date:</label>
+        <input id="delivery_date" type="date" class="form-control" value="<?php echo date('Y-m-d',strtotime("$month/$day/$year")) ?>" disabled/>
+    </div>
+    <table class="data table table-order-items">
+        <tfoot>
+            <?php echo $block->getChildHtml('order_totals') ?>
+        </tfoot>
+    </table>
+</div>
+
+</div>
+<br/>
+<button id="addrowbtn" type="button" class="hidden btn btn-primary btn-md glyphicon glyphicon-plus" onclick="addnewrow()"> Add Row
+</button>
+
+<?php if ($_giftMessage): ?>
+<script type="text/x-magento-init">
+    {
+        "a.action.show, a.action.close": {
+            "giftMessage": {}
+        }
+    }
+</script>
+<?php endif; ?>
+
+<!-- Button trigger modal -->
+<button id="updateorder" type="button" class="hidden btn btn-primary btn-md glyphicon glyphicon-floppy-disk" onclick="sendupdatedorder()"> Update Order
+</button>
+
+<!-- Button trigger modal -->
+<button id="edit" type="button" class="btn btn-primary btn-md glyphicon glyphicon-pencil" onclick="showTable()"> Edit Order
+</button>
+
+<!-- Button trigger modal -->
+<button id="cancelorder" type="button" class="btn btn-primary btn-md glyphicon glyphicon-trash" data-toggle="modal" data-target="#myModal"> Cancel Order
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Order Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <form id="cancelorderform" method="post" action="" >
+          Are You Sure You Want To Cancel Order # 
+          <?php 
+            echo "<b><label>".$block->getOrder()->getData('ECC_ORDER')."</label></b>";
+            echo "<input type='text' id='ordernumber' name='ordernumber' class='hidden' value='".$block->getOrder()->getId()."'/>";  
+            echo "<input type='text' id='mage_order_number' class='hidden' value='".$block->getOrder()->getId()."'/>";
+          ?>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" onclick="cancelOrder()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+require(["jqueryNoConflict"], function(){
+    require(["jQuery321"], function(){
+        require(["bootstrap3"], function(){
+                require(["main"], function(){
+            });
+        });
+    });
+});
+</script>
+<script type="text/javascript">
+  
+</script>

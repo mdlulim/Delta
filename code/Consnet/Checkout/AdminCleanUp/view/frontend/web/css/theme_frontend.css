@@ -1,0 +1,36 @@
+.page-wrapper{
+    width: 86% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+.magestore-bannerslider, .page-main{
+    background-color: white !important;
+}
+ body {
+    height: 100%;
+    background: url(/deltademo/pub/media/wysiwyg/Home_banner.jpg);
+    background-color: #848484 !important;
+    background-size: 100% !important;
+    background-repeat: no-repeat;
+}
+.flex-viewport{
+    height: 325px !important;
+}
+@media (max-width: 767px) {
+    .page-wrapper{
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        background-color: white;
+    }
+    .flex-viewport{
+        height: 115px !important;
+    }
+    .logo {
+        margin-left: 36px !important;
+        margin-top: 16px !important;
+    }
+    .page-header {
+        background: #0a3a5f !important;
+    }
+}

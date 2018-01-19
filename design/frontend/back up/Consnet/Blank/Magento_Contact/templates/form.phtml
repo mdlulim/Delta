@@ -1,0 +1,289 @@
+<?php
+
+$abouts = $block->getAboutTypes()[0];
+$decr1 = $block->getAboutTypes()[1];
+$tickets = $block->getTickets();
+
+rsort($tickets);
+
+//$om = \Magento\Framework\App\ObjectManager::getInstance();
+//$resources = $om->get('Magento\Framework\App\ResourceConnection');
+////$connection = $resources->getConnection();
+//$connection->fetchRow($query)); 
+
+
+
+?>
+
+<div class="bootstrap-iso">
+<link rel="stylesheet" type="text/css" href="<?php echo '../../../../resources/bootstrap/css/bootstrap-iso.css';?>">
+<style type="text/css">
+    
+.panelee-group, 
+ .panelee-group .panelee, 
+ .panelee-group .panelee-heading,
+ .panelee-group .panelee-heading a,  
+ .panelee-group .panelee-title,  
+ .panelee-group .panelee-title a,  
+ .panelee-group ,
+ .panelee-group .panelee-groupe .panelee-heading + .panele-collapse >  {
+    border-radius:2px;
+    border:0;
+}
+.panele-group .panele-heading + .panele-collapse > .panele-body {
+  border-top: 0;
+}
+
+
+ .panele-group .panele-heading {
+    padding: 0;
+}
+ .panele-group .panele-heading a {
+    display: block;
+    background: #668bb1;
+    color:#fff;
+    padding:15px;
+     text-decoration:none;
+   position: relative;
+}
+ .panele-group .panele-heading a.collapsed {
+    background: #c4ced5; 
+    color:inherit;
+}
+
+ .panele-group .panele-heading a:after {
+    content: '-';
+    position: absolute;
+    right: 20px;
+}
+ .panele-group .panele-heading a.collapsed:after {
+    content: '+';
+}
+ .panele-group .panele-collapse {
+    margin-top:5px!important;
+}
+ .panele-group   {
+    background: #f7f7f7;
+    padding:15px;
+}
+ .panele-group .panele {
+  background-color: transparent;
+}
+
+.panele-group .panele-body p:last-child,
+.panele-group .panele-body  ul:last-child,
+.panele-group .panele-body  ol:last-child {
+  margin-bottom: 0;
+}
+
+
+#tickets{
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  
+
+}
+#tickets::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#tickets::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#tickets::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+
+
+
+
+</style>
+<div class="login-container">
+
+<div class="block block-customer-tickets">
+    <div class="block-title">
+        <strong id="block-customer-login-heading" role="heading" aria-level="2">Your Service Request History</strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-customer-login-heading">
+
+<div id="tickets">
+
+         <div class="panele-group" id="accordion">
+
+
+         <?php 
+
+         $loop_count = 0 ;
+         foreach ($tickets  as  $Ticket) {
+            $loop_count ++ ;
+         
+            echo '<div class="panele panele-default">';
+            echo '<div class="panele-heading">';
+            echo '<h4 class="panele-title">';
+            echo '<a data-toggle="collapse" data-parent="#accordion" href="#Ticket'.$loop_count.'" class="collapsed">';
+            echo "Ticket Ref : ".$Ticket->header->item->ObjectId." / Date Created : ".$Ticket->header->item->PostingDate." / Status : ".$Ticket->status->item[0]->Txt30;
+            echo '</a>';
+            echo '</h4>';
+            echo '</div>';
+            echo '<div id="Ticket'.$loop_count.'" class="panele-collapse collapse">';
+            echo '<div class="panele-body">';
+            foreach ($Ticket->text->item->Lines->item as $text  ) {
+                echo "<p>".$text->Tdline."</p>";
+                
+            }
+            //echo "body";
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+
+        }
+        if($loop_count === 0 ){
+            echo "You do not have any tickets...";
+        }
+         ?>
+         
+            
+         </div><!-- /.panele-group -->
+
+</div><!-- /.container --> 
+
+</div>
+</div>
+
+
+<div class="block block-customer-contact">
+    <div class="block-title">
+        <strong id="block-customer-login-heading" role="heading" aria-level="2">Create New Service Request</strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-customer-login-heading">
+
+<?php  
+
+    if (( isset($_SESSION['Type']) )){
+     echo '<div class="alert alert-'.$_SESSION['Type'].' alert-dismissable">' ;
+     echo '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+     echo '<strong>'.$_SESSION['Type'].'!</strong> '.$_SESSION['Message'];
+     echo '</div>';
+     unset($_SESSION['Type']);
+     unset($_SESSION['Message']);
+}
+?>
+
+<div class="panele-group" id="accordion">
+<form class="form contact"
+      action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>"
+      id="contact-form"
+      method="post"
+      data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+      data-mage-init='{"validation":{}}'>
+      <input type="hidden" name="text_about" id="text_about" value="">  
+      <input type="hidden" name="text_desc" id="text_desc" value="">
+    
+       
+        <div class="field s_about required">
+       
+            <label class="" for="s_about"><span><?php /* @escapeNotVerified */ echo __('About') ?></span></label>
+            <div class="control"> 
+                <select class="form-control"  name="s_about" id="s_about">
+                    <?php  foreach($abouts as $about )
+                    {
+                        echo ("<option value='".$about['codegroup'].$about['code']."'>".$about['type']."</option>");
+                    }?>
+                </select>
+
+                </div>
+                </div>
+       
+        <div class="field s_decr1 required">
+            <label class="" for="s_decr1"><span><?php /* @escapeNotVerified */ echo __('Category 1') ?></span></label>
+            <div class="control">
+                <select  class="form-control"  name="s_decr1" id="s_decr1">
+                    <?php  foreach($decr1 as $decr )
+                    {
+                        echo ("<option value='".$decr['codegroup'].$decr['code']."'>".$decr['decr']."</option>");
+                    }?>
+                </select>
+            </div>
+        </div>
+      
+            
+           
+                <input  name="stp_id" id="stp_id" title="<?php /* @escapeNotVerified */ echo __('ID') ?>" value="<?php echo __($this->helper('Consnet\Contact\Helper\Data')->getId()) ?>" class="input-text" type="hidden"/>
+    
+
+        <div class="field comment required">
+            <label class="" for="comment"><span><?php /* @escapeNotVerified */ echo __('Please Describe your problem') ?></span></label>
+            <div class="control">
+                <textarea required="true" name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('Please Describe your problem') ?>" class="form-control" cols="5" rows="3" data-validate="{required:true}"><?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('comment')) ?></textarea>
+            </div>
+        </div>
+        <?php echo $block->getChildHtml('form.additional.info'); ?>
+   
+    <div class="actions-toolbar">
+        <div class="primary">
+            <br>
+            <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="btn btn-primary">
+                <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+<script >
+    require(['jquery', 'jquery/ui'], function($){
+        //your js code here
+
+        $(document).ready(function(){
+
+
+        $('#text_about').val($('#s_about :selected').text());
+        $('#text_desc').val($('#s_decr1 :selected').text());
+
+        });
+
+        var options = $("#s_decr1").html();
+        $("#s_about").change(function(e) {
+                
+            var text = $("#s_about :selected").val();
+
+            $('#text_about').val($('#s_about :selected').text());
+                
+            $("#s_decr1").html(options);
+            //if(text == "All") return;
+            $('#s_decr1 :not([value^="' + text.substring(0,4) +'"])').remove();
+        });
+
+
+
+         $("#s_decr1").change(function(e) {
+                
+            
+
+            $('#text_desc').val($('#s_decr1 :selected').text());
+                
+           
+        });
+
+    });
+</script>
+<script type="text/javascript">
+  require(["bootstrap3"], function(){
+   });
+</script>

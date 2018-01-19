@@ -1,0 +1,142 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<div style="display:none;">
+<div class="admin__page-section-title <?= /* @escapeNotVerified */ $block->getHeaderCssClass() ?>">
+    <span class="title"><?= /* @escapeNotVerified */ $block->getHeaderText() ?></span>
+    <div class="actions"></div>
+</div>
+<div id="customer_account_fieds" class="admin__page-section-content">
+    <?= $block->getForm()->getHtml() ?>
+</div>
+</div>
+
+<?php
+/*$om = \Magento\Framework\App\ObjectManager::getInstance();
+$adminsession = $om->get(\Magento\Backend\Model\Session\Quote::class);
+$customer_id = $adminsession->getCustomerId();
+$customer_model = $om->create('Magento\Customer\Model\Customer');
+$customer_model->setWebsiteId(1);
+$customer = $customer_model->load($customer_id);
+$group_id = $customer->getData("group_id");
+
+$companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
+$company_id = $companymanagement->getByCustomerId($customer_id)->getData("entity_id");
+
+if(isset($_POST['company'])){
+    $_SESSION['company'] = $_POST['company'];
+}
+$companyFactory = $om->get('\Magento\Company\Model\CompanyFactory');
+$resources = $om->get('Magento\Framework\App\ResourceConnection');
+$connection = $resources->getConnection();
+$accounts  =  $connection->fetchAll(
+                                 "SELECT DISTINCT user_id ,company_id , name FROM  consnet_multi_customer_user WHERE user_id = 
+                                 ".$customer_id." ");*/
+?>
+<!--<input type="text" style="display:none;" name="customer_id" id="customer_id" value="<?php /*echo $customer_id;*/ ?>"/>
+<div class="admin__page-section-title">
+    <span class="title">Company Information</span>
+    <div class="actions"></div> 
+</div>
+<div id="customer_account_fieds" class="admin__page-section-content">
+    <select  class="form-control"  name="COMPANY_ID" id="COMPANY_ID" onchange="switchcompany()">
+        <?php 
+            /*foreach($accounts as $account )
+            {
+                $company  = $companyFactory->create()->load($account['company_id']);
+                if($company->getData("company_id") == $company_id){
+                    echo "<option selected='selected' value='".$company->getId()."'>".$company->getCompanyName()." ".$company->getData('STP_ID')."</option>";
+                }else{
+                    echo "<option value='".$company->getId()."'>".$company->getCompanyName()." ".$company->getData('STP_ID')."</option>";
+                }
+            }*/
+        ?>
+    </select>
+</div>-->
+
+<div class="table">
+<table class="admin__table-secondary data-table">
+    <thead> 
+        <tr>
+            
+            <td>Promotion </td>
+            <td>Product</td> 
+           
+            <td>#</td> 	
+             
+        </tr>
+    </thead>
+    <tbody> 
+        <?php 
+                   
+          $om = \Magento\Framework\App\ObjectManager::getInstance();
+          $customerSession = $om->get('Magento\Customer\Model\Session');
+          $adminsessionquote = $om->get('Magento\Backend\Model\Session\Quote');
+        
+            $custID = '' ;  
+            $companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
+            if (($adminsessionquote->getQuote()->getCustomerId()) != NULL) {
+                     $stp_id = $companymanagement->getByCustomerId($adminsessionquote->getCustomerId())->getData("STP_ID");
+                    //  echo 'Customer STP: '.$companymanagement->getByCustomerId($adminsessionquote->getQuote()->getCustomerId())->getData("STP_ID");
+                     $custID = $stp_id ;
+            }
+            //echo $custID ;
+        $myJob =  new \Consnet\Promotions\Controller\Index\CronJobPromotion() ;
+        $_demoCollection =  $myJob->getDataFromErp($custID) ;
+        
+        // foreach ($block->getPromoItems() as $item)
+          foreach ( $_demoCollection as $item): ?>
+        <tr>
+             
+        <td><?php echo $item->getTitle(); ?></td>
+        
+
+        <td>        
+             <?php echo $item->getBotext_DescriptionOfAgreement(); ?></td>
+            <td><?php echo $item->getKnumh_ConditionRecordNumber(); ?> </td>
+        </tr>
+    </tbody>
+    <?php endforeach; ?>
+</table>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script>
+   /*require(["prototype", "Magento_Sales/order/create/form"], function(){
+    console.log("require");
+    function switchcompany() {
+    customer_id = document.getElementById("customer_id").value;
+    COMPANY_ID = $("#COMPANY_ID: selected").value();//document.getElementById("COMPANY_ID").value;
+
+    jQuery.ajax({
+              type: 'post',
+              url: 'http://10.2.10.93/deltaqa01/admin/switchcompany/SwitchCompany/Index',
+              data: {"company_id":COMPANY_ID, "customer_id":customer_id},
+              success: function (data) {
+                //location.reload();                 
+                //window.location = newlocation;
+                console.log(data);
+              },
+              error: function(xhr, status, error) {
+                  console.log(error);
+                  console.log(xhr.responseText);
+                  console.log(xhr.responseText);
+                  console.log(status);
+              }
+            });
+   };
+        order.accountFieldsBind($('customer_account_fieds'));
+    });*/
+</script>
+ 

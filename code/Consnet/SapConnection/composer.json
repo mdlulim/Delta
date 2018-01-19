@@ -1,0 +1,21 @@
+{
+    "name": "consnet/module-sapconnection",
+    "description": "setup all categories and attributes required by the other moduels",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Thato Madihla",
+            "email": "thatom@consnet.co.za"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Consnet\\SapConnection\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

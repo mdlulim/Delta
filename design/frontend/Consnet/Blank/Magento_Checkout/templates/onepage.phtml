@@ -1,0 +1,183 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ 
+ 
+
+
+// @codingStandardsIgnoreFile
+?>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
+<style type="text/css">
+#quoteitems{
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  
+
+}
+#quoteitems::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#quoteitems::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#quoteitems::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+</style>
+
+<?php
+     $om = \Magento\Framework\App\ObjectManager::getInstance();
+     $productRepository = $om->get('\Magento\Catalog\Api\ProductRepositoryInterface');
+     $imageHelper = $om->get('\Magento\Catalog\Helper\Image');
+     $customerSession = $om->get('Magento\Customer\Model\Session');
+     $companydata = $block->getCompanyData($customerSession->getId());
+
+     $checkoutsession = $om->get('Magento\Checkout\Model\Session');
+     $quote = $checkoutsession->getQuote();     
+
+     $helper = $om->create('Consnet\Api\Helper\Data'); 
+     $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');echo $NAMESPACE_ID;
+?>
+
+<div class="bootstrap-iso">
+<link rel="stylesheet" type="text/css" href="<?php echo '../../../../../resources/bootstrap/css/bootstrap-iso.css';?>"/>
+
+<div id="checkout" data-bind="scope:'checkout'" class="checkout-container">
+    <div id="checkout-loader" data-role="checkout-loader" class="loading-mask" data-mage-init='{"checkoutLoader": {}}'>
+        <div class="loader">
+            <img src="<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+                 alt="<?= /* @escapeNotVerified */ __('Loading...') ?>"
+                 style="position: absolute;">
+        </div>
+    </div>
+
+    <script>
+        window.checkoutConfig = <?= /* @escapeNotVerified */ $block->getSerializedCheckoutConfig() ?>;
+        // Create aliases for customer.js model from customer module
+        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+        window.customerData = window.checkoutConfig.customerData;
+        
+    </script>
+    
+    <script>
+        console.log(window.checkoutConfig.customerData);
+        console.log(window.checkoutConfig);
+        console.log(window.location.href);
+        console.log(window.checkoutConfig.quoteData.entity_id);
+        console.log(window.checkoutConfig.quoteItemData);
+    </script>
+<?php //echo '"'.$_SERVER['SERVER_ADDR']?>
+<?php echo "<form id='checkoutform' action='http://".$NAMESPACE_ID."/placeorder/index/index' method='post'>"; ?>
+
+    <input type='text' class='hidden' name='quote_id' value='<?php echo $quote->getId(); ?>'>
+    <!-- ITEMS START -->
+    <div class="row">
+        <center><div class="h2"><b>Order Summary</b></div></center>
+        <br>
+        <div class="col-lg-8" name="quoteitems" id="quoteitems">
+            <table class="table">
+                <tr>
+                    <th>Sku</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th></th>
+                </tr>
+                <?php foreach ($quote->getAllItems() as $item):?>               
+                <tr ng-repeat="item in itemlist">
+                    <td><?php echo $item->getSku(); ?></td>
+                    <td><?php echo $item->getName(); ?></td>
+                    <td><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($item->getPrice()); ?></td>
+                    <td><?php echo $item->getQty(); ?></td>
+                    <td><img  src="<?php $product = $productRepository->get($item->getSku());
+                                         echo $imageHelper->init($product, 'product_page_image_small')
+                                                     ->setImageFile($product->getFile())
+                                                     ->resize('90', '100')
+                                                     ->getUrl();
+                                                     /*echo  $productRepository->get($item->getSku())->getData('thumbnail');*/ ?>"/></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <div class="h4"><b>Company</b></div>
+            <div class="h4"><?php echo $companydata['company_name']; ?></div>
+            <div class="h4"><?php echo $companydata['company_email']; ?></div>
+            <div class="h4"><?php echo $companydata['telephone']; ?></div>
+            <div class="h4"><?php echo $companydata['street'].' '.$companydata['city'].' '.$companydata['country_id'].' '.
+            $companydata['region'].' '.$companydata['postcode']; ?></div>
+            <br> 
+            <div class="h4"><b>Subtotal <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getSubtotal()); ?> </b></div>
+            <div class="h4"><b>Tax <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(($quote->getGrandTotal() - $quote->getSubtotal())); ?> </b></div>
+            <div class="h4"><b>Order Total <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getGrandTotal()); ?> </b></div>
+            <div class="h4"><?php echo $quote->getItemsCount(); ?> Items in Cart</div>
+            <br>
+            <div class="form-group">
+                <label for="po_number">PO No:</label>
+                <input type="text" class="form-control" name="po_number">
+            </div>
+                <br>
+            <?php
+                $defualt_delivery_date = date_create();//date('Y-m-d');
+                date_modify($defualt_delivery_date, '+1 day');
+                $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
+            ?>
+            <div class="form-group">
+                <label for="delivery_date">Delivery Date:</label>
+                <input type="date" class="form-control" name="delivery_date" onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>" value="<?php echo $defualt_delivery_date; ?>">
+            </div>
+            <div class="form-group">
+                <button id="btncheckout" type="submit" class="btn btn-primary btn-lg"> Place Order
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ITEMS END -->
+    
+    <!--<div class="form-group">
+        <label for="delivery_date">Delivery Date:</label>
+        <input type="date" class="form-control" id="delivery_date" name="delivery_date">
+    </div>
+    <div class="form-group">
+        <button id="btncheckout" type="submit" class="btn btn-primary btn-lg" ng-click="checkout()"> Place Order
+        </button>
+    </div>-->
+</form>
+
+<script type="text/javascript">
+    var btncheckout = document.getElementById('btncheckout');
+    btncheckout.addEventListener("click", function () {
+        btncheckout.disabled = true;
+        document.getElementById('checkoutform').submit();
+        console.log('disabled');
+    });
+
+    /*function disable() {
+        //onclick='disable()'
+        var btncheckout = document.getElementById('btncheckout');
+        
+        
+        
+    }*/
+    /*require(["angular"], function(){
+        require(["app"], function(){            
+        });
+    });*/
+</script>
+    
+</div>
+</div>

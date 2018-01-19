@@ -1,0 +1,50 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php if ($block->getBugreportUrl()): ?>
+    <!--a class="link-report" href="<?php /* @escapeNotVerified */ echo $block->getBugreportUrl(); ?>" id="footer_bug_tracking"><?php /* @escapeNotVerified */ echo __('Report Bugs') ?></a -->
+<?php endif; ?>
+
+<script type="text/javascript">
+/*console.log('in menu.phtml');
+require(["jqueryNoConflict"], function(){
+    jQuery(document).ready(function (){
+
+        document.getElementById("menu-magento-catalog-catalog").style.display = 'none';
+        document.getElementById("menu-magento-sales-sales").style.display = 'none';
+        document.getElementById("menu-magento-customer-customer").style.display = 'none';
+        document.getElementById("menu-magento-backend-marketing").style.display = 'none';
+        document.getElementById("menu-magento-backend-content").style.display = 'none';
+        document.getElementById("menu-magento-reports-report").style.display = 'none';
+        document.getElementById("menu-magento-backend-stores").style.display = 'none';
+        document.getElementById("menu-magento-backend-system").style.display = 'none';
+        document.getElementById("menu-magento-marketplace-partners").style.display = 'none';
+    });
+    
+    //require(["jQuery321"], function(){
+        require(["bootstrap3"], function(){
+                require(["main"], function(){
+            });
+        });
+    //});
+});*/
+</script>
+
+<?php 
+    $om = \Magento\Framework\App\ObjectManager::getInstance();
+    $admin_session = $om->create('\Magento\Backend\Model\Auth\Session');
+
+    if($admin_session->getUser()->getRole()->getId() != 2){
+        echo "<style>
+                #menu-magento-backend-marketing, #menu-magento-backend-system {
+                    display: none;
+                }
+              </style>";
+    }
+?>
