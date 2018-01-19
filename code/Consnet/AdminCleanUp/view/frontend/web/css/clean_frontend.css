@@ -1,7 +1,7 @@
 /** 
 -this module it cleean up admin side using css most of the block that are 
 note needed are hidden using css
-1. Cleaning up customer
+1. Cleaning up customer tes
 */
 .nav-sections {
     margin-bottom: 0px !important;
@@ -10,6 +10,7 @@ note needed are hidden using css
     border-bottom: 0px solid #093260 !important;
     background-color: #093260 !important;
     height: 32px;
+
 }
 .page-header {
     background-color: transparent !important;
