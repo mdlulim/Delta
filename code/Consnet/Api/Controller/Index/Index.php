@@ -13,7 +13,7 @@ class Index extends \Magento\Framework\App\Action\Action {
     const COMPANYADMIN_EMAIL = 'admin@delta.co.zw';
     const COMPANYUSER_EMAIL = 'companyuser@delta.co.zw';
 
-    
+
     protected $NAMESPACE_ID;
     protected $_resultPageFactory;
     protected $_logger;
@@ -55,7 +55,7 @@ class Index extends \Magento\Framework\App\Action\Action {
      * @var \Magento\Company\Model\ResourceModel\Role\CollectionFactory
      */
     private $roleCollectionFactory;
-    
+
      /**
      * @var \Magento\Company\Model\RoleFactory
      */
@@ -92,7 +92,7 @@ class Index extends \Magento\Framework\App\Action\Action {
 
 
         $wsdlUrl = dirname(__FILE__) . "/z_bp_rep_v6.xml";
-      
+
 
         $helper = $this->objectManager->create('Consnet\Api\Helper\Data');
         $WURL = $helper->getGeneralConfig('replication_text');
@@ -108,7 +108,7 @@ class Index extends \Magento\Framework\App\Action\Action {
 
 
         if ($this->init_repl == 'X') {
-            
+
         } else {
             $this->init_repl = null;
         }
@@ -116,8 +116,8 @@ class Index extends \Magento\Framework\App\Action\Action {
         $dataExist = $this->getTable('ERP_CUSTOMER');
 
        if(count($dataExist) <1 ){
-            
-        
+
+
 
         $parameters = array(
             "IV_MIN" => $this->next_batch_min,
@@ -126,8 +126,8 @@ class Index extends \Magento\Framework\App\Action\Action {
             "IV_FROM_DATE" => null,
             "IV_TO_DATE" => null
         );
-        
-       
+
+
 
         $this->soapClient2 = new \Zend\Soap\Client($WURL, array("soap_version" => SOAP_1_2));
 
@@ -144,7 +144,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             }
 
         if (isset($result)) {
-            
+
             $this->cont = $result->EX_CONTACT_PERSONS;
             $this->cust = $result->EX_GENERAL_CUST_DATA;
             $this->bf = $result->EX_ORG_CORP;
@@ -158,7 +158,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             $this->createTable('ERP_ADDRESS', $this->addr);
             $this->createTable('ERP_PRODUCTS', $this->products);
 
-           
+
 
         } else {
 
@@ -171,7 +171,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         }
 
         //$helper->setConfigValue('last_row_text', $this->next_batch_min);
-       
+
 
 
 
@@ -179,18 +179,18 @@ class Index extends \Magento\Framework\App\Action\Action {
 
         parent::__construct($context);
     }else{
-        
-       
+
+
         $this->cont = null;
         $this->cust = null;
         $this->bf = null;
         $this->addr = null;
         $this->products = null;
         //$this->next_batch_min = 0;
-       
+
 
         $this->authApi();
-        
+
         parent::__construct($context);
 
     }
@@ -210,7 +210,7 @@ class Index extends \Magento\Framework\App\Action\Action {
     public function execute() {
 
 
-        
+
         $stop = 1;
         $loop_counter = 1;
         $helper = $this->objectManager->create('Consnet\Api\Helper\Data');
@@ -229,7 +229,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         $this->deleteTable('ERP_ADDRESS');
         $this->deleteTable('ERP_PRODUCTS');
 
-       
+
         $newMax = $this->size + $this->next_batch_min;
 
         if ($this->halt == 1) {
@@ -238,7 +238,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             return $resultPage;
         } else {
             $loopIndex =  0;
-            
+
             while ($stop !== 0) {
 
                 $loopIndex +=  1;
@@ -312,38 +312,35 @@ class Index extends \Magento\Framework\App\Action\Action {
             }
         }
 
-
-
-
-
-
         $resultPage = $this->_resultPageFactory->create();
         return $resultPage;
     }
 
-    //returns mysql fetchAll results 
+    //returns mysql fetchAll results
     public function createTable($name,$data){
         if($name  ==  'ERP_ADDRESS'){
+
             foreach($data->item as $line ){
                 $line->ADRC_UUID = null ;
+                
             }
         }
-        
+
 
         $sql = "SHOW TABLES LIKE '".$name."'";
         $found = $this->_connection->fetchAll($sql);
         $count =  0 ;
         foreach($found as $table){
-            $count ++; 
+            $count ++;
         }
 
         if($count > 0 ){
             //table exist
-            //JUST FILL DATA 
+            //JUST FILL DATA
             $array  = json_decode(json_encode($data),true);
             $this->InsertData($name,$array);
         }else{
-            //create table 
+            //create table
             $array  = json_decode(json_encode($data),true);
 
            // var_dump($name);
@@ -351,7 +348,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             $sql = "CREATE TABLE ".$name." ( ";
             $sql = $sql." `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY ,";
             foreach($array['item'][0]  as $key=>$attributes){
-                
+
                 $sql .= "`$key` VARCHAR(50) ,";
              }
              $sql = rtrim($sql,',');
@@ -360,7 +357,7 @@ class Index extends \Magento\Framework\App\Action\Action {
              $array  = json_decode(json_encode($data),true);
              $this->InsertData($name,$array);
         }
-        $sql  = 'SELECT * FROM '.$name; 
+        $sql  = 'SELECT * FROM '.$name;
         return $this->_connection->fetchAll($sql);
     }
 
@@ -371,7 +368,7 @@ class Index extends \Magento\Framework\App\Action\Action {
 
         $count  =  count($rows);
         if($count > 0 ){
-            //we cannot insert , must read only 
+            //we cannot insert , must read only
         }else{
         $array = $data ;
         $i = count($array['item']);
@@ -394,29 +391,29 @@ class Index extends \Magento\Framework\App\Action\Action {
         $found = $this->_connection->fetchAll($sql);
         $count =  0 ;
         foreach($found as $table){
-            $count ++; 
+            $count ++;
         }
 
         if($count < 1 ){
 
         }else{
-        $sql  = 'DELETE FROM '.$name; 
+        $sql  = 'DELETE FROM '.$name;
         $this->_connection->query($sql);
         }
     }
 
     public function getTable($name){
-        
+
         $sql = "SHOW TABLES LIKE '".$name."'";
         $found = $this->_connection->fetchAll($sql);
         $count =  0 ;
         foreach($found as $table){
-            $count ++; 
+            $count ++;
         }
-        
+
         if($count > 0){
 
-        $sql  = 'SELECT * FROM '.$name; 
+        $sql  = 'SELECT * FROM '.$name;
         return $this->_connection->fetchAll($sql);
         }else{
             return [] ;
@@ -425,16 +422,16 @@ class Index extends \Magento\Framework\App\Action\Action {
     }
 
     public function joinTables($table1,$table2,$key1,$val1,$key2,$val2){
-     
-        $sql  = 'SELECT * FROM '.$table1.' WHERE '.$key1.' = "'.$val1.'"'; 
+
+        $sql  = 'SELECT * FROM '.$table1.' WHERE '.$key1.' = "'.$val1.'"';
         $re1  =  $this->_connection->fetchAll($sql);
 
     }
 
     public function joinTable($table,$key,$val){
-   
-      $sql  = 'SELECT * FROM '.$table.' WHERE `'.$key.'` = "'.$val.'"'; 
-     
+
+      $sql  = 'SELECT * FROM '.$table.' WHERE `'.$key.'` = "'.$val.'"';
+
       $res =  $this->_connection->fetchAll($sql);
       if(count($res) > 0 ){
           return $res;
@@ -478,7 +475,7 @@ class Index extends \Magento\Framework\App\Action\Action {
                     $user['NAME1'] = $user['NAMEV'];
                 }
                 if(empty($user->NAMEV)){
-                  
+
                     $user['NAMEV'] = $user['NAME1'];
                 }
 
@@ -528,7 +525,7 @@ class Index extends \Magento\Framework\App\Action\Action {
 
         $CUSTOMER = $this->getTable('ERP_CUSTOMER');
 
-        
+
 
         $loopcount = 0;
         foreach ($CUSTOMER as $erp_customer) {
@@ -549,7 +546,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             }
 
            // $cgroup = $this->getCustomerGroup($extededAttr['VKORG']);
-          
+
 
             $companyRepo = $this->objectManager->get('\Magento\Company\Model\CompanyRepository');
             $comp_id = $this->_connection->fetchRow("SELECT * FROM company  WHERE company_email = '" . $_cust_email . "' ");
@@ -559,7 +556,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             //get ompany address
             $address = $this->joinTable('ERP_ADDRESS','ADDRNUMBER',$erp_customer['ADRNR']) ;
             $adminuser = $this->getSalesRep($erp_customer['KONZS']) ;
-            
+
 
 
             if (!$company->getId()){
@@ -675,7 +672,7 @@ class Index extends \Magento\Framework\App\Action\Action {
                 $company->setSalesRepresentativeId($adminuser);
 
                 if (!$extededAttr) {
-                    
+
                                         $company->setData('ZTERM', $erp_customer['KTOKD']);
                                         $company->setData('VKORG', $extededAttr['VKORG']);
                                         $company->setData('PARVW', $extededAttr['PARVW']);
@@ -687,7 +684,7 @@ class Index extends \Magento\Framework\App\Action\Action {
                                        // $company->setCustomerGroupId($this->getCustomerGroup($extededAttr['VKORG']));
                                         $company->save();
                                     } else {
-                    
+
                                         $company->save();
                                     }
 
@@ -768,7 +765,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         $customer->setEmail($email);
         $customer->setFirstname($name);
         $customer->setLastname('Company '.$kunnr);
-       
+
         $customer->setData('CONTACT_ID', $kunnr);
         $customer->save();
 
@@ -798,7 +795,7 @@ class Index extends \Magento\Framework\App\Action\Action {
     public function createCompanyRole($company_id) {
 
 
-        
+
         $sql = "INSERT INTO `company_roles`(`sort_order`, `role_name`, `company_id`) VALUES ( 0 ,'Default User',".$company_id.")  ";
         $this->_connection->query($sql);
 
@@ -827,7 +824,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         return $role;
     }
 
-    
+
 
     public function updateCompanyRole($company_id, $roleid) {
 
@@ -864,7 +861,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             ->setOrder('role_id', 'ASC')
             ->load();
         $roles = $roleCollection->getItems();
-       
+
         foreach($roles as $role){
             return $role;
             break;
@@ -881,9 +878,9 @@ class Index extends \Magento\Framework\App\Action\Action {
 
 
         foreach ($CONTACTS as $contact) {
-            
+
             if (!isset($contact['KUNNR'])) {
-               
+
                 continue;
             }
             $sql = "SELECT * FROM `company` WHERE STP_ID ='" . $contact['KUNNR'] . "'";
@@ -899,7 +896,7 @@ class Index extends \Magento\Framework\App\Action\Action {
                     $contact['NAME1'] = $contact['NAMEV'];
                 }
                 if(empty($contact['NAMEV'])){
-                  
+
                     $contact['NAMEV'] = $contact['NAME1'];
                 }
 
@@ -910,9 +907,9 @@ class Index extends \Magento\Framework\App\Action\Action {
                     $_cont_email = trim($contact['PARNR']) . trim($contact['NAME1']) . self::CUSTOMER_EMAIL;
                     $_cont_email = $this->cleanStr($_cont_email);
                 }
-              
-                
-                
+
+
+
 
                 $websiteId = $this->storeManager->getWebsite()->getWebsiteId();
                 $customer = $this->customerFactory->create();
@@ -1038,11 +1035,11 @@ class Index extends \Magento\Framework\App\Action\Action {
 
 
                     $customer = $repo->save($customer);
-                    
+
                     $role  = $this->getRolesByCompanyId($company['entity_id']);
                     $UserRole = $this->objectManager->create('Magento\Company\Model\Action\Customer\Assign');
                     $UserRole->assignCustomerRole($customer, $role->getId()); //assignRoles
-                 
+
 
                     $sql = "INSERT INTO `consnet_company_user`  (`user_email`, `company_id`) VALUES ('" . $customer->getEmail() . "'," . $company['entity_id'] . ")";
                     $this->_connection->query($sql);
@@ -1094,7 +1091,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         }
 
 
-       
+
     }
 
     protected function getCustomerGroup($vkorg) {
@@ -1118,7 +1115,7 @@ class Index extends \Magento\Framework\App\Action\Action {
     }
 
     public function createUser() {
-        
+
     }
 
 
