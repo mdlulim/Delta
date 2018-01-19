@@ -23,22 +23,22 @@ class CronJobPromotion {
     public function getMyListOfMatErp($stp_id) {
 
            try {
-        $wsdlUrl = dirname(__FILE__) . "/myWSLD_p.xml";
-        $WURL = "http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/srvc_url/sap/bc/srt/rfc/sap/zz_magento_get_promo_wsdl_1/300/zz_magento_service/zz_magento_binding?sap-client=300";
-        
-         $parameters = array("BpNumber" => $stp_id);
-           
+            $wsdlUrl = dirname(__FILE__) . "/myWSLD_p.xml";
+            $WURL = "http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/srvc_url/sap/bc/srt/rfc/sap/zz_magento_get_promo_wsdl_1/300/zz_magento_service/zz_magento_binding?sap-client=300";
+            
+            $parameters = array("BpNumber" => $stp_id);
+            
 
-        //  $soapClient2 = new \Zend\Soap\Client($wsdlUrl, array("soap_version" => SOAP_1_2));
-        $opts = array('http' => array('user_agent' => 'PHPSoapClient'));
-        $context = stream_context_create($opts);
-        $soapClientOptions = array('stream_context' => $context, 'cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_2);
-        libxml_disable_entity_loader(false);
-        $soapClient2 = new \Zend\Soap\Client($WURL, $soapClientOptions);
-        ////---////
-        //Set Login details
-        $soapClient2->setHttpLogin('tmadihlaba');
-        $soapClient2->setHttpPassword('Consnet@2018');
+            //  $soapClient2 = new \Zend\Soap\Client($wsdlUrl, array("soap_version" => SOAP_1_2));
+            $opts = array('http' => array('user_agent' => 'PHPSoapClient'));
+            $context = stream_context_create($opts);
+            $soapClientOptions = array('stream_context' => $context, 'cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_2);
+            libxml_disable_entity_loader(false);
+            $soapClient2 = new \Zend\Soap\Client($WURL, $soapClientOptions);
+            ////---////
+            //Set Login details
+            $soapClient2->setHttpLogin('tmadihlaba');
+            $soapClient2->setHttpPassword('Consnet@2018');
 
         
      
@@ -51,22 +51,20 @@ class CronJobPromotion {
         if (property_exists($tab_result->ExPromoList ,'item') ){
             try{
 
-             
-             $id = 0;
-            foreach($tab_result->ExPromoList->item as $item) {
-   
-            $productsIds[$id] = $item->Matnr ;
-            $id++;
-
-            }
-
+                $id = 0;
+                foreach($tab_result->ExPromoList->item as $item) {
+            //    var_dump ($tab_result->ExPromoList->item ) ;
+                    if((isset($item))  && (property_exists($item ,'Matnr') ) )   {
+                    $productsIds[$id] = $item->Matnr ;
+                    $id++;
+                    }
+                }
            } catch (\Exception $exception) {
                echo $exception ;
            }
-            
           
         } 
-        return     $productsIds  ;
+         return     $productsIds  ;
         
     }catch(SoapFault $e){
  
@@ -135,34 +133,27 @@ class CronJobPromotion {
             $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') ;
             $list = null;
             $i = 0;
-        if (property_exists($tab_result->ExPromoList ,'item') ){
+        if ( (property_exists($tab_result->ExPromoList ,'item') )  &&  (isset($tab_result->ExPromoList->item) )  )   {
             try{
 
             
             foreach($tab_result->ExPromoList->item as $item) {
   
 
+
              $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') ;
 
 
-//  $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') 
-//                  ->addFieldToFilter('Kunnr', array('eq' => $stp_id))
-//                  ->addFieldToFilter('Knuma_promo', array('eq' => $item->Knuma))
-//                  ->addFieldToFilter('Spart_distribution', array('eq' => $item->Matnr ));
+ 
 
-//         //  var_dump($model);
-//         if($model){
-//             if( strlen($model->getKnuma_promo()) < 0 ){
-//            $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') ;
-//          }
-//         }
-
-     if(isset($item)){
-
+     if ( (isset($item)) && (property_exists($item , "Knuma" ) ) ) {
+             
+             var_dump($item);
+             die();
      
             $tempKnuma = $item->Knuma ;
  
-              $model->setKnuma_promo($tempKnuma);
+                $model->setKnuma_promo($tempKnuma);
                 $model->setVkorg_salesorg($item->Vkorg);
                 $model->setVtweg_division($item->Vtweg);
                 $model->setSpart_distribution($item->Matnr);

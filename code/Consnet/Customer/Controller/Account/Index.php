@@ -182,6 +182,8 @@ class Index extends \Magento\Customer\Controller\AbstractAccount
                     ["resource_id" => "Magento_Company::view_account", "permission" => "allow"],
                     ["resource_id" => "Magento_Company::view_address", "permission" => "allow"],
                     ["resource_id" => "Magento_Company::payment_information", "permission" => "allow"],
+                    
+                    
                 ],
                 "company_id" => $id
             ]
@@ -204,6 +206,9 @@ class Index extends \Magento\Customer\Controller\AbstractAccount
                  $this->cart->removeItem($itemId)->save();
 
          }
+
+         $this->cart->truncate();
+         $this->cart->save();
 
                 $this->session->logout();
                 
@@ -257,10 +262,11 @@ class Index extends \Magento\Customer\Controller\AbstractAccount
         $_result = json_decode($_result, 1);
 
 
-        if ($log == 'X') {
-            //var_dump($data);
-            //var_dump($_result);
+        if ($log == 'X'){
+            var_dump($data);
+            var_dump($_result);
         }
+        
         return $_result['id'];
     }
     protected function authApi() {

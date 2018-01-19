@@ -25,9 +25,28 @@
                 </tr>
             </thead>
             <tbody>
+
+                <?php		    
+                    $om = \Magento\Framework\App\ObjectManager::getInstance();
+                    $resources = $om->get('Magento\Framework\App\ResourceConnection');
+                    $connection = $resources->getConnection();
+                ?>
+
+
                 <?php foreach ($_orders as $_order): ?>
                     <tr>
-                        <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="col id"><?= /* @escapeNotVerified */ $_order->getRealOrderId() ?></td>
+                        <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="col id">
+                        
+
+                     
+                        <?php $query = "SELECT `erpOrderId` FROM `erp_magento` WHERE `magOrderId` = '".$_order->getRealOrderId()."'";
+                                $erporder =  $connection->fetchRow($query)['erpOrderId']; ?> 
+                               <?= /* @escapeNotVerified */ // $_order->getRealOrderId()   
+                                   $erporder ?  $erporder : $_order->getRealOrderId()    
+                                 ?>
+                        
+                        
+                        </td>
                         <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col date"><?= /* @escapeNotVerified */ $block->formatDate($_order->getCreatedAt()) ?></td>
                         <?php $extra = $block->getChildBlock('extra.container'); ?>
                         <?php if ($extra): ?>

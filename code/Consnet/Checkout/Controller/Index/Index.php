@@ -139,6 +139,8 @@ class Index extends \Magento\Framework\App\Action\Action
             /*$resultPage = $this->resultPageFactory->create();
             $resultPage->setPath("sales/order/view/order_id/".$neworder->getId()."/");
             return $resultPage;*/
+        }else {
+            return $this->resultRedirectFactory->create()->setPath("checkout/cart/"); 
         }
         //echo "here";
         /*$dispatchmanager = $om->create('\Magento\Quote\Model\QuoteManagement');

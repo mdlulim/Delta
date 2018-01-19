@@ -206,15 +206,11 @@ class LoginPost extends \Magento\Customer\Controller\AbstractAccount
                     if($rowcount > 1 ){
 
                       $_SESSION['accounts'] = $links ;
-                      //$_SESSION['modal_on'] = true;
                       $_SESSION['user'] = $customer->getId();
-
-                     $_SESSION['menu'] = true;
-                     //$resultRedirect->setUrl($this->_redirect->getRefererUrl());
-                    //  return $resultRedirect;
-                      //return $this->accountRedirect->getRedirect();
+                      $_SESSION['menu'] = true;
+          
                     }else{
-                       // $_SESSION['modal_on'] = false;
+                      
                         $_SESSION['menu'] = false;
                     }
 

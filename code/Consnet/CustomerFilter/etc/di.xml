@@ -3,6 +3,5 @@
     <preference for="Magento\Theme\Block\Html\Title" type="Consnet\CustomerFilter\Block\Html\Title" />
     <preference for="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer" type="Consnet\CustomerFilter\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer" />
     <preference for="Magento\Sales\Block\Adminhtml\Order\View\Items" type="Consnet\CustomerFilter\Block\Adminhtml\Order\View\Items" />
+    <preference for="Magento\Customer\Controller\Account\ResetPasswordPost" type="Consnet\CustomerFilter\Controller\Account\ResetPasswordPost" />
 </config>
-
-

@@ -136,12 +136,12 @@ class AdminOrderSimulator
                                                     //$quote->setGrandTotal(($zresults->ZRESULTS->item[$i]->SUBTOTAL6) );
                                                 }
                                             } 
-                                            /*if(isset($_SESSION['flowcontrol'])){
+                                            //if(isset($_SESSION['flowcontrol'])){
                                                
-                                            }else {
-                                                $this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                ' to your shopping cart.');
-                                            }*/
+                                            //}else {
+                                            //    $this->messageManager->addSuccessMessage('You added '.$item->getName().
+                                            //    ' to your shopping cart.');
+                                            //}
                                         }
                                     }
                                     else {
@@ -162,8 +162,8 @@ class AdminOrderSimulator
                                                 if(isset($_SESSION['flowcontrol'])){
                                                     
                                                 }else {
-                                                    /*$this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                    ' to your shopping cart.');*/
+                                                    //$this->messageManager->addSuccessMessage('You added '.$item->getName().
+                                                    //' to your shopping cart.');
                                                 }
                                             }
                                         }
@@ -269,7 +269,8 @@ class AdminOrderSimulator
             $this->erpOrderCreated = 0;
             $this->messageManager->addErrorMessage("Soap call error".$e->getMessage());
             return null;
-        }        
+        }
+        
     }
     
     private function urlExists($url){ 

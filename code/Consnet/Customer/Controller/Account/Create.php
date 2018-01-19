@@ -123,6 +123,7 @@ class Create extends \Magento\Customer\Controller\AbstractAccount
 
         $post = $this->getRequest()->getPostValue();
        // var_dump($post);
+       if(isset($post['email_activate'])){
         if ( !$post ) {
             $this->messageManager->addError(
                 __($post['email_activate'])
@@ -130,12 +131,12 @@ class Create extends \Magento\Customer\Controller\AbstractAccount
             $this->_redirect('*/*/');
             return;
         }
-
+      
         //getcustomer data
         $websiteId = $this->storeManager->getWebsite()->getWebsiteId();
         $customer = $this->customerFactory->create();
         $customer->setWebsiteId($websiteId)->loadByEmail($post['email_activate']);
-
+     
         if ( !($customer->getId()) ) {
             $this->messageManager->addError(
                 __('Email ' . $post['email_activate'] . ' is not known . Please contact Delta Support on 000-000-000')
@@ -144,15 +145,17 @@ class Create extends \Magento\Customer\Controller\AbstractAccount
             return;
         }
 
-
+  }
 
         try {
-
+           if(isset($post['email_activate'])){
             $this->activate->sendEmail($post['email_activate']);
             $this->messageManager->addSuccess(
                 __('An email has been sent to the provided address, please check your email for further steps')
             );
+           }
             $this->_redirect('*/*/');
+            
             return;
         } catch (\Exception $e) {
 
@@ -170,5 +173,6 @@ class Create extends \Magento\Customer\Controller\AbstractAccount
             $resultPage = $this->resultPageFactory->create();
             return $resultPage;
         }
+                
     }
 }

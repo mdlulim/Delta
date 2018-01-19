@@ -17,7 +17,7 @@ $quote = $om->get('Magento\Quote\Model\Quote')->load($checkout_session->getData(
 <div id="cart-totals" class="cart-totals" data-bind="scope:'block-totals'">
     <table class="data table totals">
         <tr class="totals sub">
-            <th data-bind="i18n: title" class="mark" scope="row">Subtotal</th>
+            <th data-bind="i18n: title" class="mark" scope="row">Net Value</th>
             <td class="amount">
                 <span class="price" data-bind="text: getValue(), attr: {'data-th': title}" data-th="Subtotal"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getSubtotal()) ?></span>
             </td>

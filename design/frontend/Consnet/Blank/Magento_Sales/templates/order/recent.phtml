@@ -51,9 +51,9 @@
                             
                            <?php $query = "SELECT `erpOrderId` FROM `erp_magento` WHERE `magOrderId` = '".$_order->getRealOrderId()."'";
                                 $erporder =  $connection->fetchRow($query)['erpOrderId']; ?> 
-                            <?= /* @escapeNotVerified */ // $_order->getRealOrderId()  
-
-                       $erporder ?  $erporder : $_order->getRealOrderId()     ?>
+                              <?= /* @escapeNotVerified */ // $_order->getRealOrderId()  
+     
+                                 $erporder ?  $erporder : $_order->getRealOrderId()     ?>
                             
                             </td>
                             <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col date"><?= /* @escapeNotVerified */ $block->formatDate($_order->getCreatedAt()) ?></td>

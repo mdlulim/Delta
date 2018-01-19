@@ -50,7 +50,7 @@
      $quote = $checkoutsession->getQuote();     
 
      $helper = $om->create('Consnet\Api\Helper\Data'); 
-     $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');echo $NAMESPACE_ID;
+     $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
 ?>
 
 <div class="bootstrap-iso">
@@ -121,7 +121,7 @@
             <div class="h4"><?php echo $companydata['street'].' '.$companydata['city'].' '.$companydata['country_id'].' '.
             $companydata['region'].' '.$companydata['postcode']; ?></div>
             <br> 
-            <div class="h4"><b>Subtotal <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getSubtotal()); ?> </b></div>
+            <div class="h4"><b>Net Value <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getSubtotal()); ?> </b></div>
             <div class="h4"><b>Tax <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(($quote->getGrandTotal() - $quote->getSubtotal())); ?> </b></div>
             <div class="h4"><b>Order Total <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getGrandTotal()); ?> </b></div>
             <div class="h4"><?php echo $quote->getItemsCount(); ?> Items in Cart</div>
@@ -140,10 +140,6 @@
                 <label for="delivery_date">Delivery Date:</label>
                 <input type="date" class="form-control" name="delivery_date" onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>" value="<?php echo $defualt_delivery_date; ?>">
             </div>
-            <div class="form-group">
-                <button id="btncheckout" type="submit" class="btn btn-primary btn-lg"> Place Order
-                </button>
-            </div>
         </div>
     </div>
     <!-- ITEMS END -->
@@ -156,7 +152,32 @@
         <button id="btncheckout" type="submit" class="btn btn-primary btn-lg" ng-click="checkout()"> Place Order
         </button>
     </div>-->
+
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <button id="btncheckout" type="submit" class="btn btn-primary btn-lg"> Place Order
+                        </button>
+                    </div>
+                </div>
+        
 </form>
+
+                <div class="col-lg-7">
+                    <?php echo "<form id='BackToCart' action='http://".$NAMESPACE_ID."/placeorder/index/index' method='post'>"; ?>
+                        <div class="form-group">
+                            <button id="btnBackToCart" type="submit" class="btn btn-lg"> Edit Shopping Cart
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div>
 
 <script type="text/javascript">
     var btncheckout = document.getElementById('btncheckout');

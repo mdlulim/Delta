@@ -163,9 +163,9 @@ class Info extends \Magento\Framework\View\Element\Template
 
       //$modal_on = $this->registry->registry('modal_on');
 
-      if (isset($_SESSION['modal_on']))
-      {
-         return $_SESSION['modal_on'];
+       if (isset($_SESSION['modal_on']) && $_SESSION['modal_on'] == true)
+       {
+         return true;
        }else{
          return false;
        }
@@ -178,6 +178,7 @@ class Info extends \Magento\Framework\View\Element\Template
       //$this->reg->registry('user' $customer->getId());
       $out = array();
       
+      if(isset($_SESSION['accounts'])){
       foreach($_SESSION['accounts'] as $accounts )
       {
         $company  = $this->companyFactory->create()->load($accounts['company_id']);
@@ -188,6 +189,9 @@ class Info extends \Magento\Framework\View\Element\Template
 
         array_push($out,$item);
       }
+    }else{
+        return $out;
+    }
 
     
         return $out ;

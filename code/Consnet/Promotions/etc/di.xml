@@ -9,6 +9,7 @@
         <plugin name="order_cancellation_plugin" type="Consnet\Erporder\Plugin\OrderCancellation" sortOrder="1" disabled="false" />
     </type>
 
+<!--<preference for="Magento\zendframework1\library\Zend\Cache\Backend\File" type="Consnet\Promotions\Block\File" />-->
 
 <preference for="Magento\Customer\Model\ResourceModel\Grid\Collection" type="Magento\Customer\Model\ResourceModel\Grid\Collection2" />
 <virtualType name="Magento\Customer\Model\ResourceModel\Grid\Collection2" type="Consnet\Promotions\Ui\Component\Listing\CustomerDataProvider">
