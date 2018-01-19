@@ -319,9 +319,10 @@ class Index extends \Magento\Framework\App\Action\Action {
     //returns mysql fetchAll results
     public function createTable($name,$data){
         if($name  ==  'ERP_ADDRESS'){
-          
+
             foreach($data->item as $line ){
                 $line->ADRC_UUID = null ;
+                
             }
         }
 
