@@ -4,7 +4,7 @@
     <preference for="Magento\Company\Block\Company\CompanyProfile" type="Consnet\Company\Block\Company\CompanyProfile" />
     <preference for="Magento\Company\Block\Link\Company" type="Consnet\Company\Block\Link\Company" />
     <preference for="Magento\Company\Ui\Component\Listing\Column\Actions" type="Consnet\Company\Ui\Component\Listing\Column\Actions" />
-    
+    <preference for="Magento\Company\Model\ResourceModel\Company\Grid\Collection" type="Consnet\Company\Model\ResourceModel\Company\Grid\Collection" />
     
    <!-- <preference for="Magento\Customer\Controller\Account\LogoutSuccess" type="Delta\Customer\Controller\Account\LogoutSuccess" /> -->
 </config>
