@@ -60,6 +60,7 @@ class Totals extends \Magento\Sales\Block\Order\Totals
                 'label' => __('Net Value'),
             ]
         );
+        var_dump('hear');
 
         /**
          * Add shipping
