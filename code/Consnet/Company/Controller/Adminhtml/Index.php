@@ -17,7 +17,7 @@ abstract class Index extends \Magento\Backend\App\Action
      *
      * @see _isAllowed()
      */
-    const ADMIN_RESOURCE = 'Consnet_Company::index';
+    const ADMIN_RESOURCE = 'Magento_Company::index';
 
     /**
      * @var \Magento\Backend\Model\View\Result\ForwardFactory

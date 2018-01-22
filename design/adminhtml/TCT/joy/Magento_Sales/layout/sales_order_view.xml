@@ -17,7 +17,7 @@
 
         <referenceContainer name="content">
             <block class="Consnet\Erporder\Block\Adminhtml\Order\View" name="sales_order_edit"/>
-        </referenceContainer>
+        </referenceContainer> 
         <referenceContainer name="left">
             <block class="Magento\Sales\Block\Adminhtml\Order\View\Tabs" name="sales_order_tabs">
                 <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Info" name="order_tab_info" template="Magento_Sales::order/view/tab/info.phtml">
