@@ -11,7 +11,7 @@ use Magento\Company\Model\ResourceModel\Company\Collection as CompanyCollection;
 /**
  * Company grid collection. Provides data for companies grid.
  */
-class Collection extends CompanyCollection implements SearchResultInterface
+class Collection extends CompanyCollection implements Magento\Framework\Api\Search\SearchResultInterface
 {
     /**
      * @var AggregationInterface
