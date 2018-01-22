@@ -471,6 +471,7 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
      */
     protected function getEditMessage($order)
     {
+        
         // see if order has non-editable products as items
         $nonEditableTypes = $this->getNonEditableTypes($order);
         if (!empty($nonEditableTypes)) {
@@ -480,7 +481,7 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
                 implode(', ', $nonEditableTypes),
                 implode(', ', $nonEditableTypes)
             );
-        }
+        }//var_dump('Are you sure you want to Edit this order ?');die();
         return __('Are you sure you want to Edit this order ?');
     }
 
