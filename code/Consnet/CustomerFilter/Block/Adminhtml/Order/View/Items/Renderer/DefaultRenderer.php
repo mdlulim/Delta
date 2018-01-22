@@ -288,13 +288,13 @@ class DefaultRenderer extends \Magento\Sales\Block\Adminhtml\Items\Renderer\Defa
                 $html = $item->getStatus();
                 break; */
             case 'price':
-                $html = $item->getPrice();
+                $html = round($item->getPrice(),2);
                 break;
             case 'qty':
-                $html = $item->getQtyOrdered();
+                $html = round($item->getQtyOrdered());
                 break; 
              case 'subtotal':
-                $html = $item->getRowTotal();
+                $html = round($item->getRowTotal(),2);
                 break;          
             default:
                $html = null;
