@@ -1,8 +1,0 @@
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-
-    
-    <preference for="Magento\Company\Controller\Adminhtml\Index" type="Consnet\Company\Controller\Adminhtml\Index" />
-    
-    
-   <!-- <preference for="Magento\Customer\Controller\Account\LogoutSuccess" type="Delta\Customer\Controller\Account\LogoutSuccess" /> -->
-</config>

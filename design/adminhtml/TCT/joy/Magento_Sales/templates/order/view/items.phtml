@@ -32,7 +32,8 @@ $_order = $block->getOrder() ?>
         <?php $_items = $block->getItemsCollection();?>
         <?php $i = 0; $w = 0; foreach ($_items as $_item):?>
             <?php 
-            $_items->setPrice(round($_items->getPrice(),2));
+            //$_items->setPrice(round($_items->getPrice(),2));
+            //var_dump($_items);die(); 
             if ($_item->getParentItem()) {
                 continue;
             } else {
