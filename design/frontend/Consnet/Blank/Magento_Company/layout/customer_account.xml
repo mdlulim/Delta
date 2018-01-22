@@ -34,7 +34,7 @@
                    after="customer-account-navigation-address-link">
                 <arguments>
                     <argument name="path" xsi:type="string">company/profile/</argument>
-                    <argument translate="true" name="label" xsi:type="string">Company Profile</argument>
+                    <argument translate="true" name="label" xsi:type="string">Customer Profile</argument>
                     <argument name="resource" xsi:type="string">Magento_Company::view</argument>
                     <argument name="sortOrder" xsi:type="number">104</argument>
                 </arguments>
