@@ -84,8 +84,8 @@ class Menu extends \Magento\Backend\Block\Template
      * @param \Magento\Backend\Model\Menu\Config $menuConfig
      * @param \Magento\Framework\Locale\ResolverInterface $localeResolver
      * @param array $data
-     * @param MenuItemChecker|null $menuItemChecker
-     * @param AnchorRenderer|null $anchorRenderer
+     * @param \Magento\Backend\Block\MenuItemChecker|null $menuItemChecker
+     * @param \Magento\Backend\Block\AnchorRenderer|null $anchorRenderer
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
@@ -95,8 +95,8 @@ class Menu extends \Magento\Backend\Block\Template
         \Magento\Backend\Model\Menu\Config $menuConfig,
         \Magento\Framework\Locale\ResolverInterface $localeResolver,
         array $data = [],
-        MenuItemChecker $menuItemChecker = null,
-        AnchorRenderer $anchorRenderer = null
+        \Magento\Backend\Block\MenuItemChecker $menuItemChecker = null,
+        \Magento\Backend\Block\AnchorRenderer $anchorRenderer = null
     ) {
         $this->_url = $url;
         $this->_iteratorFactory = $iteratorFactory;
