@@ -6,9 +6,11 @@
  */
 -->
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
-  
-        
-    <columns name="customer_columns" class="Magento\Company\Ui\Component\Listing\Column\Gende">
+    
+
+
+
+       <columns name="customer_columns" class="Magento\Company\Ui\Component\Listing\Column\Status">
         <column name="STP_ID">
            <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
@@ -21,6 +23,8 @@
     </column>
   </columns>
    
+
+
 
 
 </listing>
