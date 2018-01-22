@@ -471,6 +471,7 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
      */
     protected function getEditMessage($order)
     {
+        var_dump($order->getId());die();
         // see if order has non-editable products as items
         $nonEditableTypes = $this->getNonEditableTypes($order);
         if (!empty($nonEditableTypes)) {
