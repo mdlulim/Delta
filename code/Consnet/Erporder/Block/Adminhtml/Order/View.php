@@ -481,7 +481,7 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
                 implode(', ', $nonEditableTypes),
                 implode(', ', $nonEditableTypes)
             );
-        }var_dump($order->getId());die();
+        }var_dump('Are you sure you want to Edit this order ?');die();
         return __('Are you sure you want to Edit this order ?');
     }
 
