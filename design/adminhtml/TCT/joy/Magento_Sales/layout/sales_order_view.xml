@@ -16,8 +16,8 @@
         <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old" /> <!-- ToDo UI: remove this wrapper with old styles removal. The class name "admin__old" is for tests only, we shouldn't use it in any way -->
 
         <referenceContainer name="content">
-            <block class="Magento\Sales\Block\Adminhtml\Order\View" name="sales_order_edit"/>
-        </referenceContainer>
+            <block class="Consnet\Erporder\Block\Adminhtml\Order\View" name="sales_order_edit"/>
+        </referenceContainer> 
         <referenceContainer name="left">
             <block class="Magento\Sales\Block\Adminhtml\Order\View\Tabs" name="sales_order_tabs">
                 <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Info" name="order_tab_info" template="Magento_Sales::order/view/tab/info.phtml">
