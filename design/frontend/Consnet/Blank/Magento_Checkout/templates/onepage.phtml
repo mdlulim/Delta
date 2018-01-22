@@ -5,7 +5,7 @@
  */
  
  
- 
+
 
 // @codingStandardsIgnoreFile
 ?>
@@ -121,7 +121,7 @@
             <div class="h4"><?php echo $companydata['street'].' '.$companydata['city'].' '.$companydata['country_id'].' '.
             $companydata['region'].' '.$companydata['postcode']; ?></div>
             <br> 
-            <div class="h4"><b>Net Value<?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getSubtotal()); ?> </b></div>
+            <div class="h4"><b>Net Value <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getSubtotal()); ?> </b></div>
             <div class="h4"><b>Tax <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(($quote->getGrandTotal() - $quote->getSubtotal())); ?> </b></div>
             <div class="h4"><b>Order Total <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($quote->getGrandTotal()); ?> </b></div>
             <div class="h4"><?php echo $quote->getItemsCount(); ?> Items in Cart</div>
