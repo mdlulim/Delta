@@ -68,7 +68,7 @@ class CompanySTP extends \Magento\Ui\Component\Listing\Columns\Column
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        \Magento\Directory\Model\Country $country,
+        \Magento\Directory\Model\Country $country, 
         array $components = [],
         array $data = []
     ) {

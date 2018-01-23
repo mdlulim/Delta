@@ -41,7 +41,7 @@
                     <item name="label" xsi:type="string" translate="true">STP ID</item>
                 </item>
             </argument>
-        </column>
+        </column>  
 
 
 
