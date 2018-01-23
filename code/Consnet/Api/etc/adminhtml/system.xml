@@ -64,6 +64,16 @@
                     <comment>for Module /ERPORDER </comment>
                 </field>
 
+                <field id="credit_information" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Credit Information </label>
+                    <comment>for Module /Magento_CustomerBalance </comment>
+                </field>
+
+                <field id="customer_statement" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Customer Statement </label>
+                    <comment>for Module /Magento_CustomerBalance </comment>
+                </field>
+
                 <field id="crm_service_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>CRM Service Requests Wsdl </label>
                     <comment>for Module /Contact </comment>
