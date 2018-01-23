@@ -38,44 +38,38 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
     protected function _initSelect()
     {
-        /*
-        $arr=array(1);
-        parent::_initSelect();
-        return $this->addFieldToFilter('main_table.entity_id', array('in'=>$arr));
-        */
         $om = \Magento\Framework\App\ObjectManager::getInstance();
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
-        $userId=$authSession->getUser()->getUserId();
-        $roleId= $authSession->getUser()->getRole()->getRoleId();
+        //$userId = $authSession->getUser()->getUserId();
+        $user = $authSession->getUser();
+        $userId = $user->getUserId();
+        //$roleId = $authSession->getUser()->getRole()->getRoleId();
 
-        var_dump($roleId);
-        //die('gets here');
-        if($roleId == 1812) {
-            //var_dump($roleId); die('gets here');
-            $resource = $om->get('Magento\Framework\App\ResourceConnection');
-            $connection = $resource->getConnection();
-            $companyTableName = $resource->getTableName('company');
-            $companyCustomerTableName = $resource->getTableName('company_advanced_customer_entity');
+        if(($user->getRole()->getRoleName() == 'sales_rep')) {
+            $arrCompanyIDs = [];
+            if(array_key_exists('company_id', $_SESSION)) {
+                $arrCompanyIDs = array($_SESSION['company_id']);
+                unset($_SESSION['company_id']);
+            } else {
+                $resource = $om->get('Magento\Framework\App\ResourceConnection');
+                $connection = $resource->getConnection();
+                $companyTableName = $resource->getTableName('company');
+                //$companyCustomerTableName = $resource->getTableName('company_advanced_customer_entity');
 
-            $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id IN (SELECT entity_id FROM $companyTableName WHERE sales_representative_id = $userId)";
-            $result = $connection->fetchAll($sql);
+                $sql = "SELECT entity_id FROM $companyTableName WHERE sales_representative_id = $userId";
+                $result = $connection->fetchAll($sql);
 
-            $customerIDs = [];
-
-            if($result != null && count($result) > 0) {
-                foreach($result as $arrRecord){
-                    $customerIDs[] = $arrRecord['customer_id'];
+                if($result != null && count($result) > 0) {
+                    foreach($result as $arrRecord){
+                        $arrCompanyIDs[] = $arrRecord['entity_id'];
+                    }
                 }
             }
-
             parent::_initSelect();
-            return $this->addFieldToFilter('main_table.entity_id', array('in'=>$customerIDs));
+            return $this->addFieldToFilter('main_table.entity_id', array('in'=>$arrCompanyIDs));
+        } else {
+            parent::_initSelect();
+            return $this;
         }
-        return $this;
-
-        // $arr=array(1, 8, 9);
-        // parent::_initSelect();
-        // return $this->addFieldToFilter('main_table.entity_id', array('in'=>$arr));
-        
     }
 }
