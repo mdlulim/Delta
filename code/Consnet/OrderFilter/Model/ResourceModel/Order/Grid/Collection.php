@@ -42,10 +42,11 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
         $userId=$authSession->getUser()->getUserId();
         $roleId= $authSession->getUser()->getRole()->getRoleId();
-        
-        var_dump($roleId); 
+
+        var_dump($roleId);
+        die('gets here');
         if($roleId == 1812) {
-            var_dump($roleId); die('gets here');
+            //var_dump($roleId); die('gets here');
             $resource = $om->get('Magento\Framework\App\ResourceConnection');
             $connection = $resource->getConnection();
             $companyTableName = $resource->getTableName('company');
