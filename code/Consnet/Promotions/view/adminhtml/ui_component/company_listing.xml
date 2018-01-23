@@ -10,7 +10,7 @@
 
 
 
-      
+    <columns name="company_columns">
        <!-- 
           <column name="STP_ID">
            <argument name="data" xsi:type="array">
@@ -45,7 +45,7 @@
 
 
 
-         <!--<column name="STP_ID" sortOrder="15">
+        <!--<column name="STP_ID" sortOrder="15">
             <settings>
                 <filter>text</filter>
                 <label translate="true">STP ID</label>
