@@ -112,6 +112,13 @@ class AdminOrderSimulator
                                             }
                                     }
                                 }
+                            }elseif ($this->hasValue($zresults->ZSTATUS->MESSAGE)) {                                
+                                foreach($quote->getAllVisibleItems() as $item){
+                                        $this->messageManager->addError($zresults->ZSTATUS->MESSAGE);                                        
+                                        $quote->deleteItem($item);
+                                        $quote->setTotalsCollectedFlag(false)->collectTotals();
+                                        $quote->save();
+                                }
                             }elseif(isset($zresults->ZRESULTS->item)) {	
                                 $totalTax = 0;
                                 $total = 0;		        
