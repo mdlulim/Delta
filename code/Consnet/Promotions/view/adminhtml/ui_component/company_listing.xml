@@ -10,7 +10,7 @@
 
 
 
-     <columns name="customer_columns" class="Magento\Company\Ui\Component\Listing\Column\Status">
+      
        <!-- 
           <column name="STP_ID">
            <argument name="data" xsi:type="array">
@@ -34,13 +34,24 @@
         
         -->
 
-         <column name="STP_ID" sortOrder="15">
+        <column name="STP_ID"  class="Consnet\Promotions\Ui\Component\Listing\Column\CompanySTP">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">STP ID</item>
+                </item>
+            </argument>
+        </column>
+
+
+
+         <!--<column name="STP_ID" sortOrder="15">
             <settings>
                 <filter>text</filter>
                 <label translate="true">STP ID</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column>-->
 
 
   </columns>
