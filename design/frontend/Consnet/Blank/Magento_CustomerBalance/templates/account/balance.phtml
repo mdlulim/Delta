@@ -21,7 +21,7 @@ $stp_id = $companymanagement->getByCustomerId(746);//$customerSession->getId())-
 $soldtoparty_number = $stp_id['STP_ID'];//$customerData['stp_id'];
 
 $helper =  $om->create('Consnet\Api\Helper\Data');
-$wsdlUrl = $helper->getGeneralConfig('sales_order_text');//"http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/bndg_url/sap/bc/srt/rfc/sap/zcustomercreditinformation/300/zcustomercreditinformation/zcustomercreditinformation_binding?sap-client=300";
+$wsdlUrl = $helper->getGeneralConfig('credit_information');
 
 //Creat SOAP client instance
 $soapClient  = new \Zend\Soap\Client($wsdlUrl,array("soap_version" => SOAP_1_2));
