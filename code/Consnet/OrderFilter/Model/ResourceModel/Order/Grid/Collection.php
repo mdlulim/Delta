@@ -38,17 +38,18 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
     protected function _initSelect()
     {
+        /*
         $arr=array(1);
         parent::_initSelect();
         return $this->addFieldToFilter('main_table.entity_id', array('in'=>$arr));
-        /* 
+        */
         $om = \Magento\Framework\App\ObjectManager::getInstance();
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
         $userId=$authSession->getUser()->getUserId();
         $roleId= $authSession->getUser()->getRole()->getRoleId();
 
         var_dump($roleId);
-        die('gets here');
+        //die('gets here');
         if($roleId == 1812) {
             //var_dump($roleId); die('gets here');
             $resource = $om->get('Magento\Framework\App\ResourceConnection');
@@ -71,7 +72,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
             return $this->addFieldToFilter('main_table.entity_id', array('in'=>$customerIDs));
         }
         return $this;
-*/
+
         // $arr=array(1, 8, 9);
         // parent::_initSelect();
         // return $this->addFieldToFilter('main_table.entity_id', array('in'=>$arr));
