@@ -6,7 +6,8 @@
 var config = {
     map: {
         '*': {
-            orderEditDialog: 'Magento_Sales/order/edit/message'
+            postWrapper: 'Magento_Company/edit/post-wrapper',
+            autoComplete: 'Magento_Company/js/form/actions/auto-complete'
         }
     }
 };

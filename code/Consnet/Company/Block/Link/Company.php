@@ -30,7 +30,7 @@ class Company extends Link implements \Magento\Customer\Block\Account\SortLinkIn
      */
     public function getLabel()
     {
-        return __('Company Profile');
+        return __('Customer Profile');
     }
 
     /**
