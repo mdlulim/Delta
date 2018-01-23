@@ -102,23 +102,24 @@ class AdminOrderSimulator
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
                                 if($quote->hasItems()){
                                     $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
+                                    $products = '';
                                     foreach($quote->getAllVisibleItems() as $item){
-                                            if(in_array($item->getSku(), $matnrs)){
-                                                $this->messageManager->addError("Required quantity is not available For ".$item->getName());
-                                                
+                                            if(in_array($item->getSku(), $matnrs)){                                                
+                                                $products+= $products.', '.$item->getName();
                                                 $quote->deleteItem($item);
                                                 $quote->setTotalsCollectedFlag(false)->collectTotals();
                                                 $quote->save();
                                             }
                                     }
+                                    $this->messageManager->addError("Required quantity is not available For Product(s) ".$products);
                                 }
                             }elseif ($this->hasValue($zresults->ZSTATUS->MESSAGE)) {                                
                                 foreach($quote->getAllVisibleItems() as $item){
-                                        $this->messageManager->addError($zresults->ZSTATUS->MESSAGE);                                        
                                         $quote->deleteItem($item);
                                         $quote->setTotalsCollectedFlag(false)->collectTotals();
                                         $quote->save();
                                 }
+                                $this->messageManager->addError($zresults->ZSTATUS->MESSAGE);
                             }elseif(isset($zresults->ZRESULTS->item)) {	
                                 $totalTax = 0;
                                 $total = 0;		        
