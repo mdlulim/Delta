@@ -4,5 +4,7 @@
     <preference for="Magento\Company\Block\Company\CompanyProfile" type="Consnet\Company\Block\Company\CompanyProfile" />
     <preference for="Magento\Company\Block\Link\Company" type="Consnet\Company\Block\Link\Company" />
     <preference for="Magento\Company\Ui\Component\Listing\Column\Actions" type="Consnet\Company\Ui\Component\Listing\Column\Actions" />
-    <preference for="Magento\Company\Model\ResourceModel\Company\Collection" type="Consnet\Company\Model\ResourceModel\Company\Collection" /> 
+    <type name="Magento\Company\Model\ResourceModel\Company\Collection">
+		<plugin disabled="false" name="Consnet_Company_Plugin_Magento_Company_Model_ResourceModel_Company_Collection" sortOrder="10" type="Consnet\Company\Plugin\Magento\Company\Model\ResourceModel\Company\Collection"/>
+	</type>
 </config>
