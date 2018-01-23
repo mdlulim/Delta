@@ -96,7 +96,7 @@ class Menu extends \Magento\Backend\Block\Template
         \Magento\Framework\Locale\ResolverInterface $localeResolver,
         array $data = [],
         \Magento\Backend\Block\MenuItemChecker $menuItemChecker = null,
-        \Magento\Backend\Block\AnchorRenderer $anchorRenderer = null
+        \Magento\Backend\Block\AnchorRenderer $anchorRenderer 
     ) {
         $this->_url = $url;
         $this->_iteratorFactory = $iteratorFactory;
