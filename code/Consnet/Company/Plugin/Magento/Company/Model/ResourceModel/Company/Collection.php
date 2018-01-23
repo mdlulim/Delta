@@ -7,6 +7,6 @@ class Collection
 {
 
     public function afterJoinAdvancedCustomerEntityTable($result) {
-       return $result->where('sales_representative_id = 5');
+       return $result->getSelect()->where('sales_representative_id = 5');
     }
 }
