@@ -1,0 +1,26 @@
+<?php
+
+
+namespace Consnet\Company\Plugin\Magento\Company\Model\ResourceModel\Company;
+
+class Collection
+{
+
+    public function afterJoinAdvancedCustomerEntityTable($result) {
+        $om = \Magento\Framework\App\ObjectManager::getInstance();
+        $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
+        $userId=$authSession->getUser()->getUserId();
+        $roleId= $authSession->getUser()->getRole()->getRoleId();
+        $roleName= $authSession->getUser()->getRole()->getRoleName();
+        if($roleName == 'sales_rep'){
+<<<<<<< HEAD
+            return $result->getSelect()->where('sales_representative_id ='".$userId');
+=======
+            return $result->getSelect()->where('sales_representative_id ='.$userId.' ');
+>>>>>>> 372893179c96c16d06c77c326d0d6d65cc565c8b
+        }else{
+            return $result;
+        }
+        
+    }
+}
