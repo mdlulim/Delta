@@ -223,7 +223,7 @@ class ErpOrder
                             }
                         }else{
                             $line = $zresults->ZTT_ORDER_TOTALS->item ;                    
-                            $order->setTaxAmount($line->MWSBP);
+                            $order->setTaxAmount($zresults->TOTAL + $line->MWSBP);//$line->MWSBP);
                             $order->setSubtotal($zresults->TOTAL);
                             $order->setGrandTotal(($zresults->TOTAL + $line->MWSBP) );
                             //$order->setData("DELIVERY_DATE", $delivery_date);
