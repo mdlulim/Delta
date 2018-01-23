@@ -43,7 +43,9 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         $userId=$authSession->getUser()->getUserId();
         $roleId= $authSession->getUser()->getRole()->getRoleId();
         
+        var_dump($roleId); 
         if($roleId == 1812) {
+            var_dump($roleId); die('gets here');
             $resource = $om->get('Magento\Framework\App\ResourceConnection');
             $connection = $resource->getConnection();
             $companyTableName = $resource->getTableName('company');
