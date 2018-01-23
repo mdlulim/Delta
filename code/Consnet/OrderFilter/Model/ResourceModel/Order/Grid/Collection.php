@@ -43,7 +43,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         $userId=$authSession->getUser()->getUserId();
         $roleId= $authSession->getUser()->getRole()->getRoleId();
         
-        if($roleId == 27) {
+        if($roleId == 1812) {
             $resource = $om->get('Magento\Framework\App\ResourceConnection');
             $connection = $resource->getConnection();
             $companyTableName = $resource->getTableName('company');
