@@ -13,7 +13,11 @@ class Collection
         $roleId= $authSession->getUser()->getRole()->getRoleId();
         $roleName= $authSession->getUser()->getRole()->getRoleName();
         if($roleName == 'sales_rep'){
+<<<<<<< HEAD
+            return $result->getSelect()->where('sales_representative_id ='".$userId');
+=======
             return $result->getSelect()->where('sales_representative_id ='.$userId.' ');
+>>>>>>> 372893179c96c16d06c77c326d0d6d65cc565c8b
         }else{
             return $result;
         }
