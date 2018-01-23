@@ -117,7 +117,7 @@ class AdminOrderSimulator
                                 $products = "";
                                 $no_license = array(8,9,10);
                                 foreach($quote->getAllVisibleItems() as $item){
-                                        $category_ids = $product_repo->get($item->getSku())>getCategoryIds();
+                                        $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
                                         foreach ($category_ids as $cat) {
                                             if(in_array($cat, $no_license)){
                                                 $products+= $products.', '.$item->getName();
