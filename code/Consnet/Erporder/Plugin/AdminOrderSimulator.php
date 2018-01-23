@@ -72,8 +72,6 @@ class AdminOrderSimulator
             //Set Address to quote
             $quote->getBillingAddress()->addData($addressInfo['shipping_address']);
             $quote->getShippingAddress()->addData($addressInfo['shipping_address']);
- 
-
             
               if(in_array('STP_ID', array_keys($company_data))){
                     if(array_key_exists('STP_ID', $company_data)){
@@ -113,14 +111,26 @@ class AdminOrderSimulator
                                     }
                                     $this->messageManager->addError("Required quantity is not available For Product(s) ".$products);
                                 }
-                            }elseif ($this->hasValue($zresults->ZSTATUS->MESSAGE)) {                                
+                            }
+                            if ($this->hasValue($zresults->ZSTATUS->MESSAGE)) {   
+                                $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');                             
+                                $products = "";
+                                $no_license = array(8,9,10);
                                 foreach($quote->getAllVisibleItems() as $item){
+                                        $category_ids = $product_repo->get($item->getSku())>getCategoryIds();
+                                        foreach ($category_ids as $cat) {
+                                            if(in_array($cat, $no_license)){
+                                                $products+= $products.', '.$item->getName();
+                                            }
+                                        }
                                         $quote->deleteItem($item);
                                         $quote->setTotalsCollectedFlag(false)->collectTotals();
                                         $quote->save();
                                 }
-                                $this->messageManager->addError($zresults->ZSTATUS->MESSAGE);
-                            }elseif(isset($zresults->ZRESULTS->item)) {	
+                                
+                                $this->messageManager->addError($zresults->ZSTATUS->MESSAGE." ".$products);
+                            }
+                            if(isset($zresults->ZRESULTS->item)) {	
                                 $totalTax = 0;
                                 $total = 0;		        
                                 foreach($quote->getAllVisibleItems() as $item){
