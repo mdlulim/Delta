@@ -85,7 +85,7 @@ $creditInfo = $soapClient->ZcrmCreditInfo($parameters);
             
 
 		    /**   GET CUSTOMER STATEMENT **/		    
-            $wsqlUrl = "http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/bndg_url/sap/bc/srt/rfc/sap/zzget_cust_statement_v6/300/zget_customer_statement_v6/zget_customer_statement_v6_binding?sap-client=300";
+            $wsqlUrl = $helper->getGeneralConfig('customer_statement');//"http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/bndg_url/sap/bc/srt/rfc/sap/zzget_cust_statement_v6/300/zget_customer_statement_v6/zget_customer_statement_v6_binding?sap-client=300";
             $soapClient  = new \Zend\Soap\Client($wsqlUrl,array("soap_version" => SOAP_1_2));
             $soapClient->setHttpLogin($username);
             $soapClient->setHttpPassword($password);
