@@ -48,7 +48,7 @@
 
     <?php $_totals = $block->getTotals('')?>
     <?php if ($_totals):?>
-        <tbody>
+        <!--tbody>
             <?php foreach ($_totals as $_code => $_total): ?>
                 <?php if ($_total->getBlockName()): ?>
                     <?= $block->getChildHtml($_total->getBlockName(), false) ?>
@@ -76,6 +76,6 @@
                   <?php } ?>
                 <?php endif?>
             <?php endforeach?>
-        </tbody>
+        </tbody-->
     <?php endif?>
 </table>
