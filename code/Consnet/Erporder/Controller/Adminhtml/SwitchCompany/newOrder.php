@@ -1,7 +1,7 @@
 <?php
   namespace Consnet\ErpOrder\Controller\Adminhtml\SwitchCompany;
 
-  class Index extends \Magento\Backend\App\Action
+  class newOrder extends \Magento\Backend\App\Action
   {
     /**
     * @var \Magento\Framework\View\Result\PageFactory
@@ -30,6 +30,8 @@
     public function execute()
     {   
        $company_id =  $this->getRequest()->getParam('id');
+       
+
        $_SESSION['company_id'] = $company_id;
        $_SESSION['from'] = 'company';
 

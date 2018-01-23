@@ -38,13 +38,18 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
     protected function _initSelect()
     {
+        /*
+        $arr=array(1);
+        parent::_initSelect();
+        return $this->addFieldToFilter('main_table.entity_id', array('in'=>$arr));
+        */
         $om = \Magento\Framework\App\ObjectManager::getInstance();
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
         $userId=$authSession->getUser()->getUserId();
         $roleId= $authSession->getUser()->getRole()->getRoleId();
 
         var_dump($roleId);
-        die('gets here');
+        //die('gets here');
         if($roleId == 1812) {
             //var_dump($roleId); die('gets here');
             $resource = $om->get('Magento\Framework\App\ResourceConnection');
@@ -52,7 +57,6 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
             $companyTableName = $resource->getTableName('company');
             $companyCustomerTableName = $resource->getTableName('company_advanced_customer_entity');
 
-            //$sql = "SELECT entity_id FROM " . $tableName . " WHERE  sales_representative_id = " . $userId;
             $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id IN (SELECT entity_id FROM $companyTableName WHERE sales_representative_id = $userId)";
             $result = $connection->fetchAll($sql);
 
