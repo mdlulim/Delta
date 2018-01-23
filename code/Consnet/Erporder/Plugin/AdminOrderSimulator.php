@@ -128,7 +128,7 @@ class AdminOrderSimulator
                                         $quote->save();
                                 }
                                 
-                                $this->messageManager->addError($zresults->ZSTATUS->MESSAGE." ".$products);
+                                $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$products);
                             }
                             if(isset($zresults->ZRESULTS->item)) {	
                                 $totalTax = 0;
