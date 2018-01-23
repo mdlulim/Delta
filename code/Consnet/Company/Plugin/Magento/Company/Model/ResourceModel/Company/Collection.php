@@ -7,6 +7,7 @@ class Collection
 {
 
     public function afterJoinAdvancedCustomerEntityTable($result) {
+        var_dump('Testing Plugin');die();
        return $result;
     }
 }
