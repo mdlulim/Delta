@@ -46,7 +46,7 @@
 
 ///////// ---  /////
 
-<?php
+// <?php
  
 namespace Consnet\Promotions\Ui\Component\Listing\Column;
 
