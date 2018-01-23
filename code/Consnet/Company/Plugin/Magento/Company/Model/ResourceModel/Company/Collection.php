@@ -7,7 +7,6 @@ class Collection
 {
 
     public function afterJoinAdvancedCustomerEntityTable($result) {
-        var_dump('Testing Plugin');die();
-       return $result;
+       return $result->where('sales_representative_id = 5');
     }
 }
