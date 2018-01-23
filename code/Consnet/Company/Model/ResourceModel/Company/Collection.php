@@ -44,7 +44,7 @@ class Collection extends AbstractCollection
             ]
         );
 
-        return $this; //where('sales_representative_id = 5');
+        return $this->where('sales_representative_id = 5');
     }
 
     /**
