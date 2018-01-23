@@ -20,6 +20,7 @@ $companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
 $stp_id = $companymanagement->getByCustomerId(746);//$customerSession->getId())->getData("STP_ID");
 $soldtoparty_number = $stp_id['STP_ID'];//$customerData['stp_id'];
 
+$helper =  $om->create('Consnet\Api\Helper\Data');
 $wsdlUrl = $helper->getGeneralConfig('sales_order_text');//"http://deltapq01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/bndg_url/sap/bc/srt/rfc/sap/zcustomercreditinformation/300/zcustomercreditinformation/zcustomercreditinformation_binding?sap-client=300";
 
 //Creat SOAP client instance
@@ -27,7 +28,6 @@ $soapClient  = new \Zend\Soap\Client($wsdlUrl,array("soap_version" => SOAP_1_2))
 
 //Set Login details
 
-$helper =  $om->create('Consnet\Api\Helper\Data');
 $username = $helper->getGeneralConfig('user_name');
 $password = $helper->getGeneralConfig('password');
 
