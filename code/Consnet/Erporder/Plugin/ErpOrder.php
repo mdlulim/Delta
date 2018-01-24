@@ -204,7 +204,7 @@ class ErpOrder
     
                     $totalTax = 0.0;
                     if($zresults->ZRESULT !== 'FAILED'){
-                        if(property_exists($zresults->ZTT_ORDER_TOTALS, 'item')){
+                        if(is_array($zresults->ZTT_ORDER_TOTALS->item)){
                             if(is_array($zresults->ZTT_ORDER_TOTALS->item)){
                                 foreach($zresults->ZTT_ORDER_TOTALS->item as $orderitm){
                                     $totalTax = $totalTax + $orderitm->MWSBP ;
