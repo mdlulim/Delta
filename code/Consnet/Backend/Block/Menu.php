@@ -402,12 +402,7 @@ class Menu extends \Magento\Backend\Block\Template
     private function excludeCIC($menu){
 
         $arr_menu = array(
-            "Magento_Sales::sales",
-            "Magento_Sales::sales_operation",
-            "Magento_Sales::sales_order",
-            "Magento_Customer::customer",
-            "Magento_Customer::customer_manage",
-            "Magento_Company::company_index",
+            
             "Magento_Backend::system",
             "Magento_User::system_acl",
             "Magento_User::system_acl_users",
