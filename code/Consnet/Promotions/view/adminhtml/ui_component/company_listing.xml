@@ -278,6 +278,7 @@
             <settings>
                 <filter>text</filter>
                 <label translate="true">State/Province</label>
+                <visible>false</visible>
             </settings>
         </column>
         <column name="postcode" sortOrder="130">
@@ -291,7 +292,7 @@
             <settings>
                 <filter>text</filter>
                 <label translate="true">City</label>
-                <visible>true</visible>
+                <visible>false</visible>
             </settings>
         </column>
         <column name="customer_group_id" component="Magento_Ui/js/grid/columns/select">
@@ -300,7 +301,7 @@
                 <options class="Magento\Customer\Ui\Component\Listing\Column\Group\Options"/>
                 <dataType>select</dataType>
                 <label translate="true">Customer Group</label>
-                <visible>true</visible>
+                <visible>false</visible>
             </settings>
         </column>
 
@@ -320,7 +321,7 @@
             <settings>
                 <filter>text</filter>
                 <label translate="true">Company Admin</label>
-                <visible>true</visible>
+                <visible>false</visible>
             </settings>
         </column>
         <column name="job_title" sortOrder="200">
