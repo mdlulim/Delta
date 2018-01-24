@@ -366,8 +366,12 @@ class Menu extends \Magento\Backend\Block\Template
         $output .= '<div class="submenu"' . ($level == 0 && isset($id) ? ' aria-labelledby="' . $id . '"' : '') . '>';
         $colStops = null;
         if ($level == 0 && $limit) {
+            $name  = $this->_getAnchorLabel($menuItem) ;
+            if($name == 'Customers'){
+                $name  = 'Companies';
+            }
             $colStops = $this->_columnBrake($menuItem->getChildren(), $limit);
-            $output .= '<strong class="submenu-title">' . $this->_getAnchorLabel($menuItem) . '</strong>';
+            $output .= '<strong class="submenu-title">' . $name . '</strong>';
             $output .= '<a href="#" class="action-close _close" data-role="close-submenu"></a>';
         }
 
@@ -387,6 +391,7 @@ class Menu extends \Magento\Backend\Block\Template
             //"Magento_Catalog::catalog",
            // "Magento_Catalog::inventory",
             "Magento_Customer::customer",
+            "Magento_Customer::customer_manage",
             "Magento_Company::company_index",
             //"Magento_CatalogRule::promo",
             //"Magento_Enterprise::private_sales",
@@ -431,6 +436,31 @@ class Menu extends \Magento\Backend\Block\Template
 
     }
 
+    private function changeTitle($menuItem){
+
+        $arr_menu = array(
+         
+            "Magento_Customer::customer",
+            "Magento_Customer::customer_manage",
+            "Magento_Company::company_index"
+        
+        );
+
+        if(in_array($menuItem->getId(),$arr_menu)){
+            
+            if($menuItem->getTitle() == 'Customers'){
+                $menuItem->setTitle('Companies');
+            }
+            if($menuItem->getTitle() == 'All Customers'){
+                $menuItem->setTitle('Contact Person');
+            }
+            return  $menuItem;
+        }else{
+            return  $menuItem;
+        }
+
+    }
+
     /**
      * Render Navigation
      *
@@ -457,6 +487,8 @@ class Menu extends \Magento\Backend\Block\Template
             $itemName = substr($menuId, strrpos($menuId, '::') + 2);
             $itemClass = str_replace('_', '-', strtolower($itemName));
 
+            $menuItem = $this->changeTitle($menuItem);
+
             if (count($colBrakes) && $colBrakes[$itemPosition]['colbrake'] && $itemPosition != 1) {
                 $output .= '</ul></li><li class="column"><ul role="menu">';
             }
@@ -467,6 +499,7 @@ class Menu extends \Magento\Backend\Block\Template
                 $user->getRole()->getRoleName() == 'cic_agent' ) && 
                 $this->excludeMenu($menuItem->getId())  ) 
              {
+               // var_dump($menuItem->getTitle());
                //echo  $user->getRole()->getRoleName();
                 
             }else{
@@ -475,6 +508,7 @@ class Menu extends \Magento\Backend\Block\Template
             $id = $this->getJsId($menuItem->getId());
             $subMenu = $this->_addSubMenu($menuItem, $level, $limit, $id);
             $anchor = $this->anchorRenderer->renderAnchor($this->getActiveItemModel(), $menuItem, $level);
+            
             $output .= '<li ' . $this->getUiId($menuItem->getId())
                 . ' class="item-' . $itemClass . ' ' . $this->_renderItemCssClass($menuItem, $level)
                 . ($level == 0 ? '" id="' . $id . '" aria-haspopup="true' : '')
