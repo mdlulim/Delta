@@ -4,4 +4,6 @@
     <preference for="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer" type="Consnet\CustomerFilter\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer" />
     <preference for="Magento\Sales\Block\Adminhtml\Order\View\Items" type="Consnet\CustomerFilter\Block\Adminhtml\Order\View\Items" />
     <preference for="Magento\Customer\Controller\Account\ResetPasswordPost" type="Consnet\CustomerFilter\Controller\Account\ResetPasswordPost" />
+    <preference for="Magento\Customer\Ui\Component\DataProvider" type="Consnet\CustomerFilter\Ui\Component\DataProvider" />
+
 </config>
