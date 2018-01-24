@@ -360,11 +360,6 @@ class Menu extends \Magento\Backend\Block\Template
         }
 
 
-        //menu-magento-customer-customer
-
-       // if(($this->excludeMenu($menuItem->getId())))
-       // {
-
         $output .= '<div class="submenu"' . ($level == 0 && isset($id) ? ' aria-labelledby="' . $id . '"' : '') . '>';
         $colStops = null;
         if ($level == 0 && $limit) {
@@ -420,14 +415,16 @@ class Menu extends \Magento\Backend\Block\Template
            // "Magento_CurrencySymbol::system_currency",
            // "Magento_Backend::stores_attributes",
            // "Magento_Backend::other_settings",
-           // "Magento_Backend::system",
+            "Magento_Backend::system",
            // "Magento_Backend::system_convert",
            // "Magento_Integration::system_extensions",
            // "Magento_Backend::system_tools",
            // "Magento_Support::support",
-           // "Magento_User::system_acl",
-           // "Magento_Logging::system_magento_logging",
-           // "Magento_Backend::system_other_settings"
+            "Magento_User::system_acl",
+            "Magento_User::system_acl_users",
+            "Magento_User::system_acl_locks",
+           //"Magento_Logging::system_magento_logging",
+           //"Magento_Backend::system_other_settings"
         );
 
         if(in_array($menu,$arr_menu)){
@@ -490,6 +487,8 @@ class Menu extends \Magento\Backend\Block\Template
             $itemClass = str_replace('_', '-', strtolower($itemName));
 
             $menuItem = $this->changeTitle($menuItem);
+
+            //var_dump($menuItem->getId());
 
             if (count($colBrakes) && $colBrakes[$itemPosition]['colbrake'] && $itemPosition != 1) {
                 $output .= '</ul></li><li class="column"><ul role="menu">';
