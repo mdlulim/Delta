@@ -328,7 +328,6 @@
                 <filter>text</filter>
                 <label translate="true">Job Title</label>
                 <visible>false</visible>
-                <item name="visible" xsi:type="boolean">false</item>
             </settings>
         </column>
         <column name="email_admin" sortOrder="210">
@@ -336,7 +335,6 @@
                 <filter>text</filter>
                 <label translate="true">Email</label>
                 <visible>true</visible>
-                <item name="visible" xsi:type="boolean">false</item>
             </settings>
         </column>
         <column name="gender" class="Magento\Company\Ui\Component\Listing\Column\Gender" sortOrder="220">
