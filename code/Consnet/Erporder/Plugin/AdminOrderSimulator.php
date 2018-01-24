@@ -96,40 +96,7 @@ class AdminOrderSimulator
                                                               $company_data["VKORG"],
                                                               $company_data["VTWEG"],
                                                               $company_data["SPART"]);
-                        if($zresults !== null){
-                            if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
-                                if($quote->hasItems()){
-                                    $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
-                                    $products = '';
-                                    foreach($quote->getAllVisibleItems() as $item){
-                                            if(in_array($item->getSku(), $matnrs)){                                                
-                                                $products+= $products.', '.$item->getName();
-                                                $quote->deleteItem($item);
-                                                $quote->setTotalsCollectedFlag(false)->collectTotals();
-                                                $quote->save();
-                                            }
-                                    }
-                                    $this->messageManager->addError("Required quantity is not available For Product(s) ".$products);
-                                }
-                            }
-                            if ($this->hasValue($zresults->ZSTATUS->MESSAGE)) {   
-                                $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');                             
-                                $products = "";
-                                $no_license = array(8,9,10);
-                                foreach($quote->getAllVisibleItems() as $item){
-                                        $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
-                                        foreach ($category_ids as $cat) {
-                                            if(in_array($cat, $no_license)){
-                                                $products+= $products.', '.$item->getName();
-                                            }
-                                        }
-                                        $quote->deleteItem($item);
-                                        $quote->setTotalsCollectedFlag(false)->collectTotals();
-                                        $quote->save();
-                                }
-                                
-                                $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$products);
-                            }
+                        if($zresults !== null){                            
                             if(isset($zresults->ZRESULTS->item)) {	
                                 $totalTax = 0;
                                 $total = 0;		        
@@ -195,6 +162,43 @@ class AdminOrderSimulator
                                 $quote->setGrandTotal(($total + $totalTax));
                                 $quote->setTotalsCollectedFlag(true)->collectTotals();
                                 $quote->collectTotals();
+                            }else {
+                                if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
+                                    if($quote->hasItems()){
+                                        $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
+                                        $products = '';
+                                        foreach($quote->getAllVisibleItems() as $item){
+                                                if(in_array($item->getSku(), $matnrs)){                                                
+                                                    $products+= $products.', '.$item->getName();
+                                                    $quote->deleteItem($item);
+                                                    $quote->setTotalsCollectedFlag(false)->collectTotals();
+                                                    $quote->save();
+                                                }
+                                        }
+                                        if($products !== ''){
+                                            $this->messageManager->addError("Required quantity is not available For Product(s) ".$products);
+                                        }                                        
+                                    }
+                                }
+                                if ($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
+                                    $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');                             
+                                    $products = "";
+                                    $no_license = array(8,9,10);
+                                    foreach($quote->getAllVisibleItems() as $item){
+                                        $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
+                                        foreach ($category_ids as $cat) {
+                                            if(in_array($cat, $no_license)){
+                                                $products+= $products.', '.$item->getName();
+                                                $quote->deleteItem($item);
+                                                $quote->setTotalsCollectedFlag(false)->collectTotals();
+                                                $quote->save();
+                                            }
+                                        }                                            
+                                    }
+                                    if($products !== ''){
+                                        $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$products);
+                                    }
+                                }
                             }
                         }
                     }
