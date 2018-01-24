@@ -34,7 +34,7 @@
         
         -->
 
-        <column name="STP_ID"  class="Consnet\Promotions\Ui\Component\Listing\Column\CompanySTP">
+        <column name="STP_ID" > <!--   class="Consnet\Promotions\Ui\Component\Listing\Column\CompanySTP"> -->
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>
@@ -45,7 +45,7 @@
 
 
 
-        <!--<column name="STP_ID" sortOrder="15">
+         <!--<column name="STP_ID" sortOrder="15">
             <settings>
                 <filter>text</filter>
                 <label translate="true">STP ID</label>
