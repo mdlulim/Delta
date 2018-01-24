@@ -188,7 +188,7 @@ class Index extends \Magento\Customer\Controller\AbstractAccount
                 "company_id" => $id
             ]
           ];
-        $url = "http://10.2.10.93/" . $this->NAMESPACE_ID . "/index.php/rest/V1/company/role/".$defRole->getId();
+        $url =  $this->NAMESPACE_ID . "/index.php/rest/V1/company/role/".$defRole->getId();
 
         $role = $this->crearObject($url, 'PUT', $role, 'X');
 

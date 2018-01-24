@@ -198,7 +198,7 @@ class Index extends \Magento\Framework\App\Action\Action {
 
     protected function authApi() {
         $userData = array("username" => "admin", "password" => "Consnet01");
-        $ch = curl_init("http://10.2.10.93/" . $this->NAMESPACE_ID . "/index.php/rest/V1/integration/admin/token");
+        $ch = curl_init( $this->NAMESPACE_ID . "/index.php/rest/V1/integration/admin/token");
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -817,7 +817,7 @@ class Index extends \Magento\Framework\App\Action\Action {
                 "company_id" => $company_id
             ]
         ];
-        $url = "http://10.2.10.93/" . $this->NAMESPACE_ID . "/index.php/rest/V1/company/role";
+        $url =  $this->NAMESPACE_ID . "/index.php/rest/V1/company/role";
 
         $role = $this->crearObject($url, 'POST', $role, '');
 
@@ -846,7 +846,7 @@ class Index extends \Magento\Framework\App\Action\Action {
                 "company_id" => $company_id
             ]
         ];
-        $url = "http://10.2.10.93/" . $this->NAMESPACE_ID . "/index.php/rest/V1/company/role/" . $roleid;
+        $url =  $this->NAMESPACE_ID . "/index.php/rest/V1/company/role/" . $roleid;
 
         $role = $this->crearObject($url, 'PUT', $role, '');
 
