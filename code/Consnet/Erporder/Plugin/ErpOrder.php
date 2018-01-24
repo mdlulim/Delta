@@ -223,7 +223,7 @@ class ErpOrder
                             }
                         }else{
                             $line = $zresults->ZTT_ORDER_TOTALS->item ;    
-                            var_dump($zresults->ZTT_ORDER_TOTALS->item->MWSBP);die();               
+                            //var_dump($zresults->ZTT_ORDER_TOTALS->item->MWSBP);die();               
                             $order->setTaxAmount($zresults->ZTT_ORDER_TOTALS->item->MWSBP);
                             $order->setSubtotal($zresults->TOTAL);
                             $order->setGrandTotal(($zresults->TOTAL + $line->MWSBP) );
