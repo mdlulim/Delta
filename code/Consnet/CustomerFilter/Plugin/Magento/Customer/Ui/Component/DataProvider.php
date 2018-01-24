@@ -10,13 +10,13 @@ class DataProvider
         $data['items'] = $result;
         $Arra = array(1, 2, 3);
         $tmp['items'] = array ();
-        
+        var_dump($data['items']);die();
         foreach($data['items'] as $line){
             if(in_array($line['entity_id'],$Arra)){
               array_push($tmp['items'],$line);
             }
         }
-        var_dump($tmp);die();
+        //var_dump($tmp);die();
         $data = $tmp;
         return $data;
     }
