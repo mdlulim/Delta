@@ -186,7 +186,7 @@ class AdminOrderSimulator
                                 }
                                 if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
                                     $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');                             
-                                    $products = "";
+                                    $products = "";var_dump($matnrs);var_dump('Not QTY');die();
                                     $no_license = array(8,9,10);
                                     foreach($quote->getAllVisibleItems() as $item){
                                         $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
@@ -204,7 +204,7 @@ class AdminOrderSimulator
                                         }                                            
                                     }
                                     if($products !== ''){
-                                        $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$products);
+                                        $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$no_license[0].$no_license[1].$no_license[2].$products);
                                     }
                                 }
                         }

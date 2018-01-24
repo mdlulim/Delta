@@ -514,17 +514,17 @@ class ColumnSet extends \Magento\Framework\View\Element\Template
   
         $om = \Magento\Framework\App\ObjectManager::getInstance();
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
-        $userId=$authSession->getUser()->getUserId();
-        $roleId= $authSession->getUser()->getRole()->getRoleId();
+        $user = $authSession->getUser();
+        $userId = $user->getUserId();
+        $roleId = $authSession->getUser()->getRole()->getRoleId();
         $sess = 2312;
        
         $resource = $om->get('Magento\Framework\App\ResourceConnection');
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('company'); 
         $tableName2 = $resource->getTableName('company_advanced_customer_entity'); 
-        //if(($roleId != 2) && ($roleId != 8) && ($roleId != 87)){  
-        if($roleId == 27){  
-            
+        
+        if(($user->getRole()->getRoleName() == 'sales_rep')) {
             $tableName = $resource->getTableName('company'); 
             $tableName2 = $resource->getTableName('company_advanced_customer_entity'); 
 
