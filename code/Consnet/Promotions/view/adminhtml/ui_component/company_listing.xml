@@ -33,7 +33,7 @@
         </column>
         
         -->
-
+      
         <column name="STP_ID" > <!--   class="Consnet\Promotions\Ui\Component\Listing\Column\CompanySTP"> -->
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
