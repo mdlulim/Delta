@@ -82,15 +82,18 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
         if(($user->getRole()->getRoleName() == 'sales_rep')) {
             $tableName = $resource->getTableName('company'); 
             $tableName2 = $resource->getTableName('company_advanced_customer_entity'); 
-
-            $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
-            $userId=$authSession->getUser()->getUserId(); 
             
             $sql = "Select entity_id FROM " . $tableName." WHERE  sales_representative_id =".$userId;
             $result = $connection->fetchAll($sql); 
         
             $arrayIds = [];
+            
             if($result != null){
+                $id=0;  
+                foreach($result as $arr){
+                    $arrayIds[$id] = $arr['entity_id'];
+                    $id++;
+                }
                 $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arrayIds) . ')';
                 $result2 = $connection->fetchAll($sql2); 
                 $customerIds = [];
@@ -99,17 +102,18 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
                 $customerIds[$ids]=$arr['customer_id'];
                 $ids++;
                 }
+               $arrayIds = $customerIds; 
             }
-            $Arra = $arrayIds;
-        $tmp['items'] = array ();
+            $cusId = $arrayIds;
+            $tmp['items'] = array ();
 
-        foreach($data['items'] as $line){
-            if(in_array($line['entity_id'],$Arra)){
-              array_push($tmp['items'],$line);
+            foreach($data['items'] as $line){
+                if(in_array($line['entity_id'],$cusId)){
+                array_push($tmp['items'],$line);
+                }
             }
-        }
-        $data = $tmp;
-        return $data;
+            $data = $tmp;
+            return $data;
         }else{
           return $data;
         } 
