@@ -1,6 +1,6 @@
 <?php
 
-namespace Magento\Customer\Ui\Component;
+namespace Consnet\CustomerFilter\Ui\Component;
 
 use Magento\Customer\Api\Data\AttributeMetadataInterface;
 use Magento\Customer\Ui\Component\Listing\AttributeRepository;
