@@ -162,33 +162,41 @@ class AdminOrderSimulator
                                 $quote->setGrandTotal(($total + $totalTax));
                                 $quote->setTotalsCollectedFlag(true)->collectTotals();
                                 $quote->collectTotals();
-                            }else {
+                            }
                                 if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
                                     if($quote->hasItems()){
-                                        $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
+                                        $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);//
                                         $products = '';
                                         foreach($quote->getAllVisibleItems() as $item){
-                                                if(in_array($item->getSku(), $matnrs)){                                                
-                                                    $products+= $products.', '.$item->getName();
-                                                    $quote->deleteItem($item);
-                                                    $quote->setTotalsCollectedFlag(false)->collectTotals();
-                                                    $quote->save();
-                                                }
+                                            if(in_array($item->getSku(), $matnrs)){   //var_dump($matnrs);var_dump('Not QTY');die();                                             
+                                                if ($products == '') {                                                    
+                                                    $products= $products.$item->getName();
+                                                }else {
+                                                    $products= $products.$item->getName().', ';
+                                                }                                                
+                                                $quote->deleteItem($item);
+                                                $quote->setTotalsCollectedFlag(false)->collectTotals();
+                                                $quote->save();
+                                            }
                                         }
                                         if($products !== ''){
                                             $this->messageManager->addError("Required quantity is not available For Product(s) ".$products);
                                         }                                        
                                     }
                                 }
-                                if ($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
+                                if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
                                     $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');                             
                                     $products = "";
                                     $no_license = array(8,9,10);
                                     foreach($quote->getAllVisibleItems() as $item){
                                         $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
-                                        foreach ($category_ids as $cat) {
+                                        foreach ($category_ids as $cat) {//var_dump($category_ids);var_dump('Not QTY');die();
                                             if(in_array($cat, $no_license)){
-                                                $products+= $products.', '.$item->getName();
+                                                if ($products == '') {                                                    
+                                                    $products= $products.$item->getName();
+                                                }else {
+                                                    $products= $products.$item->getName().', ';
+                                                }
                                                 $quote->deleteItem($item);
                                                 $quote->setTotalsCollectedFlag(false)->collectTotals();
                                                 $quote->save();
@@ -199,7 +207,6 @@ class AdminOrderSimulator
                                         $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$products);
                                     }
                                 }
-                            }
                         }
                     }
                  }
