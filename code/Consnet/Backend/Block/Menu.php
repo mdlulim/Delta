@@ -20,6 +20,8 @@ namespace Consnet\Backend\Block;
  */
 class Menu extends \Magento\Backend\Block\Template
 {
+
+    
     const CACHE_TAGS = 'BACKEND_MAINMENU';
 
     /**
