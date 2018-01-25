@@ -119,8 +119,11 @@ class AdminOrderSimulator
                                                     //$quote->setTaxAmount($zresults->ZRESULTS->item[$i]->TX_DOC_CUR);
                                                     //$quote->setSubtotal($zresults->ZRESULTS->item[$i]->NET_VALUE1);
                                                     //$quote->setGrandTotal(($zresults->ZRESULTS->item[$i]->SUBTOTAL6) );
+                                                    $this->messageManager->addSuccessMessage('You added '.$item->getName().
+                                                    ' to your shopping cart.');
                                                 }
                                             } 
+                                            
                                             //if(isset($_SESSION['flowcontrol'])){
                                                
                                             //}else {
@@ -144,6 +147,8 @@ class AdminOrderSimulator
                                                 //$quote->setTaxAmount($zresults->ZRESULTS->item->TX_DOC_CUR);
                                                 //$quote->setSubtotal($zresults->ZRESULTS->item->NET_VALUE1);
                                                 //$quote->setGrandTotal(($zresults->ZRESULTS->item->SUBTOTAL6) );
+                                                $this->messageManager->addSuccessMessage('You added '.$item->getName().
+                                                ' to your shopping cart.');
                                                 if(isset($_SESSION['flowcontrol'])){
                                                     
                                                 }else {
@@ -177,10 +182,11 @@ class AdminOrderSimulator
                                                 $quote->deleteItem($item);
                                                 $quote->setTotalsCollectedFlag(false)->collectTotals();
                                                 $quote->save();
+                                                $this->messageManager->addError("Required quantity is not available For Product(s) ".$item->getName());
                                             }
                                         }
                                         if($products !== ''){
-                                            $this->messageManager->addError("Required quantity is not available For Product(s) ".$products);
+                                            //$this->messageManager->addError("Required quantity is not available For Product(s) ".$products);
                                         }                                        
                                     }
                                 }
@@ -200,11 +206,12 @@ class AdminOrderSimulator
                                                 $quote->deleteItem($item);
                                                 $quote->setTotalsCollectedFlag(false)->collectTotals();
                                                 $quote->save();
+                                                $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$item->getName());
                                             }
                                         }                                            
                                     }
                                     if($products !== ''){
-                                        $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$no_license[0].$no_license[1].$no_license[2].$products);
+                                        //$this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$products);
                                     }
                                 }
                         }

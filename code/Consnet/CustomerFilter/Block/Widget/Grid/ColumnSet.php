@@ -542,7 +542,7 @@ class ColumnSet extends \Magento\Framework\View\Element\Template
             
             if(isset($_SESSION['company_id'])){
                 $arrayIds[0] =  $_SESSION['company_id'];
-                var_dump( $arrayIds[0]);die();
+                //var_dump( $arrayIds[0]);die();
 
             }else{
             foreach($result as $arr){

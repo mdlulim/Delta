@@ -209,7 +209,11 @@
         </column>
 
 
+<<<<<<< HEAD
+        <column name="STP_ID" > <!--   class="Consnet\Promotions\Ui\Component\Listing\Column\CompanySTP"> -->
+=======
           <column name="STP_ID" sortOrder="0" > <!--   class="Consnet\Promotions\Ui\Component\Listing\Column\CompanySTP"> -->
+>>>>>>> 6d59d5d8eceb14347654f818f66a23105a1a68aa
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>

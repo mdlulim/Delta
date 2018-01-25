@@ -125,6 +125,7 @@ class ErpOrder
             $_SESSION['CURRENT_ORDER'] = $edited_order->getId();
             return $edited_order;
         }
+        var_dump('Current Order Null');
         return null;
     }
 
