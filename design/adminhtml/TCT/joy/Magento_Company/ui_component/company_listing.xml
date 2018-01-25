@@ -297,13 +297,13 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="company_admin" sortOrder="190">
+        <!-- <column name="company_admin" sortOrder="190">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Customer Admin</label>
                 <visible>true</visible>
             </settings>
-        </column>
+        </column> -->
         <!-- <column name="job_title" sortOrder="200">
             <settings>
                 <filter>text</filter>

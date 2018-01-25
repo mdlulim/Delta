@@ -213,7 +213,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">STP IDhere</item>
+                    <item name="label" xsi:type="string" translate="true">STP ID</item>
                 </item>
             </argument>
         </column>
@@ -317,13 +317,13 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="company_admin" sortOrder="190">
+        <!-- <column name="company_admin" sortOrder="190">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Company Admin</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <!-- <column name="job_title" sortOrder="200">
             <settings>
                 <filter>text</filter>
