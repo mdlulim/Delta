@@ -192,8 +192,11 @@
                 //delivery_date.disabled = true;
                 console.log(delivery_date);
                 console.log(data);
-            }
+            }            
             else{
+              if(data == 'updated'){
+                location.reload();
+              }
               btnCancelorder.classList.add('hidden');
               btnEdit.classList.add('hidden');
               //delivery_date.disabled = true;
