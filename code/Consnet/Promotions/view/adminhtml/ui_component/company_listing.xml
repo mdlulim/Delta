@@ -324,13 +324,13 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="job_title" sortOrder="200">
+        <!-- <column name="job_title" sortOrder="200">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Job Title ONE</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <column name="email_admin" sortOrder="210">
             <settings>
                 <filter>text</filter>
