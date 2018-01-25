@@ -49,12 +49,11 @@ $numColumns = sizeof($block->getColumns());
                     <?php echo $block->getMainButtonsHtml() ? '<div class="admin__filter-actions">' . $block->getMainButtonsHtml() . '</div>' : ''; ?>
                 <?php endif; ?>
                     <?php 
-
-                           $om = \Magento\Framework\App\ObjectManager::getInstance();
+                            $om = \Magento\Framework\App\ObjectManager::getInstance();
                             $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
                             $userId=$authSession->getUser()->getUserId();
                             $roleId= $authSession->getUser()->getRole()->getRoleId(); 
-                            if($roleId == 27){  
+                            if(($authSession->getUser()->getRole()->getRoleName() == 'sales_rep')) {  
                                 $resource = $om->get('Magento\Framework\App\ResourceConnection');
                                 $connection = $resource->getConnection();
                                 $tableName = $resource->getTableName('company'); 
