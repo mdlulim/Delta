@@ -360,11 +360,6 @@ class Menu extends \Magento\Backend\Block\Template
         }
 
 
-        //menu-magento-customer-customer
-
-       // if(($this->excludeMenu($menuItem->getId())))
-       // {
-
         $output .= '<div class="submenu"' . ($level == 0 && isset($id) ? ' aria-labelledby="' . $id . '"' : '') . '>';
         $colStops = null;
         if ($level == 0 && $limit) {
@@ -384,50 +379,34 @@ class Menu extends \Magento\Backend\Block\Template
     }
 
 
-    private function excludeMenu($menu){
+    private function excludeSales($menu){
 
         $arr_menu = array(
             "Magento_Sales::sales",
             "Magento_Sales::sales_operation",
             "Magento_Sales::sales_order",
-            //"Magento_Catalog::catalog",
-           // "Magento_Catalog::inventory",
             "Magento_Customer::customer",
             "Magento_Customer::customer_manage",
             "Magento_Company::company_index",
-            //"Magento_CatalogRule::promo",
-            //"Magento_Enterprise::private_sales",
-            //"Magento_Backend::marketing_communication",
-            //"Shopial_Facebook::marketing_social",
-           // "Magento_Backend::marketing_seo",
-            //"Magento_Backend::marketing_user_content",
-            //"Magento_Backend::content",
-            //"Magento_Backend::content_elements",
-           // "Magestore_Bannerslider::bannerslider",
-           // "Magento_Backend::system_design",
-           // "Magento_Backend::content_staging",
-           //// "Magento_Reports::report",
-           // "Magento_Reports::report_marketing",
-           // "Magento_Review::report_review",
-           // "Magento_Reports::report_salesroot",
-           // "Magento_Reports::report_customers",
-           // "Magento_Reports::report_products",
-           // "Magento_Invitation::report_magento_invition",
-           // "Magento_Reports::report_statistics",
-           // "Magento_Backend::stores",
-           // "Magento_Backend::stores_settings",
-           // "Magento_Tax::sales_tax",
-           // "Magento_CurrencySymbol::system_currency",
-           // "Magento_Backend::stores_attributes",
-           // "Magento_Backend::other_settings",
-           // "Magento_Backend::system",
-           // "Magento_Backend::system_convert",
-           // "Magento_Integration::system_extensions",
-           // "Magento_Backend::system_tools",
-           // "Magento_Support::support",
-           // "Magento_User::system_acl",
-           // "Magento_Logging::system_magento_logging",
-           // "Magento_Backend::system_other_settings"
+    
+        );
+
+        if(in_array($menu,$arr_menu)){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    private function excludeCIC($menu){
+
+        $arr_menu = array(
+            
+            "Magento_Backend::system",
+            "Magento_User::system_acl",
+            "Magento_User::system_acl_users",
+            "Magento_User::system_acl_locks",
         );
 
         if(in_array($menu,$arr_menu)){
@@ -471,7 +450,6 @@ class Menu extends \Magento\Backend\Block\Template
      * @param int $limit
      * @param array $colBrakes
      * @return string HTML
-     * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function renderNavigation($menu, $level = 0, $limit = 0, $colBrakes = [])
@@ -491,6 +469,8 @@ class Menu extends \Magento\Backend\Block\Template
 
             $menuItem = $this->changeTitle($menuItem);
 
+            //var_dump($menuItem->getId());
+
             if (count($colBrakes) && $colBrakes[$itemPosition]['colbrake'] && $itemPosition != 1) {
                 $output .= '</ul></li><li class="column"><ul role="menu">';
             }
@@ -499,11 +479,15 @@ class Menu extends \Magento\Backend\Block\Template
            
             if(($user->getRole()->getRoleName() == 'sales_rep' ||
                 $user->getRole()->getRoleName() == 'cic_agent' ) && 
-                $this->excludeMenu($menuItem->getId())  ) 
+                $this->excludeSales($menuItem->getId())  ) 
              {
                // var_dump($menuItem->getTitle());
                //echo  $user->getRole()->getRoleName();
                 
+            }elseif(($user->getRole()->getRoleName() == 'cic_support_stuff' ) && 
+            $this->excludeCIC($menuItem->getId()))
+            {
+
             }else{
 
             
