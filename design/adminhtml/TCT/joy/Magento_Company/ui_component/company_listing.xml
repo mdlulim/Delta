@@ -315,8 +315,8 @@
         <column name="job_title" sortOrder="200">
             <settings>
                 <filter>text</filter>
-                <label translate="true">Job Title TWO</label>
-                <visible>true</visible>
+                <label translate="true">Job Title</label>
+                <visible>false</visible>
             </settings>
         </column>
         <column name="email_admin" sortOrder="210">
