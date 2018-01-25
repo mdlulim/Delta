@@ -307,7 +307,7 @@
         <column name="job_title" sortOrder="200">
             <settings>
                 <filter>text</filter>
-                <label translate="true">Job Title</label>
+                <label translate="true">Job Title TWO</label>
                 <visible>true</visible>
             </settings>
         </column>
