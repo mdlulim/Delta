@@ -573,7 +573,6 @@ class ColumnSet extends \Magento\Framework\View\Element\Template
 
     }else{
         if(isset($_SESSION['company_id'])){
-            var_dump($_SESSION['company_id']);die();
             $arr[0] =  $_SESSION['company_id'];
 
             $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arr) . ')';
