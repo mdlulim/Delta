@@ -85,6 +85,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
                $arrayIds = $customerIds; 
             }
             $cusId = $arrayIds;
+            var_dump($cusId);die();
             return $this->addFieldToFilter('main_table.entity_id', array('in'=>$cusId));
         }else{
          return $this;
