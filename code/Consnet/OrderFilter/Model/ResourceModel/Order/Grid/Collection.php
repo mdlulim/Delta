@@ -46,27 +46,34 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         //$roleId = $authSession->getUser()->getRole()->getRoleId();
 
         if(($user->getRole()->getRoleName() == 'sales_rep')) {
-            $arrCompanyIDs = [];
+            //$arrCompanyIDs = [];
+            $arrCustomerIDs = [];
+
+            $resource = $om->get('Magento\Framework\App\ResourceConnection');
+            $connection = $resource->getConnection();
+            $companyTableName = $resource->getTableName('company');
+            $companyCustomerTableName = $resource->getTableName('company_advanced_customer_entity');
+
             if(array_key_exists('company_id', $_SESSION)) {
-                $arrCompanyIDs = array($_SESSION['company_id']);
+                //$arrCompanyIDs = array($_SESSION['company_id']);
+
+                $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id = " . $_SESSION['company_id'];
+
                 unset($_SESSION['company_id']);
             } else {
-                $resource = $om->get('Magento\Framework\App\ResourceConnection');
-                $connection = $resource->getConnection();
-                $companyTableName = $resource->getTableName('company');
-                //$companyCustomerTableName = $resource->getTableName('company_advanced_customer_entity');
+                $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id IN (SELECT entity_id FROM $companyTableName WHERE sales_representative_id = $userId)";
+            }
 
-                $sql = "SELECT entity_id FROM $companyTableName WHERE sales_representative_id = $userId";
-                $result = $connection->fetchAll($sql);
+            $result = $connection->fetchAll($sql);
 
-                if($result != null && count($result) > 0) {
-                    foreach($result as $arrRecord){
-                        $arrCompanyIDs[] = $arrRecord['entity_id'];
-                    }
+            if($result != null && count($result) > 0) {
+                foreach($result as $arrRecord){
+                    $arrCustomerIDs[] = $arrRecord['customer_id'];
                 }
             }
+
             parent::_initSelect();
-            return $this->addFieldToFilter('main_table.entity_id', array('in'=>$arrCompanyIDs));
+            return $this->addFieldToFilter('main_table.customer_id', array('in'=>$arrCustomerIDs));
         } else {
             parent::_initSelect();
             return $this;
