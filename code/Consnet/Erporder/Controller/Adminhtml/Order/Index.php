@@ -1,5 +1,5 @@
 <?php 
-namespace Consnet\Erporder\Controller\Adminhtml; 
+namespace Consnet\Erporder\Controller\Adminhtml\Order; 
 
 class Index extends \Magento\Backend\App\Action 
 { 
