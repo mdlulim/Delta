@@ -1177,18 +1177,21 @@ class AccountManagement implements AccountManagementInterface
             return true;
         }
 
-        /**$expirationPeriod = $this->customerModel->getResetPasswordLinkExpirationPeriod();
-
+        $expirationPeriod = $this->customerModel->getResetPasswordLinkExpirationPeriod();
+        
         $currentTimestamp = (new \DateTime())->getTimestamp();
-        $tokenTimestamp = (new \DateTime($rpTokenCreatedAt))->getTimestamp();
+        $tokenTimestamp = (new \DateTime($rpTokenCreatedAt.'+5'))->getTimestamp();
+      
         if ($tokenTimestamp > $currentTimestamp) {
+            die();
             return true;
+           
         }
 
         $hourDifference = floor(($currentTimestamp - $tokenTimestamp) / (60 * 60));
         if ($hourDifference >= $expirationPeriod) {
             return true;
-        } **/
+        }
 
         return false;
     }
