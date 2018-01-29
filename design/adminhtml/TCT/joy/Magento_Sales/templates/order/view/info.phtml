@@ -94,20 +94,24 @@ $orderStoreDate = $block->formatDate(
                                     switch ($ecc_status) {
                                         case "pending":
                                             $_order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
+                                            $_order->setState(\Magento\Sales\Model\Order::STATE_PENDING);
                                             //pending
                                             break;                        
                                         case "processing":
                                             $_order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                                            $_order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
                                             $ecc_status = 'updated';
                                             //processing
                                             break;                        
                                         case "canceled":
                                             $_order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
+                                            $_order->setState(\Magento\Sales\Model\Order::STATE_CANCELED);
                                             $ecc_status = 'updated';
                                             //canceled
                                             break;
                                         case "complete":
                                             $_order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                                            $_order->setState(\Magento\Sales\Model\Order::STATE_COMPLETE);
                                             $ecc_status = 'updated';
                                             //complete
                                             break;
