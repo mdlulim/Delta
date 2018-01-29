@@ -182,7 +182,7 @@ class AdminOrderSimulator
                                             $quote->deleteItem($item);
                                             $quote->setTotalsCollectedFlag(false)->collectTotals();
                                             $quote->save();
-                                            $this->messageManager->addError("Not enough stock for: ".$item->getName());
+                                            $this->messageManager->addError("Stock for ".$item->getName()." is not available");
                                         }
                                     }
                                     if($products !== ''){
@@ -292,21 +292,17 @@ class AdminOrderSimulator
                             "P_VTWEG" => $Vtweg
                             );
 
-        //Call Funtion (passing in parameters)
-        
+        //Call Funtion (passing in parameters)        
         try{
 
             $result = $soapClient->ZSIMULATE_SALES_ORDER($parameters);
-            return $result;
-		         
-        }
-        catch (SoapFault $e){
+            return $result;		         
+        }catch (SoapFault $e){
             $this->erpOrderId = 0;
             $this->erpOrderCreated = 0;
             $this->messageManager->addErrorMessage("Soap call error".$e->getMessage());
             return null;
-        }
-        
+        }        
     }
     
     private function urlExists($url){ 
@@ -321,12 +317,10 @@ class AdminOrderSimulator
 	} 
     
     private function hasValue($string){
-        if(!isset($string) || $string == null)
-        {
+        if(!isset($string) || $string == null){
             return false;
         }
-        else
-        {
+        else{
             return true;
         }
     }  
