@@ -90,28 +90,28 @@ $orderStoreDate = $block->formatDate(
                             $realOrderId = $_order->getRealOrderId();
                             $ecc_status = $mageorder->get_ecc_order_status($realOrderId);
                     
-                            if($order->getStatus() !== $ecc_status){
+                            if($_order->getStatus() !== $ecc_status){
                                     switch ($ecc_status) {
                                         case "pending":
-                                            $order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
+                                            $_order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
                                             //pending
                                             break;                        
                                         case "processing":
-                                            $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                                            $_order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
                                             $ecc_status = 'updated';
                                             //processing
                                             break;                        
                                         case "canceled":
-                                            $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
+                                            $_order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
                                             $ecc_status = 'updated';
                                             //canceled
                                             break;
                                         case "complete":
-                                            $order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                                            $_order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
                                             $ecc_status = 'updated';
                                             //complete
                                             break;
-                                    }$order->save();   
+                                    }$_order->save();   
                                 Header("Refresh:0");//print_r($ecc_status);
                             }
                             
