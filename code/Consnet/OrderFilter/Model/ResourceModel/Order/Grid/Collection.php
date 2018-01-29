@@ -60,27 +60,36 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
                 $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id = " . $companyID;
 
+                $result = $connection->fetchAll($sql);
+
+                if($result != null && count($result) > 0) {
+                    foreach($result as $arrRecord){
+                        $arrCustomerIDs[] = $arrRecord['customer_id'];
+                    }
+                }
+
+                parent::_initSelect();
+                return $this->addFieldToFilter('main_table.customer_id', array('in'=>$arrCustomerIDs));
+
                 unset($_SESSION['company_id']);
             } else {
                 $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id IN (SELECT entity_id FROM $companyTableName WHERE sales_representative_id = $userId)";
-            }
 
-            $result = $connection->fetchAll($sql);
+                $result = $connection->fetchAll($sql);
 
-            if($result != null && count($result) > 0) {
-                foreach($result as $arrRecord){
-                    $arrCustomerIDs[] = $arrRecord['customer_id'];
+                if($result != null && count($result) > 0) {
+                    foreach($result as $arrRecord){
+                        $arrCustomerIDs[] = $arrRecord['customer_id'];
+                    }
                 }
-            }
 
-            parent::_initSelect();
-            return $this->addFieldToFilter('main_table.customer_id', array('in'=>$arrCustomerIDs));
+                parent::_initSelect();
+                return $this->addFieldToFilter('main_table.customer_id', array('in'=>$arrCustomerIDs));
+            }
         } else {
             if(isset($_SESSION['company_id'])) {
                 $companyID = (int) $_SESSION['company_id'];
                 $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id = " . $companyID;
-
-                unset($_SESSION['company_id']);
 
                 $result = $connection->fetchAll($sql);
 
@@ -91,6 +100,8 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
                 }
                 parent::_initSelect();
                 return $this->addFieldToFilter('main_table.customer_id', array('in'=>$arrCustomerIDs));
+
+                unset($_SESSION['company_id']);
             } else {
                 parent::_initSelect();
                 return $this;
