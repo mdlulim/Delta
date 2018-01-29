@@ -80,19 +80,41 @@ $orderStoreDate = $block->formatDate(
 							$resources = $om->get('Magento\Framework\App\ResourceConnection');
 							$connection = $resources->getConnection();
 							
-							        $query = "SELECT `erpOrderId` FROM `erp_magento` WHERE `magOrderId` = '".$_order->getRealOrderId()."'";
-							        $erporder =  $connection->fetchRow($query)['erpOrderId'];
-                            //End /* @escapeNotVerified */ /*$_order->getStatusLabel()*/ id="order_status"
-                            //$date = date_create($_order->getData('DELIVERY_DATE'));
-                            //date_modify($date, '+1 day');
-                            //$formatedDate = date_format($date, 'dmY');
-                            //echo date('dmY', $_order->getData('DELIVERY_DATE'));
-                            //echo date('dMY', $date);
+                            $query = "SELECT `erpOrderId` FROM `erp_magento` WHERE `magOrderId` = '".$_order->getRealOrderId()."'";
+                            $erporder =  $connection->fetchRow($query)['erpOrderId'];
+                            
                             $DBdate = $_order->getData('DELIVERY_DATE');
                             $delivery_date = substr($DBdate, 0,2).'/'.substr($DBdate, 2,2).'/'.substr($DBdate, 3);
-                            //$time = strtotime(substr($DBdate, 0,2).'/'.substr($DBdate, 2,2).'/'.substr($DBdate, 3));
-                            //$newformat = date('Y-m-d',$time);
-                            //$final = date_format($new, 'd/m/Y');
+                            
+                            $mageorder = $om->create('\Consnet\Erporder\Helper\MageOrder');
+                            $realOrderId = $_order->getRealOrderId();
+                            $ecc_status = $mageorder->get_ecc_order_status($realOrderId);
+                    
+                            if($order->getStatus() !== $ecc_status){
+                                    switch ($ecc_status) {
+                                        case "pending":
+                                            $order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
+                                            //pending
+                                            break;                        
+                                        case "processing":
+                                            $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                                            $ecc_status = 'updated';
+                                            //processing
+                                            break;                        
+                                        case "canceled":
+                                            $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
+                                            $ecc_status = 'updated';
+                                            //canceled
+                                            break;
+                                        case "complete":
+                                            $order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                                            $ecc_status = 'updated';
+                                            //complete
+                                            break;
+                                    }$order->save();   
+                                Header("Refresh:0");//print_r($ecc_status);
+                            }
+                            
 							?>
                     <td><span><?php echo $delivery_date/*$erporder*/; ?></span></td>
                 </tr>
