@@ -66,7 +66,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
             $result = $connection->fetchAll($sql); 
         
             $arrayIds = [];
-            $customerIds = [];
+            $customerIds = array(0, 0);
             $id= 0;
             if($result != null){
                 if(isset($_SESSION['company_id'])){
@@ -86,11 +86,12 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
               $customerIds[$ids]=$arr['customer_id'];
               $ids++;
             } 
-            }else{
-              $customerIds = array(0, 0);  
             }
+           // var_dump($customerIds);die();
+          
             parent::_initSelect();
             $this->getSelect()->Where('entity_id IN (' . implode(',', $customerIds) . ')');
+            //unset($_SESSION['company_id']);
             return $this;
         }else{
              parent::_initSelect();
@@ -106,6 +107,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
                     $ids++;
                 }
                 $this->getSelect()->Where('entity_id IN (' . implode(',', $customerIds) . ')');
+                unset($_SESSION['company_id']);
                 return $this;
             }else{
                 parent::_initSelect();
