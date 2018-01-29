@@ -384,7 +384,7 @@ class MageOrder
                             if ($item->REA_FOR_RE == 'Z7') {
                                 return "canceled";
                             }
-                            return 'closed';
+                            return 'complete';
                             //complete
                             break;
                         }                    	
