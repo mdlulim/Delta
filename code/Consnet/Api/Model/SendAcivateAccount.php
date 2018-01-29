@@ -71,6 +71,8 @@ class SendAcivateAccount extends \Magento\Framework\Model\AbstractModel
         $connection->query($sql);
         //
         
+        $customer = $this->customerFactory->create();
+        $customer->setWebsiteId($websiteId)->loadByEmail($toemail);
         $customer->sendNewAccountEmail();
 
         $templateParams = [

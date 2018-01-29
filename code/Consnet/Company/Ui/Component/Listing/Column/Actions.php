@@ -57,6 +57,15 @@ class Actions extends Column
                     'hidden' => false,
                 ];
 
+                $item[$this->getData('name')]['viewusers'] = [
+                    'href' => $this->urlBuilder->getUrl(
+                        'switchcompany/SwitchCompany/viewUsers',
+                        ['id' => $item['entity_id']]
+                    ),
+                    'label' => __('Contact Person'),
+                    'hidden' => false,
+                ];
+
                 $item[$this->getData('name')]['order'] = [
                     'href' => $this->urlBuilder->getUrl(
                         'switchcompany/SwitchCompany/newOrder',

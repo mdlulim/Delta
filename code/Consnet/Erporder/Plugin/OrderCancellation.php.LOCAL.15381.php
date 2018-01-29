@@ -71,8 +71,8 @@ class OrderCancellation
         $soapClient  = new Client($WURL, $options);
 
         //Set Login details
-        $soapClient->setHttpLogin($helper->getGeneralConfig('user_name'));
-        $soapClient->setHttpPassword($helper->getGeneralConfig('password'));
+        $soapClient->setHttpLogin($this->helper->getGeneralConfig('user_name'));
+        $soapClient->setHttpPassword($this->helper->getGeneralConfig('password'));
 
         //Set Parameters
         $parameters = array(

@@ -58,21 +58,19 @@ class OrderCancellation
 
     public function reject_ecc_salesorder($ecc_doc){
         //$wsdlUrl = dirname(__FILE__)."/zsalesorder_function_group_binding.xml";
-        $om = \Magento\Framework\App\ObjectManager::getInstance();
-        $helper = $om->get('Consnet\Api\Helper\Data');
-        $WURL = $helper->getGeneralConfig('sales_order_text');
+        $wsdlUrl = "http://deltadev01.delta.co.zw/sap/bc/srt/wsdl/flv_10002A101AD1/bndg_url/sap/bc/srt/rfc/sap/zsales_order_function_group/220/zsales_order_function_group/zsales_order_function_group?sap-client=220";
         
-		//Set SOAP Options
+        //Set SOAP Options
         $options = array(
-							"soap_version" => SOAP_1_2       							
-						);		
-		
+                        "soap_version" => SOAP_1_2       							
+                    );		
+
         //Creat SOAP client instance
-        $soapClient  = new Client($WURL, $options);
+        $soapClient  = new Client($wsdlUrl, $options);
 
         //Set Login details
-        $soapClient->setHttpLogin($helper->getGeneralConfig('user_name'));
-        $soapClient->setHttpPassword($helper->getGeneralConfig('password'));
+        $soapClient->setHttpLogin('tmahihlaba');
+        $soapClient->setHttpPassword('COMTIA@7');
 
         //Set Parameters
         $parameters = array(

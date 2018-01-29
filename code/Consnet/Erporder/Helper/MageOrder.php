@@ -195,7 +195,7 @@ class MageOrder
     public function cancel_order($ordernumber){
         $order = $this->orderFactory->create()->load($ordernumber);
         $order->cancel();
-        $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);//STATE_COMPLETE);        
+        $order->setStatus(\Magento\Sales\Model\Order::STATE_CLOSED);//STATE_COMPLETE);        
         $order->save();
         $this->messageManager->addSuccessMessage("Order Canceled");
         return $order->getId();
@@ -384,7 +384,7 @@ class MageOrder
                             if ($item->REA_FOR_RE == 'Z7') {
                                 return "canceled";
                             }
-                            return 'complete';
+                            return 'closed';
                             //complete
                             break;
                         }                    	
@@ -403,7 +403,7 @@ class MageOrder
                         if ($result->E_STATUS_INFO->item->REA_FOR_RE == 'Z7') {
                             return "canceled";
                         }
-                        return 'complete';
+                        return 'closed';
                         //complete
                         break;
                     } 
