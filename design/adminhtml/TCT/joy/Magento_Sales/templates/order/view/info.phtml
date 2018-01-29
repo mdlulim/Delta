@@ -106,9 +106,9 @@ $orderStoreDate = $block->formatDate(
                                             $ecc_status = 'updated';
                                             //canceled
                                             break;
-                                        case "closed":
-                                            $_order->setStatus(\Magento\Sales\Model\Order::STATE_CLOSED);
-                                            $ecc_status = 'closed';
+                                        case "complete":
+                                            $_order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                                            $ecc_status = 'updated';
                                             //complete
                                             break;
                                     }$_order->save();   
