@@ -55,11 +55,10 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
         if(($user->getRole()->getRoleName() == 'sales_rep')) {
             
-            //if(array_key_exists('company_id', $_SESSION)) {
             if(isset($_SESSION['company_id'])) {
-                //$arrCompanyIDs = array($_SESSION['company_id']);
+                $companyID = (int) $_SESSION['company_id'];
 
-                $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id = " . $_SESSION['company_id'];
+                $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id = " . $companyID;
 
                 unset($_SESSION['company_id']);
             } else {
@@ -78,7 +77,8 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
             return $this->addFieldToFilter('main_table.customer_id', array('in'=>$arrCustomerIDs));
         } else {
             if(isset($_SESSION['company_id'])) {
-                $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id = " . $_SESSION['company_id'];
+                $companyID = (int) $_SESSION['company_id'];
+                $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id = " . $companyID;
 
                 unset($_SESSION['company_id']);
 
