@@ -23,7 +23,7 @@ class SendAcivateAccount extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Escaper $escaper,
         Random $mathRandom,
-        \Consnet\Customer\Model\AccountManagement $accountManager , 
+        \Magento\Customer\Model\AccountManagement $accountManager , 
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager
 
@@ -71,6 +71,8 @@ class SendAcivateAccount extends \Magento\Framework\Model\AbstractModel
         $connection->query($sql);
         //
         
+        $customer = $this->customerFactory->create();
+        $customer->setWebsiteId($websiteId)->loadByEmail($toemail);
         $customer->sendNewAccountEmail();
 
         $templateParams = [
