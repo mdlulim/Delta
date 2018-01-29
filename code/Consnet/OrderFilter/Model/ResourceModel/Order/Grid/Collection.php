@@ -53,7 +53,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
             $connection = $resource->getConnection();
             $companyTableName = $resource->getTableName('company');
             $companyCustomerTableName = $resource->getTableName('company_advanced_customer_entity');
-            var_dump($_SESSION);
+            //var_dump($_SESSION);
             if(array_key_exists('company_id', $_SESSION)) {
                 //$arrCompanyIDs = array($_SESSION['company_id']);
 
