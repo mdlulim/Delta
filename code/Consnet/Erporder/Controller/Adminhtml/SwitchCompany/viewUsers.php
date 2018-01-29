@@ -1,7 +1,7 @@
 <?php
   namespace Consnet\ErpOrder\Controller\Adminhtml\SwitchCompany;
 
-  class newViews extends \Magento\Backend\App\Action
+  class viewUsers extends \Magento\Backend\App\Action
   {
     /**
     * @var \Magento\Framework\View\Result\PageFactory
@@ -20,7 +20,7 @@
     ) {
           parent::__construct($context);
           $this->resultPageFactory = $resultPageFactory;
-    }
+    } 
 
     /**
      * Load the page defined in view/adminhtml/layout/exampleadminnewpage_helloworld_index.xml
