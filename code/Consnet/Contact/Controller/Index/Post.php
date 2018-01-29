@@ -61,7 +61,7 @@ class Post extends \Magento\Contact\Controller\Index
     		    $parameters1['PCodegroupb'] = '';
          
             $parameters1 = array( "PCodea" => $code1 ,
-           "PCodegroupa" => $codegroup1 ,
+           "PCodegroupa1" => $codegroup1 ,
            "PCodeb" => $code2 , 
            "PCodegroupb" => $codegroup2 ,
            "PDescription" => $post['comment'].'%XX50000764',//%0000001005', 
@@ -84,9 +84,9 @@ class Post extends \Magento\Contact\Controller\Index
         		
         		
         	  $result = $soapClient->Zmagentoservreqcreatev1($parameters1);
-            $_reference = $result->TId  ;
+              $_reference = $result->TId  ;
 
-            if($_reference !=''){
+             if($_reference !=''){
 
 
             $this->saveRequestLocaly($_reference ,  $_title , $post['stp_id'] );
@@ -105,7 +105,7 @@ class Post extends \Magento\Contact\Controller\Index
             $this->_redirect('contact/');
             return;
             }
-        } catch (\Exception $e) {
+        } catch (SoapFault $e) {
         
 
             $_SESSION['Type'] = 'error' ;
