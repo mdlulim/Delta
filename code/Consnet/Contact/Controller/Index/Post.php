@@ -9,6 +9,7 @@ namespace Consnet\Contact\Controller\Index;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\ObjectManager;
 use Zend\Soap\Client;
+use SoapFault;
 
 class Post extends \Magento\Contact\Controller\Index
 {
@@ -79,14 +80,16 @@ class Post extends \Magento\Contact\Controller\Index
 				   $soapClient  = new Client($wsdlUrl,array("soap_version" => SOAP_1_2));
 
         		//Set Login details
-        		$soapClient->setHttpLogin('magentorfc');
+        		$soapClient->setHttpLogin('magentorfc1');
         		$soapClient->setHttpPassword('Consnet02');
         		
-        		
-        	  $result = $soapClient->Zmagentoservreqcreatev1($parameters1);
-            $_reference = $result->TId  ;
+             
+       
+              $result = $soapClient->Zmagentoservreqcreatev1($parameters1);
+        
+              $_reference = $result->TId  ;
 
-            if($_reference !=''){
+             if($_reference !=''){
 
 
             $this->saveRequestLocaly($_reference ,  $_title , $post['stp_id'] );
@@ -105,11 +108,11 @@ class Post extends \Magento\Contact\Controller\Index
             $this->_redirect('contact/');
             return;
             }
-        } catch (\Exception $e) {
+        } catch (SoapFault $e) {
         
 
-            $_SESSION['Type'] = 'error' ;
-            $_SESSION['Message'] = 'We can\'t process your request right now. Sorry, that\'s all we know.'.$e->getMessage() ;
+            $_SESSION['Type'] = 'warning' ;
+            $_SESSION['Message'] = 'We can\'t process your request right now. Sorry, that\'s all we know. >> '.$e->getMessage() ;
 
             //$this->messageManager->addError(
             //    __('We can\'t process your request right now. Sorry, that\'s all we know.'.$e->getMessage())
