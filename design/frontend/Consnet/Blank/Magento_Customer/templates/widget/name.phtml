@@ -71,13 +71,13 @@ $suffix = $block->showSuffix();
 
             <div class="control">
              <?= $block->escapeHtmlAttr($block->getObject()->getFirstname()) ?>
-              <!-- To be edited -->
+              <!--   -->
                   <input style="display:none" type="text" id="<?= $block->escapeHtmlAttr($block->getFieldId('firstname')) ?>"
                        name="<?= $block->escapeHtmlAttr($block->getFieldName('firstname')) ?>"
                        value="<?= $block->escapeHtmlAttr($block->getObject()->getFirstname()) ?>"
                        title="<?= $block->escapeHtmlAttr($block->getStoreLabel('firstname')) ?>"
                        class="input-text <?= $block->escapeHtmlAttr($block->getAttributeValidationClass('firstname')) ?>" <?php if ($block->getAttributeValidationClass('firstname') == 'required-entry') echo ' data-validate="{required:true}"' ?>>
-			<!-- To be edited -->         
+			<!--   -->         
             </div>
         </div>
     <?php if ($middle): ?>
@@ -103,13 +103,13 @@ $suffix = $block->showSuffix();
 
             <div class="control">
              <?= $block->escapeHtmlAttr($block->getObject()->getLastname()) ?>
-             <!-- To be edited -->
-               <input type="text" id="<?= $block->escapeHtmlAttr($block->getFieldId('lastname')) ?>"
+             <!--   -->
+               <input style="display:none" type="text" id="<?= $block->escapeHtmlAttr($block->getFieldId('lastname')) ?>"
                        name="<?= $block->escapeHtmlAttr($block->getFieldName('lastname')) ?>"
                        value="<?= $block->escapeHtmlAttr($block->getObject()->getLastname()) ?>"
                        title="<?= $block->escapeHtmlAttr($block->getStoreLabel('lastname')) ?>"
                        class="input-text <?= $block->escapeHtmlAttr($block->getAttributeValidationClass('lastname')) ?>" <?php if ($block->getAttributeValidationClass('lastname') == 'required-entry') echo ' data-validate="{required:true}"' ?>>
-			<!-- To be edited -->      
+			<!--   -->      
             </div>
         </div>
     <?php if ($suffix): ?>
