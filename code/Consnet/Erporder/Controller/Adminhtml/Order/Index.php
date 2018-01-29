@@ -37,6 +37,7 @@ class Index extends \Magento\Backend\App\Action
                         break;
                     case "complete":
                         $order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                        $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
                         $ecc_status = 'updated';
                         //complete
                         break;
