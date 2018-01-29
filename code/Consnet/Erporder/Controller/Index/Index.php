@@ -113,21 +113,25 @@ class Index extends \Magento\Framework\App\Action\Action
             if($order->getStatus() !== $ecc_status){
                 switch ($ecc_status) {
                     case "pending":
-                        //$order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                        $order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
+                        $order->setState(\Magento\Sales\Model\Order::STATE_PENDING);
                         //pending
                         break;                        
                     case "processing":
                         $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                        $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
                         $ecc_status = 'updated';
                         //processing
                         break;                        
                     case "canceled":
                         $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
+                        $order->setState(\Magento\Sales\Model\Order::STATE_CANCELED);
                         $ecc_status = 'updated';
                         //canceled
                         break;
                     case "complete":
                         $order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                        $order->setState(\Magento\Sales\Model\Order::STATE_COMPLETE);
                         $ecc_status = 'updated';
                         //complete
                         break;
