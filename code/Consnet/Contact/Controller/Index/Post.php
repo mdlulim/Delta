@@ -74,14 +74,14 @@ class Post extends \Magento\Contact\Controller\Index
           //var_dump(//$parameters1);
             
             $this->module_path = "app/code/Consnet/Contact/";
-            $wsdlUrl = $this->module_path."wsdl/QA_zcreate_serv_reqv2_bind.xml";
+            $wsdlUrl = $this->module_path."wsdl/zcreate_serv_reqv2_bind.xml";
             
 				//Start Remove
 				   $soapClient  = new Client($wsdlUrl,array("soap_version" => SOAP_1_2));
 
         		//Set Login details
-        		$soapClient->setHttpLogin('magentorfc');
-        		$soapClient->setHttpPassword('Consnet02');
+        		$soapClient->setHttpLogin('tmadihlaba');
+        		$soapClient->setHttpPassword('Consnet01');
         		
              
        
