@@ -386,7 +386,7 @@ class Menu extends \Magento\Backend\Block\Template
             "Magento_Sales::sales_operation",
             "Magento_Sales::sales_order",
             "Magento_Customer::customer",
-            "Magento_Customer::customer_manage",
+           // "Magento_Customer::customer_manage",
             "Magento_Company::company_index",
     
         );
