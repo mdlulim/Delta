@@ -7,7 +7,7 @@
     <preference for="Magento\Customer\Block\Account\Dashboard\Info" type="Consnet\Customer\Block\Account\Dashboard\Info" />
     <preference for="Magento\Customer\Block\Form\Login" type="Consnet\Customer\Block\Form\Login" />
     <preference for="Magento\Customer\Block\Account\AuthorizationLink" type="Consnet\Customer\Block\Account\AuthorizationLink" />
-    <preference for="Magento\Customer\Model\AccountManagement" type="Consnet\Customer\Model\AccountManagement" />
+   <!-- <preference for="Magento\Customer\Model\AccountManagement" type="Consnet\Customer\Model\AccountManagement" /> -->
     
     
    <!-- <preference for="Magento\Customer\Controller\Account\LogoutSuccess" type="Delta\Customer\Controller\Account\LogoutSuccess" /> -->

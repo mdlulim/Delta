@@ -47,56 +47,71 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
     }
 
-    protected function _initSelect()
-    {
-       parent::_initSelect();
+    protected function _initSelect() {
         $om = \Magento\Framework\App\ObjectManager::getInstance();
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
         $user = $authSession->getUser();
         $userId = $user->getUserId();
         $roleId = $authSession->getUser()->getRole()->getRoleId();
-       
+        $roleName = $user->getRole()->getRoleName();
+
         $resource = $om->get('Magento\Framework\App\ResourceConnection');
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('company'); 
         $tableName2 = $resource->getTableName('company_advanced_customer_entity'); 
         
-        if(($user->getRole()->getRoleName() == 'sales_rep')) {
-            $tableName = $resource->getTableName('company'); 
-            $tableName2 = $resource->getTableName('company_advanced_customer_entity'); 
+        if($roleName == "sales_rep"){
+           
             $sql = "Select entity_id FROM " . $tableName." WHERE  sales_representative_id =".$userId;
             $result = $connection->fetchAll($sql); 
         
             $arrayIds = [];
+            $customerIds = [];
+            $id= 0;
             if($result != null){
-                $id=0;  
-                foreach($result as $arr){
-                    $arrayIds[$id] = $arr['entity_id'];
-                    $id++;
-                }
-                $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arrayIds) . ')';
+                if(isset($_SESSION['company_id'])){
+                    $arrayIds[0] =  $_SESSION['company_id'];
+                }else{
+                    foreach($result as $arr){
+                        $arrayIds[$id] = $arr['entity_id'];
+                        $id++;
+                    }
+                } 
+            
+            $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arrayIds) . ')';
+            $result2 = $connection->fetchAll($sql2); 
+            
+            $ids=0;
+            foreach($result2 as $arr){
+              $customerIds[$ids]=$arr['customer_id'];
+              $ids++;
+            } 
+            }else{
+              $customerIds = array(0, 0);  
+            }
+            parent::_initSelect();
+            $this->getSelect()->Where('entity_id IN (' . implode(',', $customerIds) . ')');
+            return $this;
+        }else{
+             parent::_initSelect();
+             if(isset($_SESSION['company_id'])){
+                $arr[0] =  $_SESSION['company_id'];
+
+                $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arr) . ')';
                 $result2 = $connection->fetchAll($sql2); 
                 $customerIds = [];
                 $ids=0;
                 foreach($result2 as $arr){
-                $customerIds[$ids]=$arr['customer_id'];
-                $ids++;
+                    $customerIds[$ids]=$arr['customer_id'];
+                    $ids++;
                 }
-               $arrayIds = $customerIds; 
-            }
-            $cusId = $arrayIds;
-            $cusIds = array();
-            $i = 0;
-            foreach($cusId as $d){
-                $cusIds[$i]=intval($d);
-                $i++;
-            }
-            return $this->addFieldToFilter('main_table.entity_id', array('in'=>$cusIds));
-        }else{
-         return $this;
-        } 
-       
-       
+                $this->getSelect()->Where('entity_id IN (' . implode(',', $customerIds) . ')');
+                return $this;
+            }else{
+                parent::_initSelect();
+                return $this;
+            } 
+        }
     }
 
 }
