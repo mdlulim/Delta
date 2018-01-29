@@ -80,7 +80,7 @@ class Post extends \Magento\Contact\Controller\Index
 				   $soapClient  = new Client($wsdlUrl,array("soap_version" => SOAP_1_2));
 
         		//Set Login details
-        		$soapClient->setHttpLogin('magentorfc1');
+        		$soapClient->setHttpLogin('magentorfc');
         		$soapClient->setHttpPassword('Consnet02');
         		
              
