@@ -9,6 +9,9 @@
     <router id="admin">
         <route id="switchcompany" frontName="switchcompany"> 
             <module name="Consnet_Erporder" /> 
+        </route>
+        <route id="updateorder" frontName="updateorder"> 
+            <module name="Consnet_Erporder" /> 
         </route> 
     </router> 
 </config>
