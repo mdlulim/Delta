@@ -961,7 +961,7 @@ class AccountManagement implements AccountManagementInterface
 
         $customerSecureData = $this->customerRegistry->retrieveSecureData($customerId);
         $rpToken = $customerSecureData->getRpToken();
-        $resetPasswordLinkToken = $rpToken;
+        //$resetPasswordLinkToken = $rpToken;
         $rpTokenCreatedAt = $customerSecureData->getRpTokenCreatedAt();
 
         if (!Security::compareStrings($rpToken, $resetPasswordLinkToken)) {
