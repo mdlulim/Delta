@@ -72,7 +72,7 @@ $suffix = $block->showSuffix();
             <div class="control">
              <?= $block->escapeHtmlAttr($block->getObject()->getFirstname()) ?>
               <!-- To be edited -->
-                  <input type="text" id="<?= $block->escapeHtmlAttr($block->getFieldId('firstname')) ?>"
+                  <input style="display:none" type="text" id="<?= $block->escapeHtmlAttr($block->getFieldId('firstname')) ?>"
                        name="<?= $block->escapeHtmlAttr($block->getFieldName('firstname')) ?>"
                        value="<?= $block->escapeHtmlAttr($block->getObject()->getFirstname()) ?>"
                        title="<?= $block->escapeHtmlAttr($block->getStoreLabel('firstname')) ?>"
