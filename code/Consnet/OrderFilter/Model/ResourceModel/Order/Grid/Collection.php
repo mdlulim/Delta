@@ -45,14 +45,15 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
         $userId = $user->getUserId();
         //$roleId = $authSession->getUser()->getRole()->getRoleId();
 
-        if(($user->getRole()->getRoleName() == 'sales_rep')) {
-            //$arrCompanyIDs = [];
-            $arrCustomerIDs = [];
+        //$arrCompanyIDs = [];
+        $arrCustomerIDs = [];
 
-            $resource = $om->get('Magento\Framework\App\ResourceConnection');
-            $connection = $resource->getConnection();
-            $companyTableName = $resource->getTableName('company');
-            $companyCustomerTableName = $resource->getTableName('company_advanced_customer_entity');
+        $resource = $om->get('Magento\Framework\App\ResourceConnection');
+        $connection = $resource->getConnection();
+        $companyTableName = $resource->getTableName('company');
+        $companyCustomerTableName = $resource->getTableName('company_advanced_customer_entity');
+
+        if(($user->getRole()->getRoleName() == 'sales_rep')) {
             
             //if(array_key_exists('company_id', $_SESSION)) {
             if(isset($_SESSION['company_id'])) {
@@ -76,8 +77,24 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
             parent::_initSelect();
             return $this->addFieldToFilter('main_table.customer_id', array('in'=>$arrCustomerIDs));
         } else {
-            parent::_initSelect();
-            return $this;
+            if(isset($_SESSION['company_id'])) {
+                $sql = "SELECT customer_id FROM $companyCustomerTableName WHERE company_id = " . $_SESSION['company_id'];
+
+                unset($_SESSION['company_id']);
+
+                $result = $connection->fetchAll($sql);
+
+                if($result != null && count($result) > 0) {
+                    foreach($result as $arrRecord){
+                        $arrCustomerIDs[] = $arrRecord['customer_id'];
+                    }
+                }
+                parent::_initSelect();
+                return $this->addFieldToFilter('main_table.customer_id', array('in'=>$arrCustomerIDs));
+            } else {
+                parent::_initSelect();
+                return $this;
+            }
         }
     }
 }
