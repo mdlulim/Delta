@@ -23,7 +23,7 @@ class SendAcivateAccount extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Escaper $escaper,
         Random $mathRandom,
-        \Magento\Customer\Model\AccountManagement $accountManager , 
+        \Consnet\Customer\Model\AccountManagement $accountManager , 
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager
 
