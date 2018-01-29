@@ -384,7 +384,7 @@ class MageOrder
                             if ($item->REA_FOR_RE == 'Z7') {
                                 return "canceled";
                             }
-                            return 'complete';
+                            return 'closed';
                             //complete
                             break;
                         }                    	
@@ -403,7 +403,7 @@ class MageOrder
                         if ($result->E_STATUS_INFO->item->REA_FOR_RE == 'Z7') {
                             return "canceled";
                         }
-                        return 'complete';
+                        return 'closed';
                         //complete
                         break;
                     } 
