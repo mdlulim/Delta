@@ -47,8 +47,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
     }
 
-    protected function _initSelect()
-    {
+    protected function _initSelect() {
         $om = \Magento\Framework\App\ObjectManager::getInstance();
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
         $user = $authSession->getUser();
@@ -113,7 +112,6 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
                 return $this;
             } 
         }
-       
     }
 
 }
