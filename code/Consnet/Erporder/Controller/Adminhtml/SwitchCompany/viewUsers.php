@@ -1,7 +1,7 @@
 <?php
   namespace Consnet\ErpOrder\Controller\Adminhtml\SwitchCompany;
 
-  class newOrder extends \Magento\Backend\App\Action
+  class newViews extends \Magento\Backend\App\Action
   {
     /**
     * @var \Magento\Framework\View\Result\PageFactory
