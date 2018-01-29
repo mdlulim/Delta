@@ -49,53 +49,27 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
     protected function _initSelect()
     {
-       parent::_initSelect();
         $om = \Magento\Framework\App\ObjectManager::getInstance();
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
         $user = $authSession->getUser();
         $userId = $user->getUserId();
         $roleId = $authSession->getUser()->getRole()->getRoleId();
-       
+        $roleName = $user->getRole()->getRoleName();
+
         $resource = $om->get('Magento\Framework\App\ResourceConnection');
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('company'); 
         $tableName2 = $resource->getTableName('company_advanced_customer_entity'); 
         
-        if(($user->getRole()->getRoleName() == 'sales_rep')) {
-            $tableName = $resource->getTableName('company'); 
-            $tableName2 = $resource->getTableName('company_advanced_customer_entity'); 
-            $sql = "Select entity_id FROM " . $tableName." WHERE  sales_representative_id =".$userId;
-            $result = $connection->fetchAll($sql); 
-        
-            $arrayIds = [];
-            if($result != null){
-                $id=0;  
-                foreach($result as $arr){
-                    $arrayIds[$id] = $arr['entity_id'];
-                    $id++;
-                }
-                $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arrayIds) . ')';
-                $result2 = $connection->fetchAll($sql2); 
-                $customerIds = [];
-                $ids=0;
-                foreach($result2 as $arr){
-                $customerIds[$ids]=$arr['customer_id'];
-                $ids++;
-                }
-               $arrayIds = $customerIds; 
-            }
-            $cusId = $arrayIds;
-            $cusIds = array();
-            $i = 0;
-            foreach($cusId as $d){
-                $cusIds[$i]=intval($d);
-                $i++;
-            }
-            return $this->addFieldToFilter('main_table.entity_id', array('in'=>$cusIds));
+        if($roleName == "sales_rep"){
+            var_dump($roleName);
+            parent::_initSelect();
+            $this->getSelect()->Where('entity_id = 54');
+            return $this;
         }else{
-         return $this;
-        } 
-       
+             parent::_initSelect();
+            return $this;
+        }
        
     }
 
