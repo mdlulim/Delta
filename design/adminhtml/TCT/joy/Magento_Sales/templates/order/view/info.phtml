@@ -89,7 +89,7 @@ $orderStoreDate = $block->formatDate(
                             $mageorder = $om->create('\Consnet\Erporder\Helper\MageOrder');
                             $realOrderId = $_order->getRealOrderId();
 
-                            $status = $order->getStatus();
+                            $status = $_order->getStatus();
                             
                             if($status !== 'canceled' || $status !== 'complete'){
                                 $ecc_status = $mageorder->get_ecc_order_status($realOrderId);                    
