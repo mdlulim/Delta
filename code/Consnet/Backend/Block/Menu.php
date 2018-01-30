@@ -380,7 +380,7 @@ class Menu extends \Magento\Backend\Block\Template
 
 
     private function excludeSales($menu){
-
+        
         $arr_menu = array(
             "Magento_Sales::sales",
             "Magento_Sales::sales_operation",
@@ -388,6 +388,27 @@ class Menu extends \Magento\Backend\Block\Template
             "Magento_Customer::customer",
            // "Magento_Customer::customer_manage",
             "Magento_Company::company_index",
+    
+        );
+
+        if(in_array($menu,$arr_menu)){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    private function excludeAdmin($menu){
+        
+        $arr_menu = array(
+            "Magento_Catalog::catalog",
+            "Magento_Catalog::inventory",
+            "Magento_Catalog::catalog_products",
+            "Magento_Catalog::catalog_categories",
+            "Magento_SharedCatalog::shared_list",
+            "Magento_Backend::content",
+            "Magento_Banner::cms_magento_banner"
     
         );
 
@@ -488,7 +509,9 @@ class Menu extends \Magento\Backend\Block\Template
             $this->excludeCIC($menuItem->getId()))
             {
 
-            }else{
+            }elseif(($user->getRole()->getRoleName() == 'web_shop_administrator' ) && 
+            $this->excludeAdmin($menuItem->getId()))
+            {
 
             
             $id = $this->getJsId($menuItem->getId());
