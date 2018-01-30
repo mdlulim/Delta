@@ -509,7 +509,7 @@ class Menu extends \Magento\Backend\Block\Template
             $this->excludeCIC($menuItem->getId()))
             {
 
-            }elseif(($user->getRole()->getRoleName() == 'web_shop_administrator' ) && 
+            }elseif(($user->getRole()->getRoleName() == 'web-shop-administrator' ) && 
             $this->excludeAdmin($menuItem->getId()))
             {
 
