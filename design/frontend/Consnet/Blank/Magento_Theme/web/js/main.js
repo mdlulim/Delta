@@ -186,7 +186,7 @@
             var btnCancelorder = document.getElementById('cancelorder');
             var btnEdit = document.getElementById('edit');
             var delivery_date = document.getElementById('delivery_date');
-            if(data == 'pending'){
+            if(data == '1'){
                 btnCancelorder.classList.remove('hidden');
                 btnEdit.classList.remove('hidden');
                 //delivery_date.disabled = true;
