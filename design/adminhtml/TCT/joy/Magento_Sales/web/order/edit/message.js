@@ -29,7 +29,7 @@ define([
          * Show modal
          */
         showDialog: function () {
-            this.options.dialog.html(this.options.message).modal('openModal');
+            this.options.dialog.html('Are you sure you want to Edit this order ?').modal('openModal');
         },
 
         /**
