@@ -113,6 +113,8 @@ class Index extends \Magento\Framework\App\Action\Action
             $neworder->setData("DELIVERY_DATE",$formatedDate);
             $neworder->setPoNumber($_POST['po_number']);
             $neworder->setData("po_number",$_POST['po_number']);
+            $neworder->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
+            $neworder->setState(\Magento\Sales\Model\Order::STATE_PENDING);
             $neworder->save();
 
             /*$LOCATION  = $this->url->getUrl('sales/order/view/order_id/'.$edited_order->getId());

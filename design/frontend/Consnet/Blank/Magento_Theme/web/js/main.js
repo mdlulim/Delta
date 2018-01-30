@@ -186,7 +186,7 @@
             var btnCancelorder = document.getElementById('cancelorder');
             var btnEdit = document.getElementById('edit');
             var delivery_date = document.getElementById('delivery_date');
-            if(data == '1'){
+            if(data == '0'){
                 btnCancelorder.classList.remove('hidden');
                 btnEdit.classList.remove('hidden');
                 //delivery_date.disabled = true;
@@ -194,9 +194,9 @@
                 console.log(data);
             }            
             else{
-              //if(data == 'updated'){
+              if(data == '1'){
                 location.reload();
-              //}
+              }
               btnCancelorder.classList.add('hidden');
               btnEdit.classList.add('hidden');
               //delivery_date.disabled = true;

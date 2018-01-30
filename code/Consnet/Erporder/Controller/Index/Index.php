@@ -108,17 +108,18 @@ class Index extends \Magento\Framework\App\Action\Action
             $ordernumber = $_POST['mage_order_number'];
             $order = $objectManager->create('\Magento\Sales\Model\Order')->load($ordernumber);
             $realOrderId = $order->getRealOrderId();
-            
+            $ecc_status = "2";
             $status = $order->getStatus();
 
             if($status !== 'canceled' || $status !== 'complete'){
                 $ecc_status = $mageorder->get_ecc_order_status($realOrderId);
-                $status = $ecc_status;
+                
                 if($status !== $ecc_status){
                     switch ($ecc_status) {
                         case "pending":
                             $order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
                             $order->setState(\Magento\Sales\Model\Order::STATE_PENDING);
+                            $ecc_status = 'updated';
                             //pending
                             break;                        
                         case "processing":
@@ -141,13 +142,17 @@ class Index extends \Magento\Framework\App\Action\Action
                             break;
                     }$order->save();   
                 }
+                
+                if ($ecc_status == 'updated') {
+                    echo "1";
+                } else {
+                    echo "0";
+                }
+            }else {
+                echo "2";
             }
+
             
-            if ($ecc_status == 'updated') {
-                echo "0";
-            } else {
-                echo "1";
-            }
         }       
     }
 }
