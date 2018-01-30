@@ -18,6 +18,8 @@
  */
 $numColumns = sizeof($block->getColumns());
 
+
+
 /**
  * @var \Magento\Backend\Block\Widget\Grid\Extended $block
  */
@@ -25,6 +27,7 @@ $numColumns = sizeof($block->getColumns());
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
         $userId=$authSession->getUser()->getUserId();
         $roleId= $authSession->getUser()->getRole()->getRoleId(); 
+        $roleName = $authSession->getUser()->getRole()->getRoleName();
 ?>
 
 <?php if ($block->getCollection()): ?>
@@ -188,7 +191,8 @@ $numColumns = sizeof($block->getColumns());
             <tbody>
             <?php if (($block->getCollection()->getSize() > 0) && (!$block->getIsCollapsed())): ?>
                 <?php foreach ($block->getCollection() as $_index => $_item):?>
-                <?php if($roleId == 87 ){
+                <?php 
+                  if ($roleName == "cic_support_stuff"){
                     if($_item->getId() != 2){ ?>
                    <tr title="<?php /* @escapeNotVerified */ echo $block->getRowUrl($_item) ?>"<?php if ($_class = $block->getRowClass($_item)): ?>
                         class="<?php /* @escapeNotVerified */ echo $_class; ?>"<?php endif; ?> ><?php
@@ -197,7 +201,7 @@ $numColumns = sizeof($block->getColumns());
                             if ($block->shouldRenderCell($_item, $_column)):
                                 $_rowspan = $block->getRowspan($_item, $_column); ?>
                                     <td <?php echo($_rowspan ? 'rowspan="' . $_rowspan . '" ' : '') ?>
-                                    class="<?php /* @escapeNotVerified */ echo $_column->getCssProperty() ?>
+                                    class="<?php echo $_column->getCssProperty() ?>
                                             <?php /* @escapeNotVerified */ ?>">
                                     <?php echo(($_html = $_column->getRowField($_item)) != '' ? $_html : '&nbsp;')  ?>
                                     </td>                                <?php
