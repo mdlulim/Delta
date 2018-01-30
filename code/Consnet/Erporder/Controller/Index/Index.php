@@ -144,9 +144,9 @@ class Index extends \Magento\Framework\App\Action\Action
             }
             
             if ($ecc_status == 'updated') {
-                echo "1";
-            } else {
                 echo "0";
+            } else {
+                echo "1";
             }
         }       
     }
