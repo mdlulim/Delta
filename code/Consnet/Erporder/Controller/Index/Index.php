@@ -108,36 +108,41 @@ class Index extends \Magento\Framework\App\Action\Action
             $ordernumber = $_POST['mage_order_number'];
             $order = $objectManager->create('\Magento\Sales\Model\Order')->load($ordernumber);
             $realOrderId = $order->getRealOrderId();
-            $ecc_status = $mageorder->get_ecc_order_status($realOrderId);
+            
+            $status = $order->getStatus();
 
-            if($order->getStatus() !== $ecc_status){
-                switch ($ecc_status) {
-                    case "pending":
-                        $order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
-                        $order->setState(\Magento\Sales\Model\Order::STATE_PENDING);
-                        //pending
-                        break;                        
-                    case "processing":
-                        $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
-                        $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
-                        $ecc_status = 'updated';
-                        //processing
-                        break;                        
-                    case "canceled":
-                        $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
-                        $order->setState(\Magento\Sales\Model\Order::STATE_CANCELED);
-                        $ecc_status = 'updated';
-                        //canceled
-                        break;
-                    case "complete":
-                        $order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
-                        $order->setState(\Magento\Sales\Model\Order::STATE_COMPLETE);
-                        $ecc_status = 'updated';
-                        //complete
-                        break;
-                }$order->save();   
+            if($status !== 'canceled' || $status !== 'complete'){
+                $ecc_status = $mageorder->get_ecc_order_status($realOrderId);
+                $status = $ecc_status;
+                if($status !== $ecc_status){
+                    switch ($ecc_status) {
+                        case "pending":
+                            $order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
+                            $order->setState(\Magento\Sales\Model\Order::STATE_PENDING);
+                            //pending
+                            break;                        
+                        case "processing":
+                            $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                            $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                            $ecc_status = 'updated';
+                            //processing
+                            break;                        
+                        case "canceled":
+                            $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
+                            $order->setState(\Magento\Sales\Model\Order::STATE_CANCELED);
+                            $ecc_status = 'updated';
+                            //canceled
+                            break;
+                        case "complete":
+                            $order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                            $order->setState(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                            $ecc_status = 'updated';
+                            //complete
+                            break;
+                    }$order->save();   
+                }
             }
-            print_r($ecc_status);
+            print_r($status);
         }       
     }
 }
