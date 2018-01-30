@@ -69,7 +69,24 @@ $month = substr ($db_deliverydate, 2, 2);
         continue;
     } ?>
                 <tbody>
-                    <?php echo $block->getItemHtml($_item) ?>
+                    <tr>
+                        <td>
+                            <?php echo $_item->getName(); ?> 
+                        </td>
+                        <td>
+                            <?php echo $_item->getSku(); ?> 
+                        </td>
+                        <td>
+                            <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($_item->getPrice()); ?> 
+                        </td>
+                        <td>
+                            <?php echo floor($_item->getQtyOrdered()); ?> 
+                        </td>
+                        <td>
+                            <?php echo floor($_item->getQtyOrdered()) * $_item->getPrice(); ?> 
+                        </td>
+                    </tr>
+                    <!--<?php echo $block->getItemHtml($_item) ?>
                     <?php if ($this->helper('Magento\GiftMessage\Helper\Message')->isMessagesAllowed('order_item', $_item) && $_item->getGiftMessageId()): ?>
                         <?php $_giftMessage = $this->helper('Magento\GiftMessage\Helper\Message')->getGiftMessageForEntity($_item); ?>
                         <tr>
@@ -98,7 +115,7 @@ $month = substr ($db_deliverydate, 2, 2);
                                 </div>
                             </td>
                         </tr>
-                    <?php endif ?>
+                    <?php endif ?>-->
                 </tbody>
             <?php endforeach; ?>
         </table>        
