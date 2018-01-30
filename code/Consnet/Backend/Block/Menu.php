@@ -117,6 +117,9 @@ class Menu extends \Magento\Backend\Block\Template
      */
     protected function _construct()
     {
+
+        
+
         parent::_construct();
         $this->setCacheTags([self::CACHE_TAGS]);
     }
@@ -399,6 +402,7 @@ class Menu extends \Magento\Backend\Block\Template
 
     }
 
+
     private function excludeAdmin($menu){
         
         $arr_menu = array(
@@ -408,8 +412,13 @@ class Menu extends \Magento\Backend\Block\Template
             "Magento_Catalog::catalog_categories",
             "Magento_SharedCatalog::shared_list",
             "Magento_Backend::content",
-            "Magento_Banner::cms_magento_banner"
-    
+            "Magento_Cms::cms_block",
+            "Magento_Banner::cms_magento_banner",
+            "Magento_Widget::cms_widget_instance",
+            "Magestore_Bannerslider::bannerslider",
+
+            "Magestore_Bannerslider::bannerslider_banners"
+        
         );
 
         if(in_array($menu,$arr_menu)){
@@ -510,8 +519,8 @@ class Menu extends \Magento\Backend\Block\Template
             {
 
             }elseif(($user->getRole()->getRoleName() == 'web-shop-administrator' ) && 
-            $this->excludeAdmin($menuItem->getId()))
-            {
+            $this->excludeAdmin($menuItem->getId())){}
+            else{
 
             
             $id = $this->getJsId($menuItem->getId());
