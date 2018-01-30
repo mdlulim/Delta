@@ -109,7 +109,6 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
                 unset($_SESSION['company_id']);
                 return $this;
             }else{
-                parent::_initSelect();
                 return $this;
             } 
         }
