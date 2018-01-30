@@ -142,7 +142,12 @@ class Index extends \Magento\Framework\App\Action\Action
                     }$order->save();   
                 }
             }
-            print_r($status);
+            
+            if ($ecc_status == 'updated') {
+                echo "1";
+            } else {
+                echo "0";
+            }
         }       
     }
 }
