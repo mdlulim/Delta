@@ -40,10 +40,10 @@ $_item = $block->getItem();
         <?= $block->escapeHtml($_item->getDescription()) ?>
     </td>
     <td class="col sku" data-th="<?= $block->escapeHtml(__('SKU')) ?>"><?= /* @escapeNotVerified */ $block->prepareSku($block->getSku()) ?></td>
-    <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+    <td class="col price text-right" data-th="<?= $block->escapeHtml(__('Price')) ?>">
         <?= $block->getItemPriceHtml() ?>
     </td>
-    <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+    <td class="col qty text-right" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
         <ul class="items-qty">
         <?php if ($block->getItem()->getQtyOrdered() > 0): ?>
             <li class="item">
@@ -72,7 +72,7 @@ $_item = $block->getItem();
         <?php endif; ?>
         </ul>
     </td>
-    <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+    <td class="col subtotal text-right" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
         <?= $block->getItemRowTotalHtml() ?>
     </td>
 </tr>
