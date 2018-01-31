@@ -24,7 +24,12 @@
                     <?php endif; ?>
                 </td>
 
-                <td>there</td>
+                <td>
+                    <strong class="box-title">
+                        <span><?= /* @escapeNotVerified */ __('Payment Method') ?></span>
+                    </strong>
+                    <?= $block->getPaymentInfoHtml() ?>
+                </td>
             </tr>
         </table>
     <?php if (!$_order->getIsVirtual()): ?>
