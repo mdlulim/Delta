@@ -115,21 +115,11 @@ class AdminOrderSimulator
                                                     $item->getProduct()->setIsSuperMode(true);
 
                                                     $totalTax = $totalTax + $zresults->ZRESULTS->item[$i]->TX_DOC_CUR; 
-                                                    $total = $total + $zresults->ZRESULTS->item[$i]->NET_VALUE1;//$price_per_item;
-                                                    //$quote->setTaxAmount($zresults->ZRESULTS->item[$i]->TX_DOC_CUR);
-                                                    //$quote->setSubtotal($zresults->ZRESULTS->item[$i]->NET_VALUE1);
-                                                    //$quote->setGrandTotal(($zresults->ZRESULTS->item[$i]->SUBTOTAL6) );
+                                                    $total = $total + $zresults->ZRESULTS->item[$i]->NET_VALUE1;
                                                     $this->messageManager->addSuccessMessage('You added '.$item->getName().
                                                     ' to your shopping cart.');
                                                 }
-                                            } 
-                                            
-                                            //if(isset($_SESSION['flowcontrol'])){
-                                               
-                                            //}else {
-                                            //    $this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                            //    ' to your shopping cart.');
-                                            //}
+                                            }
                                         }
                                     }
                                     else {
@@ -141,39 +131,26 @@ class AdminOrderSimulator
                                                 $item->setOriginalCustomPrice($price_per_item);
                                                 $item->setRowTotal($zresults->ZRESULTS->item->NET_VALUE1);
                                                 $item->getProduct()->setIsSuperMode(true);
-                                                //$item->save();
                                                 $totalTax = $totalTax + $zresults->ZRESULTS->item->TX_DOC_CUR;
-                                                $total = $total + $zresults->ZRESULTS->item->NET_VALUE1;//$price_per_item;
-                                                //$quote->setTaxAmount($zresults->ZRESULTS->item->TX_DOC_CUR);
-                                                //$quote->setSubtotal($zresults->ZRESULTS->item->NET_VALUE1);
-                                                //$quote->setGrandTotal(($zresults->ZRESULTS->item->SUBTOTAL6) );
+                                                $total = $total + $zresults->ZRESULTS->item->NET_VALUE1;
                                                 $this->messageManager->addSuccessMessage('You added '.$item->getName().
                                                 ' to your shopping cart.');
-                                                if(isset($_SESSION['flowcontrol'])){
-                                                    
-                                                }else {
-                                                    //$this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                    //' to your shopping cart.');
-                                                }
                                             }
                                         }
                                     }
-                                }           
-                                //var_dump($totalTax);die();                     
+                                }                              
                                 $quote->setTaxAmount($totalTax);
                                 $quote->setSubtotal($total);
-                                //$quote->setBaseSubtotal($total);
-                                //$quote->setBaseGrandTotal(($total + $totalTax));
                                 $quote->setGrandTotal(($total + $totalTax));
                                 $quote->setTotalsCollectedFlag(true)->collectTotals();
                                 $quote->collectTotals();
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
                                 if($quote->hasItems()){
-                                    $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);//
+                                    $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
                                     $products = '';
                                     foreach($quote->getAllVisibleItems() as $item){
-                                        if(in_array($item->getSku(), $matnrs)){   //var_dump($matnrs);var_dump('Not QTY');die();                                             
+                                        if(in_array($item->getSku(), $matnrs)){                                           
                                             if ($products == '') {                                                    
                                                 $products= $products.$item->getName();
                                             }else {
@@ -184,10 +161,7 @@ class AdminOrderSimulator
                                             $quote->save();
                                             $this->messageManager->addError("Stock for ".$item->getName()." is not available");
                                         }
-                                    }
-                                    if($products !== ''){
-                                        //$this->messageManager->addError("Required quantity is not available For Product(s) ".$products);
-                                    }                                        
+                                    }                                      
                                 }
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
@@ -196,7 +170,7 @@ class AdminOrderSimulator
                                 $no_license = array(8,9,10);
                                 foreach($quote->getAllVisibleItems() as $item){
                                     $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
-                                    foreach ($category_ids as $cat) {//var_dump($category_ids);var_dump('Not QTY');die();
+                                    foreach ($category_ids as $cat) {
                                         if(in_array($cat, $no_license)){
                                             if ($products == '') {                                                    
                                                 $products= $products.$item->getName();
@@ -210,31 +184,13 @@ class AdminOrderSimulator
                                         }
                                     }                                            
                                 }
-                                if($products !== ''){
-                                    //$this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$products);
-                                }
                             }
                         }
                     }
                  }
             }   
-        }
-        
-        /*if(isset($_SESSION['flowcontrol'])){
-            if($_SESSION['flowcontrol'] !== $quote->getItemsCount()){
-                return $quote;
-            }else {
-                $_SESSION['flowcontrol'] = $quote->getItemsCount();
-                return $quote;
-            }
-        }else {
-            $_SESSION['flowcontrol'] = $quote->getItemsCount();
-            if($quote->getItemsCount() > 0){
-                return $quote->collectTotals()->save();*/
-                return $quote;//->save();
-            /*}
-            return $quote;
-        } */      
+        }return $quote;
+   
     }
     
     public function calculatePricePerItem($price, $qty) {
