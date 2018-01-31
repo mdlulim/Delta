@@ -160,8 +160,8 @@ class LoginPost extends \Magento\Customer\Controller\AbstractAccount
             return $resultRedirect;
         }
 
-        if ($this->reg->registry('isallowed')){
-
+        if (isset($_SESSION['company_id'])){
+                unset($_SESSION['company_id']);
 
         }
 

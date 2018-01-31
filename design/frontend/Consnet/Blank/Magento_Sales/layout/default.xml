@@ -21,5 +21,13 @@
                 </arguments>
             </block>
         </referenceBlock>
+        <referenceBlock name="top.links">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-orders-link-top" after="my-account-link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">My Orders</argument>
+                    <argument name="path" xsi:type="string">sales/order/history</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
     </body>
 </page>

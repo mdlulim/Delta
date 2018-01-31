@@ -53,8 +53,8 @@ $numColumns = sizeof($block->getColumns());
                             $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
                             $userId=$authSession->getUser()->getUserId();
                             $roleId= $authSession->getUser()->getRole()->getRoleId(); 
-                            if(($authSession->getUser()->getRole()->getRoleName() == 'sales_rep')) {  
-                                $resource = $om->get('Magento\Framework\App\ResourceConnection');
+
+                            $resource = $om->get('Magento\Framework\App\ResourceConnection');
                                 $connection = $resource->getConnection();
                                 $tableName = $resource->getTableName('company'); 
                                 $tableName2 = $resource->getTableName('company_advanced_customer_entity'); 
@@ -62,6 +62,7 @@ $numColumns = sizeof($block->getColumns());
                                 $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
                                 $userId=$authSession->getUser()->getUserId(); 
                                 
+                            if(($authSession->getUser()->getRole()->getRoleName() == 'sales_rep')) {  
                                 $sql = "Select entity_id FROM " . $tableName." WHERE  sales_representative_id =".$userId;
                                 $result = $connection->fetchAll($sql); 
                             
@@ -73,8 +74,10 @@ $numColumns = sizeof($block->getColumns());
                                 } 
                                
                                 $customerIds = [];
+                                 $arrayIds = [];
                                 if($arrayIds != null){
                                      if(isset($_SESSION['company_id'])){
+                                         //var_dump($roleId);die();
                                         $arrayIds[0] =  $_SESSION['company_id'];
                                       }else{
                                         foreach($result as $arr){
@@ -87,16 +90,43 @@ $numColumns = sizeof($block->getColumns());
                                    
                                     $ids=0;
                                     foreach($result2 as $arr){
-                                    $customerIds[$ids]=$arr['customer_id'];
-                                    $ids++;
+                                        $customerIds[$ids]=$arr['customer_id'];
+                                        $ids++;
                                     } 
                                   $countRecords = sizeof($customerIds);               
                                 }else{
-                                   $countRecords = 0;
+                                    if(isset($_SESSION['company_id'])){
+                                        $arrayIds[0] =  $_SESSION['company_id'];
+                                        $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arrayIds) . ')';
+                                        $result2 = $connection->fetchAll($sql2); 
+                                        
+                                        $ids=0;
+                                        foreach($result2 as $arr){
+                                        $customerIds[$ids]=$arr['customer_id'];
+                                        $ids++;
+                                        } 
+                                        unset($_SESSION['company_id']);
+                                        $countRecords = sizeof($customerIds);
+                                    }
                                 }
                              
                         } else {
-                            $countRecords = $block->getCollection()->getSize();
+                            if(isset($_SESSION['company_id'])){
+                                $arrayIds[0] =  $_SESSION['company_id'];
+                                $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arrayIds) . ')';
+                                $result2 = $connection->fetchAll($sql2); 
+                                   
+                                $ids=0;
+                                foreach($result2 as $arr){
+                                  $customerIds[$ids]=$arr['customer_id'];
+                                  $ids++;
+                                } 
+                                unset($_SESSION['company_id']);
+                                $countRecords = sizeof($customerIds);
+                            }else{
+                                $countRecords = $block->getCollection()->getSize();
+                            }
+                            
                         }
                     
                         
