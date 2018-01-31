@@ -55,9 +55,9 @@ $month = substr ($db_deliverydate, 2, 2);
                 <tr>
                     <th class="col name"><?php /* @escapeNotVerified */ echo __('Product Name') ?></th>
                     <th class="col sku"><?php /* @escapeNotVerified */ echo __('SKU') ?></th>
-                    <th class="col price"><?php /* @escapeNotVerified */ echo __('Price') ?></th>
-                    <th class="col qty"><?php /* @escapeNotVerified */ echo __('Qty') ?></th>
-                    <th class="col subtotal"><?php /* @escapeNotVerified */ echo __('Subtotal') ?></th>
+                    <th class="col price text-right"><?php /* @escapeNotVerified */ echo __('Price') ?></th>
+                    <th class="col qty text-center"><?php /* @escapeNotVerified */ echo __('Qty') ?></th>
+                    <th class="col subtotal text-right"><?php /* @escapeNotVerified */ echo __('Subtotal') ?></th>
                 </tr>
             </thead>
             <?php $_items = $_order->getItemsCollection(); ?>
@@ -76,13 +76,13 @@ $month = substr ($db_deliverydate, 2, 2);
                         <td>
                             <?php echo $_item->getSku(); ?> 
                         </td>
-                        <td>
+                        <td class="text-right">
                             <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($_item->getPrice()); ?> 
                         </td>
-                        <td>
+                        <td class="text-center">
                             <?php echo floor($_item->getQtyOrdered()); ?> 
                         </td>
-                        <td>
+                        <td class="text-right">
                             <?php echo floor($_item->getQtyOrdered()) * $_item->getPrice(); ?> 
                         </td>
                     </tr>                    
