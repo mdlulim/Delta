@@ -116,8 +116,8 @@ class AdminOrderSimulator
 
                                                     $totalTax = $totalTax + $zresults->ZRESULTS->item[$i]->TX_DOC_CUR; 
                                                     $total = $total + $zresults->ZRESULTS->item[$i]->NET_VALUE1;
-                                                    $this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                    ' to your shopping cart.');
+                                                    //$this->messageManager->addSuccessMessage('You added '.$item->getName().
+                                                    //' to your shopping cart.');
                                                 }
                                             }
                                         }
@@ -133,8 +133,8 @@ class AdminOrderSimulator
                                                 $item->getProduct()->setIsSuperMode(true);
                                                 $totalTax = $totalTax + $zresults->ZRESULTS->item->TX_DOC_CUR;
                                                 $total = $total + $zresults->ZRESULTS->item->NET_VALUE1;
-                                                $this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                ' to your shopping cart.');
+                                                //$this->messageManager->addSuccessMessage('You added '.$item->getName().
+                                                //' to your shopping cart.');
                                             }
                                         }
                                     }
