@@ -17,14 +17,14 @@
         <table>
             <tr>
                 
-                <td>
+                <td style="padding: 0;">
                     <?php if (!$_order->getIsVirtual()): ?>
                         <strong class="box-title"><span><?= /* @escapeNotVerified */ __('Address') ?></span></strong>
                         <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
                     <?php endif; ?>
                 </td>
 
-                <td>
+                <td style="padding: 0;">
                     <strong class="box-title">
                         <span><?= /* @escapeNotVerified */ __('Payment Method') ?></span>
                     </strong>
@@ -35,12 +35,12 @@
             </tr>
         </table>
     <?php if (!$_order->getIsVirtual()): ?>
-        <div class="box box-order-shipping-address">
+        <!-- <div class="box box-order-shipping-address">
             <strong class="box-title"><span><?= /* @escapeNotVerified */ __('Address') ?></span></strong>
             <div class="box-content">
                 <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
             </div>
-        </div>
+        </div> -->
 
       <!--  <div class="box box-order-shipping-method">
             <strong class="box-title">
@@ -64,14 +64,14 @@
                 <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
             </div>
         </div> -->
-        <div class="box box-order-billing-method">
+        <!-- <div class="box box-order-billing-method">
             <strong class="box-title">
                 <span><?= /* @escapeNotVerified */ __('Payment Method') ?></span>
             </strong>
             <div class="box-content">
                 <?= $block->getPaymentInfoHtml() ?>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </div>
