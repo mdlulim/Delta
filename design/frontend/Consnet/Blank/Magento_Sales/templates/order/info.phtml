@@ -14,6 +14,19 @@
         <strong><?= /* @escapeNotVerified */ __('Order Information') ?></strong>
     </div>
     <div class="block-content">
+        <table>
+            <tr>
+                
+                <td>
+                    <?php if (!$_order->getIsVirtual()): ?>
+                        <strong class="box-title"><span><?= /* @escapeNotVerified */ __('Address') ?></span></strong>
+                        <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
+                    <?php endif; ?>
+                </td>
+
+                <td>there</td>
+            </tr>
+        </table>
     <?php if (!$_order->getIsVirtual()): ?>
         <div class="box box-order-shipping-address">
             <strong class="box-title"><span><?= /* @escapeNotVerified */ __('Address') ?></span></strong>
