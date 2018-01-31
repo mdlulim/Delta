@@ -70,28 +70,28 @@
       document.getElementById('changed_deliverydate').value = date;
   });
 
-  function showTable() {  
-    var delivery_date = document.getElementById('delivery_date');  
-    if (order.classList.contains('hidden')) {
-        // Show Order Items
-        updateorder.classList.add('hidden');
-        order.classList.remove('hidden');
-        neworder.classList.add('hidden');
-        addrowbtn.classList.add('hidden');
-        document.getElementById("edit").innerHTML = "Edit Order";
-        document.getElementById("cancelorder").classList.remove('hidden');  
-        delivery_date.disabled = true;
-    } else {
-        // Hide Order Items
-        updateorder.classList.remove('hidden');
-        addrowbtn.classList.remove('hidden');
-        order.classList.add('hidden');
-        neworder.classList.remove('hidden');
-        document.getElementById("edit").innerHTML = "Cancel";
-        document.getElementById("cancelorder").classList.add('hidden');
-        delivery_date.disabled = false;
-    }
-  }
+  // function showTable() {  
+  //   var delivery_date = document.getElementById('delivery_date');  
+  //   if (order.classList.contains('hidden')) {
+  //       // Show Order Items
+  //       updateorder.classList.add('hidden');
+  //       order.classList.remove('hidden');
+  //       neworder.classList.add('hidden');
+  //       addrowbtn.classList.add('hidden');
+  //       document.getElementById("edit").innerHTML = "Edit Order";
+  //       document.getElementById("cancelorder").classList.remove('hidden');  
+  //       delivery_date.disabled = true;
+  //   } else {
+  //       // Hide Order Items
+  //       updateorder.classList.remove('hidden');
+  //       addrowbtn.classList.remove('hidden');
+  //       order.classList.add('hidden');
+  //       neworder.classList.remove('hidden');
+  //       document.getElementById("edit").innerHTML = "Cancel";
+  //       document.getElementById("cancelorder").classList.add('hidden');
+  //       delivery_date.disabled = false;
+  //   }
+  // }
 
   function addnewrow(){
 
