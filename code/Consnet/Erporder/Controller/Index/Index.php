@@ -111,10 +111,10 @@ class Index extends \Magento\Framework\App\Action\Action
             $ecc_status = "2";
             $status = $order->getStatus();
 
-            if($status !== 'canceled' || $status !== 'complete'){
+            if(strtolower($status) != 'canceled' && strtolower($status) != 'complete'){
                 $ecc_status = $mageorder->get_ecc_order_status($realOrderId);
                 
-                if($status !== $ecc_status){
+                if($status != $ecc_status){
                     switch ($ecc_status) {
                         case "pending":
                             $order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);

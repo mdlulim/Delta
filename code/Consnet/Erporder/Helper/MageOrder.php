@@ -195,7 +195,8 @@ class MageOrder
     public function cancel_order($ordernumber){
         $order = $this->orderFactory->create()->load($ordernumber);
         $order->cancel();
-        $order->setStatus(\Magento\Sales\Model\Order::STATE_CLOSED);//STATE_COMPLETE);        
+        $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);//STATE_COMPLETE);   
+        $order->setState(\Magento\Sales\Model\Order::STATE_CANCELED);     
         $order->save();
         $this->messageManager->addSuccessMessage("Order Canceled");
         return $order->getId();
