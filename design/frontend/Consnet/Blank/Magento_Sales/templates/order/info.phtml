@@ -28,7 +28,9 @@
                     <strong class="box-title">
                         <span><?= /* @escapeNotVerified */ __('Payment Method') ?></span>
                     </strong>
-                    <?= $block->getPaymentInfoHtml() ?>
+                    <div class="box-content">
+                        <?= $block->getPaymentInfoHtml() ?>
+                    </div>
                 </td>
             </tr>
         </table>
