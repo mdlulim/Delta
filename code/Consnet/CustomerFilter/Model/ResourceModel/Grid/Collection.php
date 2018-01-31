@@ -90,7 +90,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
           
             parent::_initSelect();
             $this->getSelect()->Where('entity_id IN (' . implode(',', $customerIds) . ')');
-            //unset($_SESSION['company_id']);
+            unset($_SESSION['company_id']);
             return $this;
         }else{
              parent::_initSelect();

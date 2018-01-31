@@ -559,7 +559,7 @@ class ColumnSet extends \Magento\Framework\View\Element\Template
               $customerIds[$ids]=$arr['customer_id'];
               $ids++;
             } 
-     
+            unset($_SESSION['company_id']);
             if(method_exists($this->getGrid()->getCollection(), "addAttributeToFilter")){
               return $this->getGrid()->getCollection()->addAttributeToFilter('entity_id', array('in' =>$customerIds));
             }else{
@@ -584,7 +584,7 @@ class ColumnSet extends \Magento\Framework\View\Element\Template
                 $ids++;
             }
 
-            //unset($_SESSION['company_id']);
+            unset($_SESSION['company_id']);
             return $this->getGrid()->getCollection()->addAttributeToFilter('entity_id', array('in' =>$customerIds));
 
         }else{
