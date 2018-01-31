@@ -171,7 +171,7 @@
 
         jQuery(document).children().each(function (){
           var title = document.getElementsByName('title');
-          jQuery(this).html( jQuery(this).html().replace('Order # '+mage_order_number.value,'1'));
+          //jQuery(this).html( jQuery(this).html().replace('Order # '+mage_order_number.value,'1'));
           console.log('Order # '+mage_order_number);
         });
     }
