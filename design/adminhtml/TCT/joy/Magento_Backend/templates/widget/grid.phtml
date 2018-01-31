@@ -105,6 +105,7 @@ $numColumns = sizeof($block->getColumns());
                                         $customerIds[$ids]=$arr['customer_id'];
                                         $ids++;
                                         } 
+                                        unset($_SESSION['company_id']);
                                         $countRecords = sizeof($customerIds);
                                     }
                                 }
@@ -120,6 +121,7 @@ $numColumns = sizeof($block->getColumns());
                                   $customerIds[$ids]=$arr['customer_id'];
                                   $ids++;
                                 } 
+                                unset($_SESSION['company_id']);
                                 $countRecords = sizeof($customerIds);
                             }else{
                                 $countRecords = $block->getCollection()->getSize();
