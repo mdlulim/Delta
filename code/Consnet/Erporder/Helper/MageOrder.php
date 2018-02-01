@@ -367,15 +367,15 @@ class MageOrder
             if(isset($result->ZSTATUS)){
                 switch ($result->ZSTATUS) {
                     case "O":
-                    return 'O';
+                    return 'open';
                     //Open
                     break;                        
                     case "C":
-                    return 'C';
+                    return 'confirmed';
                     //Confirmed
                     break;                        
                     case "D":
-                    return 'D';
+                    return 'dispatched';
                     //Dispatched
                     break;
                 }
