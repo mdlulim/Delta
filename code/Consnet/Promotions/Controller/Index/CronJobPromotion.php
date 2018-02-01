@@ -129,7 +129,7 @@ class CronJobPromotion {
      
             $tab_result = $soapClient2->ZzMagentoGetPromotions($parameters);
         
-        
+            var_dump ($tab_result) ;
             $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') ;
             $list = null;
             $i = 0;
