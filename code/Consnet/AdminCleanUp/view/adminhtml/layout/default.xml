@@ -3,7 +3,6 @@
    <head>
      <css src="Consnet_AdminCleanUp::css/clean_adminhtml.css"/>
      <css src="Consnet_AdminCleanUp::css/materialize.min.css"/>
-     <css src="Consnet_AdminCleanUp::css/bootstrap.css"/>
    </head>
    <body>
         <referenceContainer name="header">
