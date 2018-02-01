@@ -113,22 +113,21 @@ class Index extends \Magento\Framework\App\Action\Action
 
             if(strtolower($status) != 'confirmed' && strtolower($status) != 'dispatched'){
                 $ecc_status = $mageorder->get_ecc_order_status($realOrderId);
-                
                 if($status != $ecc_status){
                     switch ($ecc_status) {
-                        case "O":
+                        case "open":
                             $order->setStatus('open');
                             $order->setState('new');
                             $ecc_status = 'updated';
                             //Open
                             break;                        
-                        case "C":
+                        case "confirmed":
                             $order->setStatus('confirmed');
                             $order->setState('complete');
                             $ecc_status = 'updated';
                             //Confirmed
                             break;                        
-                        case "D":
+                        case "dispatched":
                             $order->setStatus('dispatched');
                             $order->setState('closed');
                             $ecc_status = 'updated';

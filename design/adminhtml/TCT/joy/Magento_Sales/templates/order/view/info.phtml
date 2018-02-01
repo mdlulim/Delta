@@ -96,19 +96,19 @@ $orderStoreDate = $block->formatDate(
                                 if($status !== $ecc_status){
 
                                         switch ($ecc_status) {
-                                            case "O":
+                                            case "open":
                                                 $_order->setStatus('open');
                                                 $_order->setState('new');
                                                 $ecc_status = 'updated';
                                                 //Open
                                                 break;                        
-                                            case "C":
+                                            case "confirmed":
                                                 $_order->setStatus('confirmed');
                                                 $_order->setState('complete');
                                                 $ecc_status = 'updated';
                                                 //Confirmed
                                                 break;                        
-                                            case "D":
+                                            case "dispatched":
                                                 $_order->setStatus('dispatched');
                                                 $_order->setState('closed');
                                                 $ecc_status = 'updated';
