@@ -131,6 +131,9 @@ class Index extends \Magento\Framework\App\Action\Action
 
             //@todo: Refactor it to match CQRS 
             
+            $emailSender = $om->create('\Magento\Sales\Model\Order\Email\Sender\OrderSender');
+            $emailSender->send($neworder);
+
             return $this->resultRedirectFactory->create()->setPath("sales/order/view/order_id/".$neworder->getId()."/"); 
             
             /*$resultPage = $this->resultPageFactory->create(); 
