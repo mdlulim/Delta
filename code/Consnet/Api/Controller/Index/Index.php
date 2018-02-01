@@ -151,6 +151,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             $this->addr = $result->EX_ADDRESS;
            // $this->products = $result->EX_PRODUCTS;
             $this->next_batch_min = $result->EX_LAST_INDEX;
+            print_r($this->next_batch_min);
 
             $this->createTable('ERP_CUSTOMER', $this->cust);
             $this->createTable('ERP_CONTACT', $this->cont);
