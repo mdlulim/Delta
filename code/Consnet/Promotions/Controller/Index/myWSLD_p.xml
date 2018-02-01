@@ -8,7 +8,7 @@
 
     </wsdl:documentation>
 
-    <wsp:UsingPolicy wsdl:required="true"/>
+    <wsp:UsingPolicy wsdl:required="false"/>
 
 
     <wsp:Policy wsu:Id="BN__ZZ_MAGENTO_BINDING">
