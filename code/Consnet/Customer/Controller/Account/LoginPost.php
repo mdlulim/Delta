@@ -194,8 +194,9 @@ class LoginPost extends \Magento\Customer\Controller\AbstractAccount
 
 
                     print_r($_SESSION['company']); 
-                    var_dump ( $_SESSION['kunnr'] ) ;
+                    
                     $_SESSION['kunnr'] = $comp['STP_ID'];
+                    var_dump ( $_SESSION['kunnr'] ) ;
                     $_SESSION['ZTERM'] = $company->getData('ZTERM');
 		            $_SESSION['VKORG'] = $company->getData('VKORG');
 
