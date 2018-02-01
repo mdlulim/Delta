@@ -48,6 +48,8 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
     }
 
     protected function _initSelect() {
+        parent::_initSelect();
+        $Collection = $this->getSelect();
         $om = \Magento\Framework\App\ObjectManager::getInstance();
         $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
         $user = $authSession->getUser();
@@ -88,12 +90,10 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
             } 
             }
           
-            parent::_initSelect();
-            $this->getSelect()->Where('entity_id IN (' . implode(',', $customerIds) . ')');
-            unset($_SESSION['company_id']);
-            return $this;
-        }else{
-             parent::_initSelect();
+            //unset($_SESSION['company_id']);
+            return $Collection->Where('entity_id IN (' . implode(',', $customerIds) . ')');
+           
+        }if ($roleName == "cic_agent"){
              if(isset($_SESSION['company_id'])){
                 $arr[0] =  $_SESSION['company_id'];
 
@@ -105,12 +105,29 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
                     $customerIds[$ids]=$arr['customer_id'];
                     $ids++;
                 }
-                $this->getSelect()->Where('entity_id IN (' . implode(',', $customerIds) . ')');
-                unset($_SESSION['company_id']);
-                return $this;
+                //var_dump($customerIds);
+                //unset($_SESSION['company_id']);
+                return $Collection->Where('entity_id IN (' . implode(',', $customerIds) . ')');
             }else{
-                return $this;
-            } 
+                return $Collection;
+            }
+        }else{
+             if(isset($_SESSION['company_id'])){
+                $arr[0] =  $_SESSION['company_id'];
+
+                $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arr) . ')';
+                $result2 = $connection->fetchAll($sql2); 
+                $customerIds = [];
+                $ids=0;
+                foreach($result2 as $arr){
+                    $customerIds[$ids]=$arr['customer_id'];
+                    $ids++;
+                }
+                //unset($_SESSION['company_id']);
+                return $Collection->Where('entity_id IN (' . implode(',', $customerIds) . ')');
+            }else{
+                return $Collection;
+            }
         }
     }
 
