@@ -365,7 +365,7 @@ class MageOrder
 
             $result = $soapClient->ZGET_ORDER_STATUS($parameters);
             if(isset($result->ZSTATUS)){
-                switch ($result-ZSTATUS) {
+                switch ($result->ZSTATUS) {
                     case "O":
                     return 'O';
                     //Open
