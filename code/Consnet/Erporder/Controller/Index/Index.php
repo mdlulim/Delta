@@ -116,29 +116,23 @@ class Index extends \Magento\Framework\App\Action\Action
                 
                 if($status != $ecc_status){
                     switch ($ecc_status) {
-                        case "pending":
-                            $order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
-                            $order->setState(\Magento\Sales\Model\Order::STATE_PENDING);
+                        case "O":
+                            $order->setStatus('open');
+                            $order->setState('new');
                             $ecc_status = 'updated';
-                            //pending
+                            //Open
                             break;                        
-                        case "processing":
-                            $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
-                            $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                        case "C":
+                            $order->setStatus('confirmed');
+                            $order->setState('complete');
                             $ecc_status = 'updated';
-                            //processing
+                            //Confirmed
                             break;                        
-                        case "canceled":
-                            $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
-                            $order->setState(\Magento\Sales\Model\Order::STATE_CANCELED);
+                        case "D":
+                            $order->setStatus('dispatched');
+                            $order->setState('closed');
                             $ecc_status = 'updated';
-                            //canceled
-                            break;
-                        case "complete":
-                            $order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
-                            $order->setState(\Magento\Sales\Model\Order::STATE_COMPLETE);
-                            $ecc_status = 'updated';
-                            //complete
+                            //Delivered
                             break;
                     }$order->save();   
                 }
