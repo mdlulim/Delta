@@ -347,10 +347,13 @@ class Index extends \Magento\Framework\App\Action\Action {
 
             $sql = "CREATE TABLE ".$name." ( ";
             $sql = $sql." `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY ,";
+
+            if(is_array($array) && isset($array['item'][0])){
             foreach($array['item'][0]  as $key=>$attributes){
 
                 $sql .= "`$key` VARCHAR(50) ,";
              }
+            }
              $sql = rtrim($sql,',');
              $sql .= ");";
              $this->_connection->query($sql);
