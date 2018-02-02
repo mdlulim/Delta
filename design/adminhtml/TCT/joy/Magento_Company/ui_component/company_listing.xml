@@ -207,13 +207,13 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="legal_name" sortOrder="50">
+        <!-- <column name="legal_name" sortOrder="50">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Customer Legal Name</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <column name="company_email" sortOrder="60">
             <settings>
                 <filter>text</filter>
@@ -223,27 +223,27 @@
                 <label translate="true">Customer Email</label>
             </settings>
         </column>
-        <column name="vat_tax_id" sortOrder="70">
+        <!-- <column name="vat_tax_id" sortOrder="70">
             <settings>
                 <filter>text</filter>
                 <label translate="true">VAT/TAX ID</label>
                 <visible>false</visible>
             </settings>
-        </column>
-        <column name="reseller_id" sortOrder="80">
+        </column> -->
+        <!-- <column name="reseller_id" sortOrder="80">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Reseller ID</label>
                 <visible>false</visible>
             </settings>
-        </column>
-        <column name="comment" sortOrder="90">
+        </column> -->
+        <!-- <column name="comment" sortOrder="90">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Comment</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <column name="telephone" sortOrder="100">
             <settings>
                 <filter>text</filter>
@@ -261,19 +261,19 @@
                 <label translate="true">Country</label>
             </settings>
         </column>
-        <column name="region" sortOrder="120">
+        <!-- <column name="region" sortOrder="120">
             <settings>
                 <filter>text</filter>
                 <label translate="true">State/Province</label>
             </settings>
-        </column>
-        <column name="postcode" sortOrder="130">
+        </column> -->
+        <!-- <column name="postcode" sortOrder="130">
             <settings>
                 <filter>text</filter>
                 <label translate="true">ZIP</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <column name="city" sortOrder="140">
             <settings>
                 <filter>text</filter>
@@ -290,13 +290,13 @@
                 <visible>true</visible>
             </settings>
         </column>
-        <column name="street" sortOrder="180">
+        <!-- <column name="street" sortOrder="180">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Street Address</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <!-- <column name="company_admin" sortOrder="190">
             <settings>
                 <filter>text</filter>
@@ -318,7 +318,7 @@
                 <visible>true</visible>
             </settings>
         </column>
-        <column name="gender" class="Magento\Company\Ui\Component\Listing\Column\Gender" sortOrder="220">
+        <!-- <column name="gender" class="Magento\Company\Ui\Component\Listing\Column\Gender" sortOrder="220">
             <settings>
                 <filter>select</filter>
                 <options class="Magento\Company\Model\Company\Source\Gender"/>
@@ -326,7 +326,7 @@
                 <label translate="true">Gender</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <actionsColumn name="actions" class="Magento\Company\Ui\Component\Listing\Column\Actions" sortOrder="230">
             <settings>
                 <indexField>entity_id</indexField>
