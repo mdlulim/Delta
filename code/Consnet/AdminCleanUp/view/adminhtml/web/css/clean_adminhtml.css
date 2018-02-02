@@ -93,107 +93,13 @@ note needed are hidden using css
     text-shadow: none;
     color: #d7d8d8 !important;
 }
-/** 
--this module it cleean up admin side using css most of the block that are 
-note needed are hidden using css
-
-1. Cleaning up customer
-*/
-#tab_address, .admin__page-nav-link{
-    display: none;
-}
-#tab_wishlist_content, .admin__page-nav-link{
-    display: none;
-}
-#tab_giftregistry_content, .admin__page-nav-link{
-    display: none;
-}
-#tab_giftregistry_content, .admin__page-nav-link{
-    display: none;
-}
-#tab_newsletter_content, .admin__page-nav-link{
-    display: none;
-}
-#tab_reviews_content, .admin__page-nav-link{
-    display: none;
-}
-#tab_customer_edit_tab_reward_content, .admin__page-nav-link{
-    display: none;
-}                              
-#tab_customer_edit_tab_agreements_content, .admin__page-nav-link{
-    display: none;
-}
-#tab_customer_edit_tab_rma_content, .admin__page-nav-link{
-    display: none;
-}
-#customer-delete-button{
-    display: none;
-}
-#tab_customer_edit_tab_rma_content, .admin__page-nav-link{
-    display: none;
-}
-
-
-/**----------------------------------Orders---------------------------------- 
-.order-view-billing-shipping{
-  display: none;
-}*/
-#sales_order_view_tabs_order_shipments{
-    display: none;
-}
-#sales_order_view_tabs_order_invoices{
-    display: none;
-}
-#sales_order_view_tabs_order_history{
-    display: none;
-}
-#edit-order-comments-block-title{
-    display: none;
-}
-#sales_order_view_tabs_order_creditmemos{
-    display: none;
-}
-.order-methods-overlay{
-    display: none;
-}
-.order-discounts{
-    display: none;
-}
-.row-gift-options{
-    display: none;
-}
-.page-header{
-    background: #093260 !important;
-}
-.page-title {
-    color: #ece9e7 !important;
-}
-.page-actions {
-    background: #093260 !important;
-}
-.page-main-actions .page-actions._fixed .page-actions-inner::before {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #f3f2f1 !important;
-    content: attr(data-title);
-    float: left;
-    font-size: 2.8rem;
-    margin-top: .3rem;
-    max-width: 50%;
-}
-.abs-action-quaternary, .page-actions > button, .page-actions .page-actions-buttons > button, .page-actions .page-actions-buttons > .action, .page-actions > .block-footer .action-add, .page-actions .page-actions-buttons > .block-footer .action-add {
-    background-color: transparent;
-    border-color: transparent;
-    text-shadow: none;
-    color: #d7d8d8 !important;
-}
 
 #dash{
   text-align:center;
   padding:40px;
   background:url(../img/Call-Centre-img-royalty-free.jpg) no-repeat;
   background-size:cover;
+  width: 100%;
 }
 
 #admin-dashboard .jumbotron{
@@ -207,9 +113,16 @@ note needed are hidden using css
   text-align:justify;
 }
 
-@media (max-width:991px) {
+@media (max-width:600px) {
   #admin-dashboard{
-    padding:30px;
-    max-width:800px;
+    padding:20px;
+    width:98%;
   }
+  #dash{
+    text-align:center;
+    padding:10px;
+    background:url(../img/Call-Centre-img-royalty-free.jpg) no-repeat;
+    background-size:cover;
+    width: 100%;
+    }
 }
