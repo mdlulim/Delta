@@ -151,7 +151,7 @@ class Index extends \Magento\Framework\App\Action\Action {
             $this->addr = $result->EX_ADDRESS;
            // $this->products = $result->EX_PRODUCTS;
             $this->next_batch_min = $result->EX_LAST_INDEX;
-            print_r($this->next_batch_min);
+            
 
             $this->createTable('ERP_CUSTOMER', $this->cust);
             $this->createTable('ERP_CONTACT', $this->cont);
@@ -219,6 +219,8 @@ class Index extends \Magento\Framework\App\Action\Action {
             $this->loadProducts();
         }
 
+       
+
         $this->createAdminUsers();
         $this->createCompany();
         $this->createCompanyUsers();
@@ -230,7 +232,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         $this->deleteTable('ERP_ADDRESS');
         $this->deleteTable('ERP_PRODUCTS');
 
-
+        $helper->setConfigValue('last_row_text', $this->next_batch_min);
         $newMax = $this->size + $this->next_batch_min;
 
         if ($this->halt == 1) {
@@ -559,13 +561,13 @@ class Index extends \Magento\Framework\App\Action\Action {
 
             //get ompany address
             $address = $this->joinTable('ERP_ADDRESS','ADDRNUMBER',$erp_customer['ADRNR']) ;
-            $adminuser = $this->getSalesRep($erp_customer['KONZS']) ;
+            $salesuser = $this->getSalesRep($erp_customer['KONZS']) ;
 
 
 
             if (!$company->getId()){
 
-                $dummyUser = $this->createDummyAdminUser($this->cleanStr($erp_customer['NAME1']),$erp_customer['KUNNR']);
+                $dummyUser = $this->createDummyAdminUser($erp_customer['NAME1'],$erp_customer['KUNNR']);
 
                 if (empty($address['TEL_NUMBER'])) {
                     $address['TEL_NUMBER'] = '000 000 000';
@@ -589,19 +591,19 @@ class Index extends \Magento\Framework\App\Action\Action {
 
 
                 $company = $this->companyFactory->create();
-                $company->setCompanyName($this->cleanStr($erp_customer['NAME1']));
-                $company->setLegalName($this->cleanStr($address['MC_NAME1']));
+                $company->setCompanyName($erp_customer['NAME1']);
+                $company->setLegalName($address['MC_NAME1']);
                 $company->setCompanyEmail($_cust_email);
                 $company->setStatus(1);
                 $company->setCustomerGroupId($cgroup);
-                $company->setStreet($this->cleanStr($address['STREET']));
-                $company->setCity($this->cleanStr($address['CITY1']));
+                $company->setStreet($address['STREET']);
+                $company->setCity($address['CITY1']);
                 $company->setCountryId($address['COUNTRY']);
-                $company->setRegion($this->cleanStr( $address['REGION']));
+                $company->setRegion($address['REGION']);
                 $company->setPostcode("99999");
-                $company->setTelephone($this->cleanStr($address['TEL_NUMBER']));
+                $company->setTelephone($address['TEL_NUMBER']);
                 $company->setSuperUserId($dummyUser);
-                $company->setSalesRepresentativeId($adminuser);
+                $company->setSalesRepresentativeId($salesuser);
 
                 if (!$extededAttr) {
 
@@ -662,17 +664,17 @@ class Index extends \Magento\Framework\App\Action\Action {
                 }
 
 
-                $company->setCompanyName($this->cleanStr($erp_customer['NAME1']));
-                $company->setLegalName($this->cleanStr($address['MC_NAME1']));
+                $company->setCompanyName($erp_customer['NAME1']);
+                $company->setLegalName($address['MC_NAME1']);
                 $company->setCompanyEmail($_cust_email);
                 $company->setStatus(1);
                 $company->setCustomerGroupId($cgroup);
-                $company->setStreet($this->cleanStr($address['STREET']));
-                $company->setCity($this->cleanStr($address['CITY1']));
+                $company->setStreet($address['STREET']);
+                $company->setCity($address['CITY1']);
                 $company->setCountryId($address['COUNTRY']);
-                $company->setRegion($this->cleanStr( $address['REGION']));
+                $company->setRegion($address['REGION']);
                 $company->setPostcode("99999");
-                $company->setTelephone($this->cleanStr($address['TEL_NUMBER']));
+                $company->setTelephone($address['TEL_NUMBER']);
                 $company->setSalesRepresentativeId($adminuser);
 
                 if (!$extededAttr) {
