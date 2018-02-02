@@ -39,7 +39,7 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
      */
     public function getAjaxCheckUrl()
     {
-        return $this->getUrl('Api/index'); //hit controller by ajax call on button click.
+        return $this->getUrl('switchcompany/SwitchCompany/startReplication'); //hit controller by ajax call on button click.
     }
      /**
      * Get the button and scripts contents
