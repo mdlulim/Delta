@@ -298,8 +298,6 @@ class MageOrder
     }
     
     public function get_ecc_order_status($order_number){
-        $wsdlUrl = dirname(__FILE__)."/zsalesorder_function_group_binding.xml";		
-        
         $WURL = $this->helper->getGeneralConfig('sales_order_text');
         
 		//Set SOAP Options
@@ -364,55 +362,24 @@ class MageOrder
         //Call Funtion (passing in parameters)        
         try{
             $result = null;
-            
-            //$a = new Client($wsdlUrl, $options);
-            //var_dump($a->ping());
 
             $result = $soapClient->ZGET_ORDER_STATUS($parameters);
-            if ($result->E_RETURN->MESSAGE == "") {
-                if (is_array($result->E_STATUS_INFO->item)) {
-                    foreach ($result->E_STATUS_INFO->item as $item) {
-                        switch ($item->PRC_STAT_H) {
-                            case "A":
-                            return 'pending';
-                            //pending
-                            break;                        
-                            case "B":
-                            return 'processing';
-                            //processing
-                            break;                        
-                            case "C":
-                            if ($item->REA_FOR_RE == 'Z7') {
-                                return "canceled";
-                            }
-                            return 'complete';
-                            //complete
-                            break;
-                        }                    	
-                    }     
-                }else {
-                    switch ($result->E_STATUS_INFO->item->PRC_STAT_H) {
-                        case "A":
-                        return 'pending';
-                        //pending
-                        break;                        
-                        case "B":
-                        return 'processing';
-                        //processing
-                        break;                        
-                        case "C":
-                        if ($result->E_STATUS_INFO->item->REA_FOR_RE == 'Z7') {
-                            return "canceled";
-                        }
-                        return 'complete';
-                        //complete
-                        break;
-                    } 
-                }  
-            }else {
-                //No Data
-            }
-            return 0;              	         
+            if(isset($result->ZSTATUS)){
+                switch ($result->ZSTATUS) {
+                    case "O":
+                    return 'open';
+                    //Open
+                    break;                        
+                    case "C":
+                    return 'confirmed';
+                    //Confirmed
+                    break;                        
+                    case "D":
+                    return 'dispatched';
+                    //Dispatched
+                    break;
+                }
+            }            	         
         }
         catch (Exception $e){
             //$this->messageManager->addErrorMessage("Required quantity is not available");

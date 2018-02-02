@@ -129,7 +129,7 @@ class CronJobPromotion {
      
             $tab_result = $soapClient2->ZzMagentoGetPromotions($parameters);
         
-        
+            var_dump ($tab_result->ExPromoList) ;   
             $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') ;
             $list = null;
             $i = 0;
@@ -141,15 +141,17 @@ class CronJobPromotion {
   
 
 
-             $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') ;
+           //  $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') ;
 
 
  
 
-     if ( (isset($item)) && (property_exists($item , "Knuma" ) ) ) {
+     if ( (isset($item)) 
+        // && (property_exists($item , "Knuma" ) ) 
+        ) {
              
              var_dump($item);
-             die();
+            // die();
      
             $tempKnuma = $item->Knuma ;
  
@@ -172,7 +174,7 @@ class CronJobPromotion {
                 $model->setTitle($item->Botext);
                 $model->setMatnr_product($item->Matnr);
                 $model->setKunnr($stp_id);
-             $list[] = $model ;
+                $list[] = $model ;
                 
 
      }

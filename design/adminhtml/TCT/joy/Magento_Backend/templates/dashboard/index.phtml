@@ -45,64 +45,153 @@ window.changeDiagramsPeriod = function(periodObj) {
         }
     });
 <?php endforeach; ?>
-    ajaxBlockUrl = '<?php echo $block->getUrl('adminhtml/*/ajaxBlock', ['_current' => true, 'block' => 'totals', 'period' => '']) ?>' + periodParam;
-    new Ajax.Request(ajaxBlockUrl, {
-        parameters: {isAjax: 'true', form_key: FORM_KEY},
-        onSuccess: function(transport) {
-            tabContentElementId = 'dashboard_diagram_totals';
-            try {
-                if (transport.responseText.isJSON()) {
-                    var response = transport.responseText.evalJSON();
-                    if (response.error) {
-                        alert({
-                            content: response.message
-                        });
-                    }
-                    if(response.ajaxExpired && response.ajaxRedirect) {
-                        setLocation(response.ajaxRedirect);
-                    }
-                } else {
-                    $(tabContentElementId).replace(transport.responseText);
-                }
-            }
-            catch (e) {
-                $(tabContentElementId).replace(transport.responseText);
-            }
-        }
-    });
-}
-
-});
 </script>
 <?php endif; ?>
 <div class="dashboard-container row">
-    <div class="dashboard-main col-m-8 col-m-push-4">
-        <div class="dashboard-diagram-container">
-            <?php echo $block->getChildHtml('diagrams') ?>
-            <?php if (is_array($block->getChildBlock('diagrams')->getTabsIds())) : ?>
-                <div id="diagram_tab_content" class="dashboard-diagram-tab-content"></div>
-            <?php endif; ?>
-        </div>
-        <?php echo $block->getChildHtml('totals') ?>
-        <div class="dashboard-store-stats">
-            <?php echo $block->getChildHtml('grids') ?>
-            <div id="grid_tab_content" class="dashboard-store-stats-content"></div>
-            <?php echo $block->getChildHtml('refresh_statistics') ?>
-        </div>
-    </div>
+    
     <div class="dashboard-secondary col-m-4 col-m-pull-8">
-        <?php echo $block->getChildHtml('sales') ?>
-        <div class="dashboard-item">
-            <div class="dashboard-item-title"><?php /* @escapeNotVerified */ echo __('Last Orders') ?></div>
-            <?php echo $block->getChildHtml('lastOrders'); ?>
-        </div>
-        <div class="dashboard-item">
-            <div class="dashboard-item-title"><?php /* @escapeNotVerified */ echo __('Last Search Terms') ?></div>
-            <?php echo $block->getChildHtml('lastSearches'); ?>
-        </div>
-        <div class="dashboard-item">
-            <div class="dashboard-item-title"><?php /* @escapeNotVerified */ echo __('Top Search Terms') ?></div>
-            <?php echo $block->getChildHtml('topSearches'); ?>
-        </div>
+        <h1>Welcome to Delta Beverages</h1>
     </div>
+    <div id="page-inner">
+
+			<div class="dashboard-cards"> 
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+					
+						<div class="card horizontal cardIcon waves-effect waves-dark">
+						<div class="card-image red">
+						<i class="material-icons dp48">import_export</i>
+						</div>
+						<div class="card-stacked red">
+						<div class="card-content">
+						<h3>84,198</h3> 
+						</div>
+						<div class="card-action">
+						<strong>REVENUE</strong>
+						</div>
+						</div>
+						</div>
+	 
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+					
+						<div class="card horizontal cardIcon waves-effect waves-dark">
+						<div class="card-image orange">
+						<i class="material-icons dp48">shopping_cart</i>
+						</div>
+						<div class="card-stacked orange">
+						<div class="card-content">
+						<h3>36,540</h3> 
+						</div>
+						<div class="card-action">
+						<strong>SALES</strong>
+						</div>
+						</div>
+						</div> 
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+					
+							<div class="card horizontal cardIcon waves-effect waves-dark">
+						<div class="card-image blue">
+						<i class="material-icons dp48">equalizer</i>
+						</div>
+						<div class="card-stacked blue">
+						<div class="card-content">
+						<h3>24,225</h3> 
+						</div>
+						<div class="card-action">
+						<strong>PRODUCTS</strong>
+						</div>
+						</div>
+						</div> 
+						 
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+					
+					<div class="card horizontal cardIcon waves-effect waves-dark">
+						<div class="card-image green">
+						<i class="material-icons dp48">supervisor_account</i>
+						</div>
+						<div class="card-stacked green">
+						<div class="card-content">
+						<h3>88,658</h3> 
+						</div>
+						<div class="card-action">
+						<strong>VISITS</strong>
+						</div>
+						</div>
+						</div> 
+						 
+                    </div>
+                </div>
+			   </div>
+				<!-- /. ROW  --> 
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-7"> 
+					<div class="cirStats">
+						  	<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-6"> 
+										<div class="card-panel text-center">
+											<h4>Profit</h4>
+											<div class="easypiechart" id="easypiechart-blue" data-percent="82"><span class="percent">82%</span>
+											<canvas height="110" width="110"></canvas></div> 
+										</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6"> 
+										<div class="card-panel text-center">
+											<h4>No. of Visits</h4>
+											<div class="easypiechart" id="easypiechart-red" data-percent="46"><span class="percent">46%</span>
+											<canvas height="110" width="110"></canvas></div>
+										</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6"> 
+										<div class="card-panel text-center">
+											<h4>Customers</h4>
+											<div class="easypiechart" id="easypiechart-teal" data-percent="84"><span class="percent">84%</span>
+											<canvas height="110" width="110"></canvas></div> 
+										</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6"> 
+										<div class="card-panel text-center">
+											<h4>Sales</h4>
+											<div class="easypiechart" id="easypiechart-orange" data-percent="55"><span class="percent">55%</span>
+											<canvas height="110" width="110"></canvas></div>
+										</div>
+								</div>  
+							</div>
+						</div>							
+						</div><!--/.row-->
+						<div class="col-xs-12 col-sm-12 col-md-5"> 
+						     <div class="row">
+									<div class="col-xs-12"> 
+									<div class="card">
+										<div class="card-image donutpad">
+										  <div id="morris-donut-chart"><svg height="342" version="1.1" width="411" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.75px; top: -0.850006px;"><desc>Created with Raphaël 2.1.0</desc><defs></defs><path style="opacity: 0;" fill="none" stroke="#a6a6a6" d="M205.5,282.5A109,109,0,0,0,308.4220648142984,209.38939361930437" stroke-width="2" opacity="0"></path><path style="" fill="#a6a6a6" stroke="#ffffff" d="M205.5,285.5A112,112,0,0,0,311.25478219450844,210.377175095065L355.16190158776413,225.6877879693554A158.5,158.5,0,0,1,205.5,332Z" stroke-width="3"></path><path style="opacity: 1;" fill="none" stroke="#414e63" d="M308.4220648142984,209.38939361930437A109,109,0,0,0,107.72069250765188,125.33147265779414" stroke-width="2" opacity="1"></path><path style="" fill="#414e63" stroke="#ffffff" d="M311.25478219450844,210.377175095065A112,112,0,0,0,105.02951890694504,124.00573337314628L58.8310387614778,101.24720898669122A163.5,163.5,0,0,1,359.88309722144754,227.33409042895653Z" stroke-width="3"></path><path style="opacity: 0;" fill="none" stroke="#e96562" d="M107.72069250765188,125.33147265779414A109,109,0,0,0,205.46575664063926,282.49999462106564" stroke-width="2" opacity="0"></path><path style="" fill="#e96562" stroke="#ffffff" d="M105.02951890694504,124.00573337314628A112,112,0,0,0,205.4648141628587,285.4999944730216L205.45020575725985,331.9999921783386A158.5,158.5,0,0,1,63.31632809598918,103.45677446110433Z" stroke-width="3"></path><text style="text-anchor: middle; font: normal normal 800 normal 15px &quot;Arial&quot;;" x="205.5" y="163.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" font-size="15px" font-weight="800" transform="matrix(3.0278,0,0,3.0278,-417.7222,-349.7917)" stroke-width="0.3302752293577982"><tspan dy="5">Users</tspan></text><text style="text-anchor: middle; font: normal normal normal normal 14px &quot;Arial&quot;;" x="205.5" y="183.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" font-size="14px" transform="matrix(2.2708,0,0,2.2708,-261.7917,-223.0313)" stroke-width="0.4403669724770642"><tspan dy="5">30</tspan></text></svg></div>
+										</div> 
+										<div class="card-action">
+										  <b>Donut Chart Example</b>
+										</div>
+									</div>	
+								</div>
+							 </div>
+						</div>
+					</div>
+					
+				<div class="row">
+				<div class="col-md-12">
+				
+					</div>		
+				</div> 
+			   <div class="fixed-action-btn horizontal click-to-toggle">
+    <a class="btn-floating btn-large red">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">track_changes</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+</div>
 </div>

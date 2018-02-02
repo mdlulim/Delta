@@ -91,32 +91,28 @@ $orderStoreDate = $block->formatDate(
 
                             $status = $_order->getStatus();
                             
-                            if($status !== 'canceled' || $status !== 'complete'){
+                            if($status !== 'confirmed' || $status !== 'dispatched'){
                                 $ecc_status = $mageorder->get_ecc_order_status($realOrderId);                    
                                 if($status !== $ecc_status){
+
                                         switch ($ecc_status) {
-                                            case "pending":
-                                                $_order->setStatus(\Magento\Sales\Model\Order::STATE_PENDING);
-                                                $_order->setState(\Magento\Sales\Model\Order::STATE_PENDING);
-                                                //pending
+                                            case "open":
+                                                $_order->setStatus('open');
+                                                $_order->setState('new');
+                                                $ecc_status = 'updated';
+                                                //Open
                                                 break;                        
-                                            case "processing":
-                                                $_order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
-                                                $_order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                                            case "confirmed":
+                                                $_order->setStatus('confirmed');
+                                                $_order->setState('complete');
                                                 $ecc_status = 'updated';
-                                                //processing
+                                                //Confirmed
                                                 break;                        
-                                            case "canceled":
-                                                $_order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
-                                                $_order->setState(\Magento\Sales\Model\Order::STATE_CANCELED);
+                                            case "dispatched":
+                                                $_order->setStatus('dispatched');
+                                                $_order->setState('closed');
                                                 $ecc_status = 'updated';
-                                                //canceled
-                                                break;
-                                            case "complete":
-                                                $_order->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
-                                                $_order->setState(\Magento\Sales\Model\Order::STATE_COMPLETE);
-                                                $ecc_status = 'updated';
-                                                //complete
+                                                //Delivered
                                                 break;
                                         }$_order->save();   
                                     Header("Refresh:0");//print_r($ecc_status);
