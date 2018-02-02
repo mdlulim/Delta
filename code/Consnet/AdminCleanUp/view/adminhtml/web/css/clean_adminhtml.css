@@ -189,9 +189,9 @@ note needed are hidden using css
     color: #d7d8d8 !important;
 }
 
-#anchor-content{
+#dash{
   text-align:center;
-  padding:100px;
+  padding:40px;
   background:url(../img/Call-Centre-img-royalty-free.jpg) no-repeat;
   background-size:cover;
 }
