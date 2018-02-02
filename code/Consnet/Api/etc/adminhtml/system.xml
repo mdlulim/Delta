@@ -12,7 +12,7 @@
             
             <group id="start_replicate" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <field id="listbutton" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>Webkul\Addbutton\Block\System\Config\Form\Button</frontend_model>
+                    <frontend_model>Consnet\Api\Block\System\Config\Form\Button</frontend_model>
                 </field>
             </group>
             
