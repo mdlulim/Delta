@@ -3,3 +3,29 @@
         <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
     </button>
 </div>
+
+<?php /* @var $block \Skumar\Sync\Block\System\Config\Synchronize */ ?>
+<script>
+require([
+    'jquery',
+    'prototype',
+], function(jQuery){
+    function check() {
+        params = {
+        };
+
+        new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxCheckUrl() ?>', {
+            loaderArea:     false,
+            asynchronous:   true,
+            parameters:     params,
+            onSuccess: function(transport) {
+                var response = JSON.parse(transport.responseText);
+            }
+        });
+    }
+
+    jQuery('#startreplication_btn').click(function () {
+        check();
+    });
+});
+</script>
