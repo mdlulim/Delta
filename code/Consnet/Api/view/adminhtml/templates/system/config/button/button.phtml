@@ -1,3 +1,25 @@
+<style>
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+    z-index: 10000;
+}
+
+#wait{
+    text-align:center;
+    margin :0 auto;
+    color :white;
+}
+</style>
+
 <div class="pp-buttons-container">
     <button id="<?php echo $block->getId() ?>" onclick="return false;">
         <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
@@ -20,13 +42,27 @@ require([
             parameters:     params,
             onSuccess: function(transport) {
                 var response = JSON.parse(transport.responseText);
-                alert('Replication compited...Please refresh page');
+                jQuery('#overlay').remove();
+                location.reload(true);
+            },
+            onComplete: function(){
+                jQuery('#overlay').remove();
+                location.reload(true);
+            },
+            onFailure:function(transport){
+                jQuery('#overlay').remove();
+                location.reload(true);
             }
+            
         });
     }
 
     jQuery('#startreplication_btn').click(function () {
+	var overlay = jQuery('<div id="overlay"><h1 id="wait">Please Wait, Replication in progress ...</h1></div>');
+	overlay.appendTo(document.body)
         check();
+        
+
     });
 });
 </script>

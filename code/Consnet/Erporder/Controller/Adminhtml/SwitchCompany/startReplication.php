@@ -5,6 +5,7 @@ namespace Consnet\ErpOrder\Controller\Adminhtml\SwitchCompany;
 use  \Magento\Backend\App\Action\Context;
 use \Magento\User\Model\UserFactory;
 use \Magento\User\Model\ResourceModel\User;
+use SoapFault;
 
 class startReplication extends \Magento\Framework\App\Action\Action {
 
@@ -152,7 +153,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             $this->cust = $result->EX_GENERAL_CUST_DATA;
             $this->bf = $result->EX_ORG_CORP;
             $this->addr = $result->EX_ADDRESS;
-           // $this->products = $result->EX_PRODUCTS;
+            $this->products = $result->EX_PRODUCTS;
             $this->next_batch_min = $result->EX_LAST_INDEX;
             
 
@@ -160,7 +161,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             $this->createTable('ERP_CONTACT', $this->cont);
             $this->createTable('ERP_ORG', $this->bf);
             $this->createTable('ERP_ADDRESS', $this->addr);
-            $this->createTable('ERP_PRODUCTS', $this->products);
+           // $this->createTable('ERP_PRODUCTS', $this->products);
 
 
 
@@ -195,7 +196,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         $this->authApi();
 
-        parent::__construct($context);
+       // parent::__construct($context);
 
     }
     }
@@ -219,12 +220,12 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         $stop = 1;
         $loop_counter = 1;
         $helper = $this->objectManager->create('Consnet\Api\Helper\Data');
-        if ($this->products !== null) {
-            $this->loadProducts();
-        }
+        //if ($this->products !== null) {
+            
+       // }
 
        
-
+        $this->loadProducts();
         $this->createAdminUsers();
         $this->createCompany();
         $this->createCompanyUsers();
@@ -234,7 +235,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         $this->deleteTable('ERP_CONTACT');
         $this->deleteTable('ERP_ORG');
         $this->deleteTable('ERP_ADDRESS');
-        $this->deleteTable('ERP_PRODUCTS');
+        //$this->deleteTable('ERP_PRODUCTS');
 
         $helper->setConfigValue('last_row_text', $this->next_batch_min);
         $newMax = $this->size + $this->next_batch_min;
@@ -260,7 +261,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                // $this->soapClient2->ZZ_BP_REPLICATION($parameters);
                 try{
                 $result = $this->soapClient2->ZZ_BP_REPLICATION($parameters);
-                }catch(Exception $e){
+                }catch(SoapFault $e){
                     $helper->setConfigValue('customer_file_location_text', $e->getMessage());
                 }
                 if (isset($result)) {
@@ -275,7 +276,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                     $this->createTable('ERP_CONTACT', $this->cont);
                     $this->createTable('ERP_ORG', $this->bf);
                     $this->createTable('ERP_ADDRESS', $this->addr);
-                    $this->createTable('ERP_PRODUCTS', $this->products);
+                   // $this->createTable('ERP_PRODUCTS', $this->products);
 
                 } else {
                     $this->cont = null;
@@ -303,11 +304,12 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                 $this->deleteTable('ERP_CONTACT');
                 $this->deleteTable('ERP_ORG');
                 $this->deleteTable('ERP_ADDRESS');
-                $this->deleteTable('ERP_PRODUCTS');
+               // $this->deleteTable('ERP_PRODUCTS');
 
 
 
                 $newMax = $this->size + $this->next_batch_min;
+                $helper->setConfigValue('last_row_text', $this->next_batch_min);
 
                 if ($loop_counter == $this->halt) {
                     $stop = 0;
@@ -1132,13 +1134,16 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
     public function loadProducts() {
         $eccproducts = $this->products;
+        if(isset($eccproducts)){
         try {
-            $csv_handler = fopen($_SERVER['DOCUMENT_ROOT'] . '/deltademo/var/import/products/products.csv', 'w');
+            $csv_handler = fopen($_SERVER['DOCUMENT_ROOT'] . '/deltaqa01/var/import/products/products.csv', 'w');
 
             fputcsv($csv_handler, $this->getHeaderArray());
 
             $productList = array(array());
             $i = 0;
+
+           
             foreach ($eccproducts->item as $item) {
                 if (!in_array($item->MATNR, array_column($productList, 0))) {
                     if ($item->KONDM == 'Y1' || $item->KONDM == 'Y2' || $item->KONDM == 'Y3') {
@@ -1194,6 +1199,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                     }
                 }
             }
+        
 
             foreach ($productList as $product) {
                 fputcsv($csv_handler, $product);
@@ -1203,6 +1209,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
+    }
     }
 
     protected function getHeaderArray() {
