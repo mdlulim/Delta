@@ -93,3 +93,36 @@ note needed are hidden using css
     text-shadow: none;
     color: #d7d8d8 !important;
 }
+
+#dash{
+  text-align:center;
+  padding:40px;
+  background:url(../img/Call-Centre-img-royalty-free.jpg) no-repeat;
+  background-size:cover;
+  width: 100%;
+}
+
+#admin-dashboard .jumbotron{
+  border-radius:20px;
+  padding:10px;
+  background:rgba(255,255,255,0.75);
+  margin:0 auto;
+}
+
+#admin-text{
+  text-align:justify;
+}
+
+@media (max-width:600px) {
+  #admin-dashboard{
+    padding:20px;
+    width:98%;
+  }
+  #dash{
+    text-align:center;
+    padding:10px;
+    background:url(../img/Call-Centre-img-royalty-free.jpg) no-repeat;
+    background-size:cover;
+    width: 100%;
+    }
+}
