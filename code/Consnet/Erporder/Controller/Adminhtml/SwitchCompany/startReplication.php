@@ -2,7 +2,7 @@
 
 namespace Consnet\ErpOrder\Controller\Adminhtml\SwitchCompany;
 
-use Magento\Framework\App\Action\Context;
+use  \Magento\Backend\App\Action\Context;
 use \Magento\User\Model\UserFactory;
 use \Magento\User\Model\ResourceModel\User;
 
@@ -14,7 +14,6 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     const COMPANYUSER_EMAIL = 'companyuser@delta.co.zw';
 
 
-    
     protected $NAMESPACE_ID;
     protected $_resultPageFactory;
     protected $_logger;
@@ -66,30 +65,33 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
     /**
      * @param \Magento\Company\Api\Data\CompanyInterfaceFactory $companyFactory
+     * 
+     * 
      */
-    public function __construct(
-    Context $context, UserFactory $userFactory,
-    \Magento\Company\Model\ResourceModel\Role\CollectionFactory $roleCollectionFactory,
-    \Magento\Company\Model\RoleFactory $roleFactory,
-     \Magento\Company\Model\UserRoleFactory $userRoleFactory, User $userResourceModel, \Magento\Framework\View\Result\PageFactory $resultPageFactory, \Magento\Company\Api\Data\CompanyInterfaceFactory $companyFactory, \Psr\Log\LoggerInterface $logger, \Magento\Company\Api\Data\CompanyCustomerInterface $companyCustomerInterface, \Magento\Store\Model\StoreManagerInterface $storeManager, \Magento\Customer\Model\CustomerFactory $customerFactory, \Magento\Customer\Model\AddressFactory $address, \Magento\Customer\Model\ResourceModel\CustomerRepository $customerRepository, \Magento\Company\Model\CompanyRepository $companyRepository, \Magento\Framework\ObjectManagerInterface $objectManager, \Magento\Framework\App\State $appState
-    ) {
+
+    public function __construct( \Magento\Backend\App\Action\Context $context, 
+    \Magento\Framework\View\Result\PageFactory $resultPageFactory  )
+     { 
+        parent::__construct($context); 
+        $this->objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $this->_resultPageFactory = $resultPageFactory;
-        $this->storeManager = $storeManager;
-        $this->customerFactory = $customerFactory;
-        $this->_logger = $logger;
-        $this->address = $address;
-        $this->customerRepository = $customerRepository;
-        $this->companyRepository = $companyRepository;
-        $this->objectManager = $objectManager;
-        $this->companyFactory = $companyFactory;
-        $this->companyCustomerInterface = $companyCustomerInterface;
+        $this->storeManager = $this->objectManager->create('\Magento\Store\Model\StoreManagerInterface');
+        $this->customerFactory = $this->objectManager->create('\Magento\Customer\Model\CustomerFactory');
+        $this->_logger = $this->objectManager->create('\Psr\Log\LoggerInterface');
+        $this->address  = $this->objectManager->create('\Magento\Customer\Model\AddressFactory');
+        $this->customerRepository = $this->objectManager->create('\Magento\Customer\Model\ResourceModel\CustomerRepository');
+        $this->companyRepository = $this->objectManager->create('\Magento\Company\Model\CompanyRepository');
+        $this->companyFactory = $this->objectManager->create('\Magento\Company\Model\CompanyFactory');
+        $this->companyCustomerInterface = $this->objectManager->create('\Magento\Company\Api\Data\CompanyInterfaceFactory');
         $this->_resources = $this->objectManager->get('Magento\Framework\App\ResourceConnection');
         $this->_connection = $this->_resources->getConnection();
-        $this->userFactory = $userFactory;
-        $this->userResourceModel = $userResourceModel;
-        $this->userRoleFactory = $userRoleFactory;
-        $this->roleCollectionFactory = $roleCollectionFactory;
-        $this->roleFactory = $roleFactory;
+        $this->userFactory = $this->objectManager->create('\Magento\User\Model\UserFactory');
+        $this->userResourceModel =$this->objectManager->create('\Magento\User\Model\ResourceModel\User');
+        $this->userRoleFactory =  $this->objectManager->create('\Magento\Company\Model\ResourceModel\Role\CollectionFactory');
+        $this->roleCollectionFactory = $this->objectManager->create('\Magento\Company\Model\ResourceModel\Role\CollectionFactory');
+        $this->roleFactory = $this->objectManager->create('\Magento\Company\Model\RoleFactory'); 
+        $this->objectManager->create('\Magento\User\Model\ResourceModel\User');
+
 
 
         $wsdlUrl = dirname(__FILE__) . "/z_bp_rep_v6.xml";
@@ -179,7 +181,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         $this->authApi();
 
-        parent::__construct($context);
+        //parent::__construct($context);
     }else{
 
 
@@ -197,6 +199,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
     }
     }
+    
 
     protected function authApi() {
         $userData = array("username" => "admin", "password" => "Consnet01");
@@ -317,6 +320,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         }
 
         $resultPage = $this->_resultPageFactory->create();
+        $resultPage->setPath('admin/system_config');
         return $resultPage;
     }
 
@@ -676,7 +680,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                 $company->setRegion($address['REGION']);
                 $company->setPostcode("99999");
                 $company->setTelephone($address['TEL_NUMBER']);
-                $company->setSalesRepresentativeId($adminuser);
+                $company->setSalesRepresentativeId($salesuser);
 
                 if (!$extededAttr) {
 
