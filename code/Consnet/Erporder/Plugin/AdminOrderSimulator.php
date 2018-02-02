@@ -149,6 +149,11 @@ class AdminOrderSimulator
                                 if($quote->hasItems()){
                                     $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
                                     $products = '';
+                                    $count = count($matnrs);
+                                    if(count($matnrs) > 0){
+                                        $count = count($matnrs) - 1;
+                                    }
+                                    
                                     foreach($quote->getAllVisibleItems() as $item){
                                         if(in_array($item->getSku(), $matnrs)){                                           
                                             if ($products == '') {                                                    
@@ -159,7 +164,9 @@ class AdminOrderSimulator
                                             $quote->deleteItem($item);
                                             $quote->setTotalsCollectedFlag(false)->collectTotals();
                                             $quote->save();
-                                            $this->messageManager->addError("Stock for ".$item->getName()." is not available");
+                                            if($item->getSku() == $matnrs[$count]){
+                                                $this->messageManager->addError("Stock for ".$item->getName()." is not available");
+                                            }                                            
                                         }
                                     }                                      
                                 }
