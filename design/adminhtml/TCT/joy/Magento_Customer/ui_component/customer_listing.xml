@@ -221,12 +221,12 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="shipping_full" sortOrder="160">
+        <!-- <column name="shipping_full" sortOrder="160">
             <settings>
                 <label translate="true">Shipping Address</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <column name="dob" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="170">
             <settings>
                 <timezone>false</timezone>
