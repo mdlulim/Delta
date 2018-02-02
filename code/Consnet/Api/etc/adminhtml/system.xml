@@ -19,8 +19,8 @@
              <group id="wsdls" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Web services Configuration</label>
                 <field id="initial_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Initial Replication  </label>
-                    <comment>Value is iether empty( nothing ) or X ( x means yes ) </comment>
+                    <label>Delta Changes ?  </label>
+                    <comment>Value is iether empty( nothing ) or X ( X means yes ) </comment>
                 </field>
 
                  <field id="namespace_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
@@ -30,7 +30,7 @@
 
                 <field id="customer_file_location_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Customer File Location</label>
-                    <comment>file pathe  e.g  /var/import/customer/customer.csv (must be writable/readable)</comment>
+                    <comment>file pathe  e.g  /var/import/product/product.csv (must be writable/readable)</comment>
                 </field>
 
 
