@@ -12,13 +12,13 @@
         </item>
     </argument>
     <settings>
-        <buttons>
+        <!--<buttons>
             <button name="add">
                 <url path="*/*/new"/>
                 <class>primary</class>
                 <label translate="true">Add New Customer</label>
             </button>
-        </buttons>
+        </buttons>-->
         <spinner>customer_columns</spinner>
         <deps>
             <dep>customer_listing.customer_listing_data_source</dep>
@@ -163,7 +163,7 @@
                 <label translate="true">Phone</label>
             </settings>
         </column>
-        <column name="billing_postcode" sortOrder="70">
+        <!--<column name="billing_postcode" sortOrder="70">
             <settings>
                 <filter>text</filter>
                 <editor>
@@ -171,7 +171,7 @@
                 </editor>
                 <label translate="true">ZIP</label>
             </settings>
-        </column>
+        </column>-->
         <column name="billing_country_id" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
             <settings>
                 <filter>select</filter>
@@ -179,7 +179,7 @@
                 <label translate="true">Country</label>
             </settings>
         </column>
-        <column name="billing_region" sortOrder="90">
+        <!--<column name="billing_region" sortOrder="90">
             <settings>
                 <filter>text</filter>
                 <label translate="true">State/Province</label>
@@ -191,7 +191,7 @@
                 <dataType>date</dataType>
                 <label translate="true">Customer Since</label>
             </settings>
-        </column>
+        </column>-->
         <column name="website_id" class="Magento\Customer\Ui\Component\Listing\Column\Websites" component="Magento_Ui/js/grid/columns/select" sortOrder="110">
             <settings>
                 <filter>select</filter>
@@ -202,7 +202,7 @@
                 <label translate="true">Web Site</label>
             </settings>
         </column>
-        <column name="confirmation" class="Magento\Customer\Ui\Component\Listing\Column\Confirmation" sortOrder="130">
+        <!--<column name="confirmation" class="Magento\Customer\Ui\Component\Listing\Column\Confirmation" sortOrder="130">
             <settings>
                 <dataType>select</dataType>
                 <label translate="true">Confirmed email</label>
@@ -214,7 +214,7 @@
                 <label translate="true">Account Created in</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column>-->
         <column name="billing_full" sortOrder="150">
             <settings>
                 <label translate="true">Billing Address</label>
@@ -238,7 +238,7 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="taxvat" sortOrder="180">
+        <!--<column name="taxvat" sortOrder="180">
             <settings>
                 <filter>text</filter>
                 <editor>
@@ -247,7 +247,7 @@
                 <label translate="true">Tax VAT Number</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column>-->
         <column name="gender" component="Magento_Ui/js/grid/columns/select" sortOrder="190">
             <settings>
                 <filter>select</filter>
@@ -275,7 +275,7 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="billing_fax" sortOrder="220">
+        <!--<column name="billing_fax" sortOrder="220">
             <settings>
                 <filter>text</filter>
                 <editor>
@@ -294,7 +294,7 @@
                 <label translate="true">VAT Number</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column>-->
         <column name="billing_company" sortOrder="240">
             <settings>
                 <filter>text</filter>
@@ -305,7 +305,7 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="billing_firstname" sortOrder="250">
+        <!--<column name="billing_firstname" sortOrder="250">
             <settings>
                 <filter>text</filter>
                 <editor>
@@ -324,7 +324,7 @@
                 <label translate="true">Billing Lastname</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column>-->
         <column name="lock_expires" class="Magento\Customer\Ui\Component\Listing\Column\AccountLock" sortOrder="270">
             <settings>
                 <label translate="true">Account Lock</label>
