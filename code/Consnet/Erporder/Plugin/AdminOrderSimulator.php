@@ -286,6 +286,49 @@ class AdminOrderSimulator
         else{
             return true;
         }
-    }  
+    }
+    
+    public function showItemMessage($itemName, $itemSku, $itemQty, $messageType){
+        if(isset($_SESSION['items'])){
+            //foreach ($_SESSION['items'] as $sessionItem) {
+                if($this->checkItemAddPreviously($itemSku)){    
+                    if($sessionItem['itemQty'] !== $itemQty){
+                        addMessage($itemName, $messageType);
+                    }
+                }else{
+                    array_push($_SESSION['items'], array('itemSku' => $itemSku,
+                    'itemName' => $itemName, 
+                    'itemQty' => $itemQty));
+                    addMessage($itemName, $messageType);
+                }
+            //}
+        }else {
+            $_SESSION['items'] = array(
+                array('itemSku' => $itemSku,
+                      'itemName' => $itemName, 
+                      'itemQty' => $itemQty)
+            );
+            $this->addMessage($itemName, $messageType);
+        }
+
+    }
+
+    public function checkItemAddPreviously($itemSku){
+        foreach ($_SESSION['items'] as $sessionItem) {
+            if($itemSku == $sessionItem['itemSku']){
+                return 1;
+            }
+        }  
+        return 0;
+    }
+
+    public function addMessage($itemName, $messageType){
+        if($messageType == 'stock'){
+            $this->messageManager->addError("Stock for ".$itemName." is not available");
+        }elseif($messageType == 'success'){
+            $this->messageManager->addSuccessMessage('You added '.$itemName.
+            ' to your shopping cart.');
+        }
+    }
 }
 ?>
