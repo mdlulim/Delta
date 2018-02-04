@@ -131,6 +131,7 @@ class ErpOrder
 
     public function afterPlace($result){
         $this->magOrderId = $result->getRealOrderId();
+        unset($_SESSION['items']);
         
         if(isset($_SESSION['DELIVERY_DATE'])){
             $date  = date_create($_SESSION['DELIVERY_DATE']);
