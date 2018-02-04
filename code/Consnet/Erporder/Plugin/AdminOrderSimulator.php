@@ -118,6 +118,8 @@ class AdminOrderSimulator
                                                     $total = $total + $zresults->ZRESULTS->item[$i]->NET_VALUE1;
                                                     //$this->messageManager->addSuccessMessage('You added '.$item->getName().
                                                     //' to your shopping cart.');
+                                                    $this->showItemMessage($item->getName(), $item->getSku(), 
+                                                    $item->getQty(), 'success');
                                                 }
                                             }
                                         }
@@ -133,8 +135,8 @@ class AdminOrderSimulator
                                                 $item->getProduct()->setIsSuperMode(true);
                                                 $totalTax = $totalTax + $zresults->ZRESULTS->item->TX_DOC_CUR;
                                                 $total = $total + $zresults->ZRESULTS->item->NET_VALUE1;
-                                                //$this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                //' to your shopping cart.');
+                                                $this->showItemMessage($item->getName(), $item->getSku(), 
+                                                $item->getQty(), 'success');
                                             }
                                         }
                                     }
@@ -164,9 +166,11 @@ class AdminOrderSimulator
                                             $quote->deleteItem($item);
                                             $quote->setTotalsCollectedFlag(false)->collectTotals();
                                             $quote->save();
-                                            if($item->getSku() == $matnrs[$count]){
+                                            $this->showItemMessage($item->getName(), $item->getSku(), 
+                                            $item->getQty(), 'stock');
+                                            /*if($item->getSku() == $matnrs[$count]){
                                                 $this->messageManager->addError("Stock for ".$item->getName()." is not available");
-                                            }                                            
+                                            }*/                                            
                                         }
                                     }                                      
                                 }
