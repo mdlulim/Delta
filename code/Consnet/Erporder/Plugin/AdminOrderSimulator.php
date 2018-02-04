@@ -191,7 +191,9 @@ class AdminOrderSimulator
                                             $quote->deleteItem($item);
                                             $quote->setTotalsCollectedFlag(false)->collectTotals();
                                             $quote->save();
-                                            $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$item->getName());
+                                            $this->showItemMessage($item->getName(), $item->getSku(), 
+                                            $item->getQty(), 'licence');
+                                            //$this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$item->getName());
                                         }
                                     }                                            
                                 }
@@ -332,6 +334,8 @@ class AdminOrderSimulator
         }elseif($messageType == 'success'){
             $this->messageManager->addSuccessMessage('You added '.$itemName.
             ' to your shopping cart.');
+        }elseif($messageType == 'licence'){
+            $this->messageManager->addError("Youre Liquor Licence Is Expired For Product: ".$itemName);
         }
     }
 }
