@@ -297,13 +297,13 @@ class AdminOrderSimulator
             //foreach ($_SESSION['items'] as $sessionItem) {
                 if($this->checkItemAddPreviously($itemSku)){    
                     if($sessionItem['itemQty'] !== $itemQty){
-                        addMessage($itemName, $messageType);
+                        $this->addMessage($itemName, $messageType);
                     }
                 }else{
                     array_push($_SESSION['items'], array('itemSku' => $itemSku,
                     'itemName' => $itemName, 
                     'itemQty' => $itemQty));
-                    addMessage($itemName, $messageType);
+                    $this->addMessage($itemName, $messageType);
                 }
             //}
         }else {
