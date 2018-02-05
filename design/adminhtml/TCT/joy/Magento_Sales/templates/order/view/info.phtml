@@ -130,7 +130,7 @@ $orderStoreDate = $block->formatDate(
                     </tr>-->
                     <tr>
                         <th><?php /* @escapeNotVerified */ echo __('Status') ?></th>
-                        <td><?php /* @escapeNotVerified */ echo $_order->getStatus() ?></td>
+                        <td><?php /* @escapeNotVerified */ echo ucfirst($_order->getStatus()) ?></td>
                     </tr>
                 <?php endif; ?>
                 <?php if ($_order->getRelationChildId()): ?>
