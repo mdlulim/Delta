@@ -30,7 +30,17 @@
         <?= /* @escapeNotVerified */ $_menu ?>
         <?= /* @escapeNotVerified */ $block->getChildHtml() ?>
         <li style="float:right; margin-top: 5px;">
-            <a class=""><button type="button" style="">CHECKOUT</button></a>
+            <a class=""><button type="button" id="proceed_to_checkout" style="">CHECKOUT</button></a>
         </li>
     </ul>
 </nav>
+
+<script type="text/javascript">
+    $(".counter-number").change(function(e){
+        var ItemCount = $(this).val();
+        console.log(ItemCount);
+    });
+  /*document.getElementById('proceed_to_checkout').addEventListener('change', function(){
+    document.getElementById('proceed_to_checkout').innerHTML = 'CHECKOUT'.;
+  })*/
+</script>
