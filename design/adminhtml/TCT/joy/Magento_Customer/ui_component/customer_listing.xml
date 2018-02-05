@@ -324,13 +324,13 @@
                 <label translate="true">Billing Lastname</label>
                 <visible>false</visible>
             </settings>
-        </column>-->
+        </column>
         <column name="lock_expires" class="Magento\Customer\Ui\Component\Listing\Column\AccountLock" sortOrder="270">
             <settings>
                 <label translate="true">Account Lock</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column>-->
         <actionsColumn name="actions" class="Magento\Customer\Ui\Component\Listing\Column\Actions">
             <settings>
                 <indexField>entity_id</indexField>
