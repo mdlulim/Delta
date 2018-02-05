@@ -322,14 +322,14 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         }
 
         $resultPage = $this->_resultPageFactory->create();
-        $resultPage->setPath('admin/system_config');
+        
         return $resultPage;
     }
 
     //returns mysql fetchAll results
     public function createTable($name,$data){
-        if($name  ==  'ERP_ADDRESS'){
-
+        if($name  ==  'ERP_ADDRESS' && property_exists($data ,'item')){
+   
             foreach($data->item as $line ){
                 $line->ADRC_UUID = null ;
                 
@@ -383,7 +383,9 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         if($count > 0 ){
             //we cannot insert , must read only
         }else{
+
         $array = $data ;
+        if(  count($array) > 0   ){
         $i = count($array['item']);
         $row = array();
 
@@ -396,6 +398,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             $row = array();
          }
         }
+    }
     }
 
     public function deleteTable($name){
@@ -1136,7 +1139,10 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         $eccproducts = $this->products;
         if(isset($eccproducts)){
         try {
-            $csv_handler = fopen($_SERVER['DOCUMENT_ROOT'] . '/var/import/products/products.csv', 'w');
+            $filePath = BP . '/var/import/products/products.csv';
+            $csv_handler = fopen($filePath, 'w');
+            //var_dump($filePath); die();
+
 
             fputcsv($csv_handler, $this->getHeaderArray());
 
