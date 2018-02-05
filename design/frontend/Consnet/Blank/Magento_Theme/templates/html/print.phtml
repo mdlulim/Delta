@@ -18,7 +18,7 @@
                 // get order date
                 var orderDate = $('#hiddenOrderDetails > div.order-date').html().replace('<strong>Created: </strong>', '');
                 orderDate = orderDate.slice(0, orderDate.indexOf('(') - 1);
-                $('#orderDate').html(getBaseUrl() + ' : ' + orderDate);
+                $('#orderDate').html(': ' + orderDate);
 
                 // get order number
                 var orderNumber = $('#hiddenOrderDetails > h1 > span').html().replace('Order # ', '');
@@ -50,8 +50,8 @@
     );
 
     // function to return the site's base url
-    function getBaseUrl() {
-        var re = new RegExp(/^.*\//);
-        return re.exec(window.location.href);
-    }
+    // function getBaseUrl() {
+    //     var re = new RegExp(/^.*\//);
+    //     return re.exec(window.location.href);
+    // }
 </script>
