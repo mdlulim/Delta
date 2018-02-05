@@ -15,6 +15,12 @@
                 var newPageTitle = 'Print ' + $('h1.page-title span.base:first').html();
                 $(document).attr("title", newPageTitle);
 
+                //show formatted order details
+                $('#orderDetails').show();
+
+                //hide unformatted order details
+                //$('#hiddenOrderDetails').hide();
+
                 // align all amounts to the right 
                 $(".amount").css("text-align", "right");
 

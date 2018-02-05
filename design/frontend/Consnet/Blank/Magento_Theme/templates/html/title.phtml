@@ -17,7 +17,37 @@ if (trim($block->getPageHeading())) {
 }
 ?>
 <?php if ($title): ?>
-<div class="page-title-wrapper<?= /* @escapeNotVerified */ $cssClass ?>">
+<table id="orderDetails" style="display: none;">
+<!-- <table id="orderDetails"> -->
+    <tr>
+        <td width="30%" style="padding: 0;">
+            <div class="order-details-items" style="padding: 0;">
+                <table>
+                    <tr>
+                        <td style="padding-top: 2px; padding-bottom: 2px;" id="customerDetails">Customer details here</td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+        <td></td>
+        <td width="40%" style="padding: 0;">
+            <h3 style="text-align: center; margin: 0;">SALES ORDER</h3>
+            <div class="order-details-items" style="padding: 0;">
+                <table>
+                    <tr>
+                        <th style="padding-top: 2px; padding-bottom: 2px;">Date:</th>
+                        <td style="padding-top: 2px; padding-bottom: 2px;" id="orderDate"></td>
+                    </tr>
+                    <tr>
+                        <th style="padding-top: 2px; padding-bottom: 2px;">Order #:</th>
+                        <td style="padding-top: 2px; padding-bottom: 2px;" id="orderNumber"></td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+<div id="hiddenOrderDetails" class="page-title-wrapper<?= /* @escapeNotVerified */ $cssClass ?>">
     <h1 class="page-title"
         <?php if ($block->getId()): ?> id="<?= /* @escapeNotVerified */ $block->getId() ?>" <?php endif; ?>
         <?php if ($block->getAddBaseAttributeAria()): ?>
