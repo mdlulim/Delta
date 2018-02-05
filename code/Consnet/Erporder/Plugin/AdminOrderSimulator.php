@@ -154,8 +154,7 @@ class AdminOrderSimulator
                     }
                  }
             }   
-        }return $quote;
-   
+        }return $quote;   
     }
 
     public function stockCheck($quote){
