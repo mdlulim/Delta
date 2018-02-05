@@ -129,7 +129,7 @@ class CronJobPromotion {
      
             $tab_result = $soapClient2->ZzMagentoGetPromotions($parameters);
         
-            var_dump ($tab_result->ExPromoList) ;   
+          //  var_dump ($tab_result->ExPromoList) ;   
             $model = \Magento\Framework\App\objectManager::getInstance()->create('Consnet\Promotions\Model\Promotion') ;
             $list = null;
             $i = 0;
@@ -150,7 +150,7 @@ class CronJobPromotion {
         // && (property_exists($item , "Knuma" ) ) 
         ) {
              
-             var_dump($item);
+         //    var_dump($item);
             // die();
      
             $tempKnuma = $item->Knuma ;
