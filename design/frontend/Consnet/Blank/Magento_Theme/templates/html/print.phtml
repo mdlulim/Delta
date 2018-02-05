@@ -16,8 +16,12 @@
                 $(document).attr("title", newPageTitle);
 
                 //show formatted order details
+                var orderDate = $('#hiddenOrderDetails > div.order-date').html().replace('<strong>Created: </strong>', '');
+                $('#orderDate').html(': ' + orderDate);
+
                 var orderNumber = $('#hiddenOrderDetails > h1 > span').html().replace('Order # ', '');
-                $('#orderNumber').html(orderNumber);
+                $('#orderNumber').html(': ' + orderNumber);
+
                 $('#orderDetails').show();
 
                 //hide unformatted order details
