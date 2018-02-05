@@ -50,9 +50,7 @@ class AdminOrderSimulator
             $customer = $customer_model->load($this->magCustomerId);
             $customer_data = $customer->getData();
             
-            $company_data = $this->getCompanyData($this->magCustomerId);//$customer_data['entity_id']);
-            //$address = $this->getCompanyAddress($company_data, $this->magCustomerId);
-            //$quote->setShippingAddress($address);
+            $company_data = $this->getCompanyData($this->magCustomerId);
 
             $addressInfo=[
                 'shipping_address' =>[
@@ -68,8 +66,7 @@ class AdminOrderSimulator
                        'save_in_address_book' => 0
                             ]
            ];
-           //var_dump($addressInfo);die;
-            //Set Address to quote
+           
             $quote->getBillingAddress()->addData($addressInfo['shipping_address']);
             $quote->getShippingAddress()->addData($addressInfo['shipping_address']);
             
@@ -81,7 +78,6 @@ class AdminOrderSimulator
                         }else{
                             $stp = str_pad($company_data['STP_ID'], 10, '0', STR_PAD_LEFT);
                         }
-                    //$stp = str_pad($company_data['STP_ID'], 10, '0', STR_PAD_LEFT);
                     
                     $orderItems = $quote->getAllVisibleItems();
                     
@@ -116,6 +112,7 @@ class AdminOrderSimulator
 
                                                     $totalTax = $totalTax + $zresults->ZRESULTS->item[$i]->TX_DOC_CUR; 
                                                     $total = $total + $zresults->ZRESULTS->item[$i]->NET_VALUE1;
+                                                    
                                                     $this->showItemMessage($item->getName(), $item->getSku(), 
                                                     $item->getQty(), 'success');
                                                 }
@@ -131,8 +128,10 @@ class AdminOrderSimulator
                                                 $item->setOriginalCustomPrice($price_per_item);
                                                 $item->setRowTotal($zresults->ZRESULTS->item->NET_VALUE1);
                                                 $item->getProduct()->setIsSuperMode(true);
+                                                
                                                 $totalTax = $totalTax + $zresults->ZRESULTS->item->TX_DOC_CUR;
                                                 $total = $total + $zresults->ZRESULTS->item->NET_VALUE1;
+                                                
                                                 $this->showItemMessage($item->getName(), $item->getSku(), 
                                                 $item->getQty(), 'success');
                                             }
@@ -155,8 +154,7 @@ class AdminOrderSimulator
                     }
                  }
             }   
-        }return $quote;
-   
+        }return $quote;   
     }
 
     public function stockCheck($quote){
