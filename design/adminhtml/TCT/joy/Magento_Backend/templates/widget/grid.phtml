@@ -53,7 +53,7 @@ $numColumns = sizeof($block->getColumns());
                             $authSession = $om->get('\Magento\Backend\Model\Auth\Session');
                             $userId=$authSession->getUser()->getUserId();
                             $roleId= $authSession->getUser()->getRole()->getRoleId(); 
-
+                            $countRecords =0; 
                             $resource = $om->get('Magento\Framework\App\ResourceConnection');
                                 $connection = $resource->getConnection();
                                 $tableName = $resource->getTableName('company'); 
