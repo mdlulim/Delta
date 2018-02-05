@@ -73,6 +73,11 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     public function __construct( \Magento\Backend\App\Action\Context $context, 
     \Magento\Framework\View\Result\PageFactory $resultPageFactory  )
      { 
+        $filePath = BP. '/var/log/replicatinlog.txt';
+        echo $filePath;
+        $log  = fopen($filePath ,'a') or die('unable to open file');
+        fwrite($log,'Constructor run '.date('h:i:sa') ."\n");
+        fclose($log);
         parent::__construct($context); 
         $this->objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $this->_resultPageFactory = $resultPageFactory;
