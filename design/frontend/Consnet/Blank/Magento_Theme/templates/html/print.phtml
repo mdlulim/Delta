@@ -16,7 +16,7 @@
                 $(document).attr("title", newPageTitle);
 
                 //show formatted order details
-                var orderNumber = $('#hiddenOrderDetails > h1 > span').html();
+                var orderNumber = $('#hiddenOrderDetails > h1 > span').html().replace('Order # ', '');
                 $('#orderNumber').html(orderNumber);
                 $('#orderDetails').show();
 
