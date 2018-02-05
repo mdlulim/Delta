@@ -47,7 +47,7 @@ if (trim($block->getPageHeading())) {
         </td>
     </tr>
 </table>
-<div class="page-title-wrapper<?= /* @escapeNotVerified */ $cssClass ?>">
+<div id="hiddenOrderDetails" class="page-title-wrapper<?= /* @escapeNotVerified */ $cssClass ?>">
     <h1 class="page-title"
         <?php if ($block->getId()): ?> id="<?= /* @escapeNotVerified */ $block->getId() ?>" <?php endif; ?>
         <?php if ($block->getAddBaseAttributeAria()): ?>
