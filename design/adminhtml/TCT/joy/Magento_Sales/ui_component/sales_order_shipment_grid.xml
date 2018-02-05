@@ -170,14 +170,14 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="shipping_address" class="Magento\Sales\Ui\Component\Listing\Column\Address">
+        <!-- <column name="shipping_address" class="Magento\Sales\Ui\Component\Listing\Column\Address">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Shipping Address</label>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <column name="payment_method" component="Magento_Ui/js/grid/columns/select">
             <settings>
                 <filter>select</filter>
