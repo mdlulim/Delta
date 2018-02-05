@@ -15,21 +15,30 @@
                 var newPageTitle = 'Print ' + $('h1.page-title span.base:first').html();
                 $(document).attr("title", newPageTitle);
 
-                //show formatted order details
+                // get order date
                 var orderDate = $('#hiddenOrderDetails > div.order-date').html().replace('<strong>Created: </strong>', '');
                 orderDate = orderDate.slice(0, orderDate.indexOf('(') - 1);
                 $('#orderDate').html(': ' + orderDate);
 
+                // get order number
                 var orderNumber = $('#hiddenOrderDetails > h1 > span').html().replace('Order # ', '');
                 $('#orderNumber').html(': ' + orderNumber);
 
+                // get order status
                 var orderStatus = $('#hiddenOrderDetails > span.order-status').html().toUpperCase();
                 $('#orderStatus').html(': ' + orderStatus);
 
+                //show formatted order details
                 $('#orderDetails').show();
 
                 //hide unformatted order details
                 //$('#hiddenOrderDetails').hide();
+
+                var customerDetails = $('#orderInformationSection').html();
+                $('#customerDetails').html(': ' + customerDetails);
+
+                //hide order information section
+                //$('#orderInformationSection').hide();
 
                 // align all amounts to the right 
                 $(".amount").css("text-align", "right");
