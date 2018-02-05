@@ -21,7 +21,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
     <label for="delivery_date">Delivery Date:</label>
     <input type="date" class="form-control" name="delivery_date" id="delivery_date" 
      value="<?php echo $defualt_delivery_date; ?>">
-    <a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>
+    <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>-->
 </div>
 
 
@@ -49,7 +49,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
                             id="s_method_<?= /* @escapeNotVerified */ $_code ?>" <?= /* @escapeNotVerified */ $_checked ?>
                             class="admin__control-radio"/>
                             <label class="admin__field-label" for="s_method_<?= /* @escapeNotVerified */ $_code ?>">
-                            
+                               Confirm Delivery Date
                                <strong style="display: none;">
                                     <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
                                     <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
