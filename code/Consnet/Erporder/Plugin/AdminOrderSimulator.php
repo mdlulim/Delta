@@ -50,9 +50,7 @@ class AdminOrderSimulator
             $customer = $customer_model->load($this->magCustomerId);
             $customer_data = $customer->getData();
             
-            $company_data = $this->getCompanyData($this->magCustomerId);//$customer_data['entity_id']);
-            //$address = $this->getCompanyAddress($company_data, $this->magCustomerId);
-            //$quote->setShippingAddress($address);
+            $company_data = $this->getCompanyData($this->magCustomerId);
 
             $addressInfo=[
                 'shipping_address' =>[
@@ -68,8 +66,7 @@ class AdminOrderSimulator
                        'save_in_address_book' => 0
                             ]
            ];
-           //var_dump($addressInfo);die;
-            //Set Address to quote
+           
             $quote->getBillingAddress()->addData($addressInfo['shipping_address']);
             $quote->getShippingAddress()->addData($addressInfo['shipping_address']);
             
@@ -81,7 +78,6 @@ class AdminOrderSimulator
                         }else{
                             $stp = str_pad($company_data['STP_ID'], 10, '0', STR_PAD_LEFT);
                         }
-                    //$stp = str_pad($company_data['STP_ID'], 10, '0', STR_PAD_LEFT);
                     
                     $orderItems = $quote->getAllVisibleItems();
                     
@@ -116,8 +112,9 @@ class AdminOrderSimulator
 
                                                     $totalTax = $totalTax + $zresults->ZRESULTS->item[$i]->TX_DOC_CUR; 
                                                     $total = $total + $zresults->ZRESULTS->item[$i]->NET_VALUE1;
-                                                    //$this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                    //' to your shopping cart.');
+                                                    
+                                                    $this->showItemMessage($item->getName(), $item->getSku(), 
+                                                    $item->getQty(), 'success');
                                                 }
                                             }
                                         }
@@ -131,10 +128,12 @@ class AdminOrderSimulator
                                                 $item->setOriginalCustomPrice($price_per_item);
                                                 $item->setRowTotal($zresults->ZRESULTS->item->NET_VALUE1);
                                                 $item->getProduct()->setIsSuperMode(true);
+                                                
                                                 $totalTax = $totalTax + $zresults->ZRESULTS->item->TX_DOC_CUR;
                                                 $total = $total + $zresults->ZRESULTS->item->NET_VALUE1;
-                                                //$this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                //' to your shopping cart.');
+                                                
+                                                $this->showItemMessage($item->getName(), $item->getSku(), 
+                                                $item->getQty(), 'success');
                                             }
                                         }
                                     }
@@ -146,51 +145,53 @@ class AdminOrderSimulator
                                 $quote->collectTotals();
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
-                                if($quote->hasItems()){
-                                    $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
-                                    $products = '';
-                                    foreach($quote->getAllVisibleItems() as $item){
-                                        if(in_array($item->getSku(), $matnrs)){                                           
-                                            if ($products == '') {                                                    
-                                                $products= $products.$item->getName();
-                                            }else {
-                                                $products= $products.$item->getName().', ';
-                                            }                                                
-                                            $quote->deleteItem($item);
-                                            $quote->setTotalsCollectedFlag(false)->collectTotals();
-                                            $quote->save();
-                                            $this->messageManager->addError("Stock for ".$item->getName()." is not available");
-                                        }
-                                    }                                      
-                                }
+                                $this->stockCheck($quote, $zresults);
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
-                                $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');                             
-                                $products = "";
-                                $no_license = array(8,9,10);
-                                foreach($quote->getAllVisibleItems() as $item){
-                                    $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
-                                    foreach ($category_ids as $cat) {
-                                        if(in_array($cat, $no_license)){
-                                            if ($products == '') {                                                    
-                                                $products= $products.$item->getName();
-                                            }else {
-                                                $products= $products.$item->getName().', ';
-                                            }
-                                            $quote->deleteItem($item);
-                                            $quote->setTotalsCollectedFlag(false)->collectTotals();
-                                            $quote->save();
-                                            $this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$item->getName());
-                                        }
-                                    }                                            
-                                }
+                                $this->licenseCheck($quote);
                             }
                         }
                     }
                  }
             }   
-        }return $quote;
-   
+        }return $quote;   
+    }
+
+    public function stockCheck($quote, $zresults){
+        if($quote->hasItems()){
+            $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
+            $count = count($matnrs);
+            if(count($matnrs) > 0){
+                $count = count($matnrs) - 1;
+            }
+            
+            foreach($quote->getAllVisibleItems() as $item){
+                if(in_array($item->getSku(), $matnrs)){                                               
+                    $quote->deleteItem($item);
+                    $quote->setTotalsCollectedFlag(false)->collectTotals();
+                    $quote->save();
+                    $this->showItemMessage($item->getName(), $item->getSku(), 
+                    $item->getQty(), 'stock');                                        
+                }
+            }                                      
+        }
+    }
+
+    public function licenseCheck($quote){
+        $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');
+        $no_license = array(8,9,10);
+        foreach($quote->getAllVisibleItems() as $item){
+            $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
+            foreach ($category_ids as $cat) {
+                if(in_array($cat, $no_license)){
+                    $quote->deleteItem($item);
+                    $quote->setTotalsCollectedFlag(false)->collectTotals();
+                    $quote->save();
+                    $this->showItemMessage($item->getName(), $item->getSku(), 
+                    $item->getQty(), 'licence');
+                }
+            }                                            
+        }
     }
     
     public function calculatePricePerItem($price, $qty) {
@@ -279,6 +280,59 @@ class AdminOrderSimulator
         else{
             return true;
         }
-    }  
+    }
+    
+    public function showItemMessage($itemName, $itemSku, $itemQty, $messageType){
+        if(isset($_SESSION['items'])){
+            //foreach ($_SESSION['items'] as $sessionItem) {
+                if($this->checkItemAddPreviously($itemSku)){    
+                    $sessionItem = $this->getSessionItem($itemSku);
+                    if($sessionItem['itemQty'] !== $itemQty){
+                        $this->addMessage($itemName, $messageType);
+                    }
+                }else{
+                    array_push($_SESSION['items'], array('itemSku' => $itemSku,
+                    'itemName' => $itemName, 
+                    'itemQty' => $itemQty));
+                    $this->addMessage($itemName, $messageType);
+                }
+            //}
+        }else {
+            $_SESSION['items'] = array(
+                array('itemSku' => $itemSku,
+                      'itemName' => $itemName, 
+                      'itemQty' => $itemQty)
+            );
+            $this->addMessage($itemName, $messageType);
+        }
+    }
+
+    public function checkItemAddPreviously($itemSku){
+        foreach ($_SESSION['items'] as $sessionItem) {
+            if($itemSku == $sessionItem['itemSku']){
+                return 1;
+            }
+        }  
+        return 0;
+    }
+
+    public function addMessage($itemName, $messageType){
+        if($messageType == 'stock'){
+            $this->messageManager->addError("Stock for ".$itemName." is not available");
+        }elseif($messageType == 'success'){
+            $this->messageManager->addSuccessMessage('You added '.$itemName.
+            ' to your shopping cart.');
+        }elseif($messageType == 'licence'){
+            $this->messageManager->addError("Youre Liquor Licence Is Expired For Product: ".$itemName);
+        }
+    }
+
+    public function getSessionItem($itemSku){
+        foreach ($_SESSION['items'] as $sessionItem) {
+            if($itemSku == $sessionItem['itemSku']){
+                return $sessionItem;
+            }
+        }
+    }
 }
 ?>

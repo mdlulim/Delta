@@ -12,7 +12,7 @@ class Orders extends \Magento\Framework\App\Action\Action
 
     const COMPANY_EMAIL = 'stores1@delta.co.zw';
     const CUSTOMER_EMAIL = 'users1@delta.co.zw';
-    const NAMESPACE_ID = 'deltaqa01';
+    //const NAMESPACE_ID = 'deltaqa01'; 
     protected $_resultPageFactory;
     protected $_logger;
     protected $storeManager;
@@ -44,6 +44,7 @@ class Orders extends \Magento\Framework\App\Action\Action
     protected $password ;
     protected $size;
     protected $init_repl ;
+    protected $NAMESPACE_ID;
         
     protected $soapClient2 ;
     //protected $appState ;
@@ -92,6 +93,8 @@ class Orders extends \Magento\Framework\App\Action\Action
         $this->username  = $this->helper->getGeneralConfig('user_name');
         $this->password  = $this->helper->getGeneralConfig('password');
         
+        $this->NAMESPACE_ID = $this->helper->getGeneralConfig('namespace_text');
+
         $this->authApi();
 
         parent::__construct($context);
@@ -100,7 +103,7 @@ class Orders extends \Magento\Framework\App\Action\Action
     protected function authApi()
     {
         $userData = array("username" => "admin", "password" => "Consnet01");
-        $ch = curl_init("http://10.2.10.93/" . self::NAMESPACE_ID . "/index.php/rest/V1/integration/admin/token");
+        $ch = curl_init("http://".$this->$NAMESPACE_ID. "/index.php/rest/V1/integration/admin/token");
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -134,7 +137,7 @@ class Orders extends \Magento\Framework\App\Action\Action
     }
 
     protected function getOrders(){
-        $ch = curl_init("http://10.2.10.93/" . self::NAMESPACE_ID . "/index.php/rest/V1/orders?searchCriteria"); 
+        $ch = curl_init("http://" . $this->NAMESPACE_ID . "/index.php/rest/V1/orders?searchCriteria"); 
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET"); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer " . json_decode($this->token))); 
@@ -310,7 +313,7 @@ class Orders extends \Magento\Framework\App\Action\Action
                             } 
                         }";
         
-        $ch = curl_init("http://10.2.10.93/" . self::NAMESPACE_ID . "/index.php/rest/V1/orders");
+        $ch = curl_init("http://" . $this->NAMESPACE_ID . "/index.php/rest/V1/orders");
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($order_data));

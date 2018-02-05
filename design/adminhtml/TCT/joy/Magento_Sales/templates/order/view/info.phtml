@@ -130,7 +130,7 @@ $orderStoreDate = $block->formatDate(
                     </tr>-->
                     <tr>
                         <th><?php /* @escapeNotVerified */ echo __('Status') ?></th>
-                        <td><?php /* @escapeNotVerified */ echo $_order->getStatus() ?></td>
+                        <td><?php /* @escapeNotVerified */ echo ucfirst($_order->getStatus()) ?></td>
                     </tr>
                 <?php endif; ?>
                 <?php if ($_order->getRelationChildId()): ?>
@@ -198,7 +198,7 @@ $orderStoreDate = $block->formatDate(
                     <?php if ($_groupName = $block->getCustomerGroupName()) : ?>
                         <tr>
                             <th><?php /* @escapeNotVerified */ echo __('Customer SBU') ?></th>
-                            <td><?php /* @escapeNotVerified */ echo $_groupName ?></td>
+                            <td><?php /* @escapeNotVerified */ echo ($_groupName=='Default (General)' ? 'General' : $_groupName); ?></td>
                         </tr>
                     <?php endif; ?>
                     <?php foreach ($block->getCustomerAccountData() as $data):?>

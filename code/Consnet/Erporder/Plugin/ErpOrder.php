@@ -125,12 +125,13 @@ class ErpOrder
             $_SESSION['CURRENT_ORDER'] = $edited_order->getId();
             return $edited_order;
         }
-        var_dump('Current Order Null');
+        //var_dump('Current Order Null');
         return null;
     }
 
     public function afterPlace($result){
         $this->magOrderId = $result->getRealOrderId();
+        unset($_SESSION['items']);
         
         if(isset($_SESSION['DELIVERY_DATE'])){
             $date  = date_create($_SESSION['DELIVERY_DATE']);
@@ -181,7 +182,7 @@ class ErpOrder
                     $customer_model->setWebsiteId(1);
                     $customer = $customer_model->load($this->magCustomerId);
                     $customer_data = $customer->getData();
-                    var_dump($customer_data);  
+                    //var_dump($customer_data);  
                     $company_data = $this->getCompanyData($this->magCustomerId);//$customer_data['entity_id']);
                     if(preg_match("/[a-z]/i", $company_data['STP_ID'])){
                         $stp = $company_data['STP_ID'];

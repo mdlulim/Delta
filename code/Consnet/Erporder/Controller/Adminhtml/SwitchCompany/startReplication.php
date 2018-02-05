@@ -1136,7 +1136,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         $eccproducts = $this->products;
         if(isset($eccproducts)){
         try {
-            $csv_handler = fopen($_SERVER['DOCUMENT_ROOT'] . '/deltaqa01/var/import/products/products.csv', 'w');
+            $csv_handler = fopen($_SERVER['DOCUMENT_ROOT'] . '/var/import/products/products.csv', 'w');
 
             fputcsv($csv_handler, $this->getHeaderArray());
 
