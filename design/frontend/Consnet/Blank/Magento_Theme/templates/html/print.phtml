@@ -11,6 +11,8 @@
         ],
         function($) {
             $(function() {
+                console.log('link: ' . getBaseUrl());
+                
                 // change page title
                 var newPageTitle = 'Print ' + $('h1.page-title span.base:first').html();
                 $(document).attr("title", newPageTitle);
@@ -48,4 +50,10 @@
             });
         }
     );
+
+    // function to return the site's base url
+    function getBaseUrl() {
+        var re = new RegExp(/^.*\//);
+        return re.exec(window.location.href);
+    }
 </script>
