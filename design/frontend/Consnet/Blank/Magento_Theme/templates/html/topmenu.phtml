@@ -36,10 +36,12 @@
 </nav>
 
 <script type="text/javascript">
+require(['jquery', 'jquery/ui'], function($){
     $(".counter-number").change(function(e){
         var ItemCount = $(this).val();
         console.log(ItemCount);
     });
+});
   /*document.getElementById('proceed_to_checkout').addEventListener('change', function(){
     document.getElementById('proceed_to_checkout').innerHTML = 'CHECKOUT'.;
   })*/
