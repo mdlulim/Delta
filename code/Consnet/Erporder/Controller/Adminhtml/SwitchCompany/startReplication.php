@@ -73,11 +73,16 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     public function __construct( \Magento\Backend\App\Action\Context $context, 
     \Magento\Framework\View\Result\PageFactory $resultPageFactory  )
      { 
-        $filePath = BP. '/var/log/replicatinlog.txt';
-        echo $filePath;
-        $log  = fopen($filePath ,'a') or die('unable to open file');
-        fwrite($log,'Constructor run '.date('h:i:sa') ."\n");
-        fclose($log);
+      
+       
+
+        
+
+        // $filePath = BP. '/var/log/replicatinlog.txt';
+        // echo $filePath;
+        // $log  = fopen($filePath ,'a') or die('unable to open file');
+        // fwrite($log,'Constructor run '.date('h:i:sa') ."\n");
+        // fclose($log);
         parent::__construct($context); 
         $this->objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $this->_resultPageFactory = $resultPageFactory;
@@ -105,7 +110,6 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         $helper = $this->objectManager->create('Consnet\Api\Helper\Data');
         $WURL = $helper->getGeneralConfig('replication_text');
-
         $this->init_repl = $helper->getGeneralConfig('initial_text');
         $this->username = $helper->getGeneralConfig('user_name');
         $this->password = $helper->getGeneralConfig('password');
@@ -124,8 +128,19 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         $dataExist = $this->getTable('ERP_CUSTOMER');
 
-       if(count($dataExist) <1 ){
+        if(count( $dataExist) > 0 ){
+           if($dataExist[0]['KUNNR'] == null ){
+            $this->deleteTable('ERP_CUSTOMER');
+            $this->deleteTable('ERP_CONTACT');
+            $this->deleteTable('ERP_ORG');
+            $this->deleteTable('ERP_ADDRESS');
 
+            $dataExist = $this->getTable('ERP_CUSTOMER');
+           }
+        }
+       
+
+       if(count($dataExist) <1 ){
 
 
         $parameters = array(
@@ -137,7 +152,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         );
 
 
-
+      //  $WURL = $helper->getGeneralConfig('replication_text');
         $this->soapClient2 = new \Zend\Soap\Client($WURL, array("soap_version" => SOAP_1_2));
 
         //Set Login details
@@ -148,11 +163,30 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         try{
             $result = $this->soapClient2->ZZ_BP_REPLICATION($parameters);
-            }catch(Exception $e){
-                $helper->setConfigValue('customer_file_location_text', $e->getMessage());
+            
+            }catch(SoapFault $e){
+                
+        $filePath = BP. '/var/log/replicatinlog.txt';
+        echo $filePath;
+        $log  = fopen($filePath ,'a') or die('unable to open file');
+        fwrite($log,'in catch : '.date('h:i:sa') ."\n");
+        fclose($log);
             }
+            
+        $filePath = BP. '/var/log/replicatinlog.txt';
+        echo $filePath;
+        $log  = fopen($filePath ,'a') or die('unable to open file');
+        fwrite($log,'after catch : '.date('h:i:sa') ."\n");
+        fclose($log);
 
         if (isset($result)) {
+
+            
+        $filePath = BP. '/var/log/replicatinlog.txt';
+        echo $filePath;
+        $log  = fopen($filePath ,'a') or die('unable to open file');
+        fwrite($log,'resut set : '.date('h:i:sa') ."\n");
+        fclose($log);
 
             $this->cont = $result->EX_CONTACT_PERSONS;
             $this->cust = $result->EX_GENERAL_CUST_DATA;
@@ -161,10 +195,12 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             $this->products = $result->EX_PRODUCTS;
             $this->next_batch_min = $result->EX_LAST_INDEX;
             
-
+            
+           
             $this->createTable('ERP_CUSTOMER', $this->cust);
             $this->createTable('ERP_CONTACT', $this->cont);
             $this->createTable('ERP_ORG', $this->bf);
+            
             $this->createTable('ERP_ADDRESS', $this->addr);
            // $this->createTable('ERP_PRODUCTS', $this->products);
 
@@ -172,23 +208,28 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         } else {
 
+            $filePath = BP. '/var/log/replicatinlog.txt';
+            echo $filePath;
+            $log  = fopen($filePath ,'a') or die('unable to open file');
+            fwrite($log,'resut not set : '.date('h:i:sa') ."\n");
+            fclose($log);
+
             $this->cont = null;
             $this->cust = null;
             $this->bf = null;
             $this->addr = null;
             $this->products = null;
             $this->next_batch_min = 0;
+
+     
         }
-
-        //$helper->setConfigValue('last_row_text', $this->next_batch_min);
-
-
 
 
         $this->authApi();
 
-        //parent::__construct($context);
     }else{
+
+
 
 
         $this->cont = null;
@@ -204,7 +245,8 @@ class startReplication extends \Magento\Framework\App\Action\Action {
        // parent::__construct($context);
 
     }
-    }
+    
+}
     
 
     protected function authApi() {
@@ -218,17 +260,26 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         $this->token = curl_exec($ch);
     }
 
+
+    private function is_cli(){
+        return !http_response_code();
+    }
+
+
+
     public function execute() {
+
+        $filePath = BP. '/var/log/replicatinlog.txt';
+        $log  = fopen($filePath ,'a') or die('unable to open file');
+        fwrite($log,'execute run '.date('h:i:sa') ."\n");
+        fclose($log);
 
 
 
         $stop = 1;
         $loop_counter = 1;
         $helper = $this->objectManager->create('Consnet\Api\Helper\Data');
-        //if ($this->products !== null) {
-            
-       // }
-
+      
        
         $this->loadProducts();
         $this->createAdminUsers();
@@ -265,6 +316,16 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                 );
                // $this->soapClient2->ZZ_BP_REPLICATION($parameters);
                 try{
+                    $WURL = $helper->getGeneralConfig('replication_text');
+                    $this->soapClient2 = new \Zend\Soap\Client($WURL, array("soap_version" => SOAP_1_2));
+            
+                    //Set Login details
+                    $this->soapClient2->setHttpLogin($this->username);
+                    $this->soapClient2->setHttpPassword($this->password);
+
+
+
+
                 $result = $this->soapClient2->ZZ_BP_REPLICATION($parameters);
                 }catch(SoapFault $e){
                     $helper->setConfigValue('customer_file_location_text', $e->getMessage());
@@ -333,17 +394,35 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
     //returns mysql fetchAll results
     public function createTable($name,$data){
+
+        if(!isset($data)){
+            exit;
+        }
         if($name  ==  'ERP_ADDRESS' && property_exists($data ,'item')){
+            
+            if(is_array($data->item)){
+                foreach($data->item as $line ){
+                    foreach($line as $key=>$col){
+                     if($key == 'ADRC_UUID') {
+                        $line->ADRC_UUID = null ;
+                    }
+                 }
+                }
+            }else{
+
+            foreach($data->item as $key=>$line ){
    
-            foreach($data->item as $line ){
-                $line->ADRC_UUID = null ;
-                
+                if($key == 'ADRC_UUID') {
+                    $data->item->ADRC_UUID = null ;
+                }
             }
         }
+    }
 
 
         $sql = "SHOW TABLES LIKE '".$name."'";
         $found = $this->_connection->fetchAll($sql);
+       
         $count =  0 ;
         foreach($found as $table){
             $count ++;
@@ -357,9 +436,6 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         }else{
             //create table
             $array  = json_decode(json_encode($data),true);
-
-           // var_dump($name);
-
             $sql = "CREATE TABLE ".$name." ( ";
             $sql = $sql." `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY ,";
 
@@ -381,6 +457,8 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
     public function InsertData($table,$data){
 
+        //var_dump($data);die();
+       
         $sql =  'SELECT * FROM '.$table;
         $rows = $this->_connection->fetchAll($sql);
 
@@ -389,21 +467,53 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             //we cannot insert , must read only
         }else{
 
+        if(isset($array[0][1])){
+            $count = 2 ;
+        }else{
+            $count = 1 ;
+        }
+
         $array = $data ;
-        if(  count($array) > 0   ){
+
+       
+      
+    
+      if(isset($array['item'][1]) && is_array($array) ){
+
+           
         $i = count($array['item']);
         $row = array();
 
          for($x=0;  $x<=($i -1 ); $x++){
+
             $line = $array['item'];
+            
              foreach($line[$x] as $key=> $r){
               $row[$key]=$r;
             }
             $this->_connection->insert($table,$row);
             $row = array();
          }
+        }elseif($count == 1){
+            $row = array();
+
+            $line = $array['item'];
+            if(is_array($line)){
+                $columns = array_keys($line);
+
+                foreach($columns as $col ){
+               
+                    $row[$col]=$line[$col];
+                 }
+            }
+          
+          
+           $this->_connection->insert($table,$row);
+           $row = array();
+ 
         }
     }
+ 
     }
 
     public function deleteTable($name){
@@ -546,7 +656,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         $CUSTOMER = $this->getTable('ERP_CUSTOMER');
 
-
+        
 
         $loopcount = 0;
         foreach ($CUSTOMER as $erp_customer) {
@@ -711,10 +821,18 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
 
                 $this->setCustomerAdmin($company->getId(),$company->getSuperUserId());
-                $creditRepo = $this->objectManager->create('\Magento\CompanyCredit\Model\CreditLimitRepository');
+                try{
+
+                $CreditData  = $this->objectManager->create('Magento\CompanyCredit\Model\CreditDataProvider')->get($company->getId());   
+               
+                }catch(\Magento\Framework\Exception\NoSuchEntityException $ex){
+                    $CreditData = null ;
+                }
+                $creditRepo = $this->objectManager->create('\Magento\CompanyCredit\Model\CreditLimitRepository')    ;
                 $credit = $this->objectManager->create('\Magento\CompanyCredit\Model\CreditLimit');
                 $credit->setCompanyId($company->getId());
-                if(!$credit->getId()){
+               
+                if(!(isset($CreditData))){
                 $credit->setCreditLimit(1);
                 $credit->setExceedLimit(1);
                 $credit->setCurrencyCode('USD');
@@ -807,8 +925,8 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
 
         if ($log == 'X') {
-            var_dump($data);
-            var_dump($_result);
+            // var_dump($data);
+            // var_dump($_result);
         }
         return $_result;
     }
