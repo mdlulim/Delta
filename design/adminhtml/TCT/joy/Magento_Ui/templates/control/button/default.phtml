@@ -13,7 +13,9 @@
  */
 ?>
 <?= $block->getBeforeHtml() ?>
+<?php if($block->getLabel() != "Add New Company" && $block->getLabel() != "Go to Archive"){ ?>
 <button <?= /* @escapeNotVerified */ $block->getAttributesHtml(), $block->getUiId() ?>>
     <span><?= /* @escapeNotVerified */ $block->getLabel() ?></span>
 </button>
+<?php } ?>
 <?= $block->getAfterHtml() ?>
