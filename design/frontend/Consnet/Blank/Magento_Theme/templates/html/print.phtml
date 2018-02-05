@@ -17,11 +17,14 @@
 
                 //show formatted order details
                 var orderDate = $('#hiddenOrderDetails > div.order-date').html().replace('<strong>Created: </strong>', '');
-                orderDate = orderDate.slice(0, orderDate.indexOf('(') - 2);
+                orderDate = orderDate.slice(0, orderDate.indexOf('(') - 1);
                 $('#orderDate').html(': ' + orderDate);
 
                 var orderNumber = $('#hiddenOrderDetails > h1 > span').html().replace('Order # ', '');
                 $('#orderNumber').html(': ' + orderNumber);
+
+                var orderStatus = $('#hiddenOrderDetails > span.order-status').html().toUpperCase();
+                $('#orderStatus').html(': ' + orderStatus);
 
                 $('#orderDetails').show();
 
