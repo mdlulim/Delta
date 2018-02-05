@@ -32,13 +32,13 @@
                 $('#orderDetails').show();
 
                 //hide unformatted order details
-                //$('#hiddenOrderDetails').hide();
+                $('#hiddenOrderDetails').hide();
 
-                var customerDetails = $('#orderInformationSection').html();
+                var customerDetails = $('#orderInformationSection > address').html();
                 $('#customerDetails').html(customerDetails);
 
                 //hide order information section
-                //$('#orderInformationSection').hide();
+                $('#orderInformationSection').hide();
 
                 // align all amounts to the right 
                 $(".amount").css("text-align", "right");
