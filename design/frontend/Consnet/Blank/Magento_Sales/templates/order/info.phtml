@@ -17,7 +17,7 @@
         <table>
             <tr>
                 
-                <td style="padding: 0;">
+                <td style="padding: 0;" id="orderInformationSection">
                     <?php if (!$_order->getIsVirtual()): ?>
                         <strong class="box-title"><span><?= /* @escapeNotVerified */ __('Address') ?></span></strong>
                         <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
