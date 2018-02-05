@@ -14,6 +14,14 @@
  * @var $block \Magento\Theme\Block\Html\Topmenu
  */
 ?>
+<style type="text/css">
+
+#proceed_to_checkout{
+    margin-top: 50px;
+}
+
+</style>
+
 <?php $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
 <?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
 
@@ -21,8 +29,8 @@
     <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
         <?= /* @escapeNotVerified */ $_menu ?>
         <?= /* @escapeNotVerified */ $block->getChildHtml() ?>
-        <li class="level0 nav-5 last level-top ui-menu-item" style="float:right;">
-            <a><button type="button" class="action primary checkout">Proceed To Checkout</button></a>
+        <li style="float:right; margin-top: 5px;">
+            <a class=""><button type="button" style="">CHECKOUT</button></a>
         </li>
     </ul>
 </nav>
