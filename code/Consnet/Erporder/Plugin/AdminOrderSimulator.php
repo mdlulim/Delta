@@ -145,7 +145,7 @@ class AdminOrderSimulator
                                 $quote->collectTotals();
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
-                                $this->stockCheck($quote);
+                                $this->stockCheck($quote, $zresults);
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
                                 $this->licenseCheck($quote);
@@ -157,7 +157,7 @@ class AdminOrderSimulator
         }return $quote;   
     }
 
-    public function stockCheck($quote){
+    public function stockCheck($quote, $zresults){
         if($quote->hasItems()){
             $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
             $count = count($matnrs);
