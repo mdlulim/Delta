@@ -108,9 +108,12 @@ note needed are hidden using css
   background:rgba(255,255,255,0.75);
   margin:0 auto;
 }
-
+#admin-header{
+    font-size: 40pt;
+}
 #admin-text{
   text-align:justify;
+  font-family: 16pt;
 }
 
 @media (max-width:600px) {
@@ -125,4 +128,11 @@ note needed are hidden using css
     background-size:cover;
     width: 100%;
     }
+    #admin-header{
+      font-size: 25pt;
+    }
+#admin-text{
+  text-align:justify;
+  font-family: 11pt;
+}
 }

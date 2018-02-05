@@ -84,7 +84,7 @@ $orderStoreDate = $block->formatDate(
                             $erporder =  $connection->fetchRow($query)['erpOrderId'];
                             
                             $DBdate = $_order->getData('DELIVERY_DATE');
-                            $delivery_date = substr($DBdate, 0,2).'/'.substr($DBdate, 2,2).'/'.substr($DBdate, 3);
+                            $delivery_date = substr($DBdate, 0,2).'/'.substr($DBdate, 2,2).'/'.substr($DBdate, 4);
                             
                             $mageorder = $om->create('\Consnet\Erporder\Helper\MageOrder');
                             $realOrderId = $_order->getRealOrderId();

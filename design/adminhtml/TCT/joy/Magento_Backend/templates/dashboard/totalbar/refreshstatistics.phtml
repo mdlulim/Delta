@@ -6,7 +6,7 @@
 ?>
 <div class="page-actions">
     <div class="page-actions-inner">
-        <div class="page-actions-buttons">
+     <div class="page-actions-buttons">
             <form
                 action="<?php /* @escapeNotVerified */ echo $block->getUrl('*/*/refreshStatistics'); ?>"
                 method="post">
@@ -14,12 +14,12 @@
                     name="form_key"
                     type="hidden"
                     value="<?php /* @escapeNotVerified */ echo $block->getFormKey(); ?>"/>
-                <button
+                <!--<button
                     class="action-primary"
                     type="submit"
                     title="Refresh Data">
                     <?php /* @escapeNotVerified */ echo __('Reload Data') ?>
-                </button>
+                </button>-->
             </form>
         </div>
     </div>
