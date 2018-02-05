@@ -116,8 +116,6 @@ class AdminOrderSimulator
 
                                                     $totalTax = $totalTax + $zresults->ZRESULTS->item[$i]->TX_DOC_CUR; 
                                                     $total = $total + $zresults->ZRESULTS->item[$i]->NET_VALUE1;
-                                                    //$this->messageManager->addSuccessMessage('You added '.$item->getName().
-                                                    //' to your shopping cart.');
                                                     $this->showItemMessage($item->getName(), $item->getSku(), 
                                                     $item->getQty(), 'success');
                                                 }
@@ -148,55 +146,10 @@ class AdminOrderSimulator
                                 $quote->collectTotals();
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
-                                if($quote->hasItems()){
-                                    $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
-                                    $products = '';
-                                    $count = count($matnrs);
-                                    if(count($matnrs) > 0){
-                                        $count = count($matnrs) - 1;
-                                    }
-                                    
-                                    foreach($quote->getAllVisibleItems() as $item){
-                                        if(in_array($item->getSku(), $matnrs)){                                           
-                                            if ($products == '') {                                                    
-                                                $products= $products.$item->getName();
-                                            }else {
-                                                $products= $products.$item->getName().', ';
-                                            }                                                
-                                            $quote->deleteItem($item);
-                                            $quote->setTotalsCollectedFlag(false)->collectTotals();
-                                            $quote->save();
-                                            $this->showItemMessage($item->getName(), $item->getSku(), 
-                                            $item->getQty(), 'stock');
-                                            /*if($item->getSku() == $matnrs[$count]){
-                                                $this->messageManager->addError("Stock for ".$item->getName()." is not available");
-                                            }*/                                            
-                                        }
-                                    }                                      
-                                }
+                                $this->stockCheck($quote);
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
-                                $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');                             
-                                $products = "";
-                                $no_license = array(8,9,10);
-                                foreach($quote->getAllVisibleItems() as $item){
-                                    $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
-                                    foreach ($category_ids as $cat) {
-                                        if(in_array($cat, $no_license)){
-                                            if ($products == '') {                                                    
-                                                $products= $products.$item->getName();
-                                            }else {
-                                                $products= $products.$item->getName().', ';
-                                            }
-                                            $quote->deleteItem($item);
-                                            $quote->setTotalsCollectedFlag(false)->collectTotals();
-                                            $quote->save();
-                                            $this->showItemMessage($item->getName(), $item->getSku(), 
-                                            $item->getQty(), 'licence');
-                                            //$this->messageManager->addError($zresults->ZSTATUS->MESSAGE_V4." ".$item->getName());
-                                        }
-                                    }                                            
-                                }
+                                $this->licenseCheck($quote);
                             }
                         }
                     }
@@ -204,6 +157,43 @@ class AdminOrderSimulator
             }   
         }return $quote;
    
+    }
+
+    public function stockCheck($quote){
+        if($quote->hasItems()){
+            $matnrs = explode(";", $zresults->ZSTATUS->MESSAGE_V1);
+            $count = count($matnrs);
+            if(count($matnrs) > 0){
+                $count = count($matnrs) - 1;
+            }
+            
+            foreach($quote->getAllVisibleItems() as $item){
+                if(in_array($item->getSku(), $matnrs)){                                               
+                    $quote->deleteItem($item);
+                    $quote->setTotalsCollectedFlag(false)->collectTotals();
+                    $quote->save();
+                    $this->showItemMessage($item->getName(), $item->getSku(), 
+                    $item->getQty(), 'stock');                                        
+                }
+            }                                      
+        }
+    }
+
+    public function licenseCheck($quote){
+        $product_repo = $this->om->create('\Magento\Catalog\Api\ProductRepositoryInterface');
+        $no_license = array(8,9,10);
+        foreach($quote->getAllVisibleItems() as $item){
+            $category_ids = $product_repo->get($item->getSku())->getCategoryIds();
+            foreach ($category_ids as $cat) {
+                if(in_array($cat, $no_license)){
+                    $quote->deleteItem($item);
+                    $quote->setTotalsCollectedFlag(false)->collectTotals();
+                    $quote->save();
+                    $this->showItemMessage($item->getName(), $item->getSku(), 
+                    $item->getQty(), 'licence');
+                }
+            }                                            
+        }
     }
     
     public function calculatePricePerItem($price, $qty) {
