@@ -141,8 +141,10 @@ class AdminOrderSimulator
                                 $quote->setTaxAmount($totalTax);
                                 $quote->setSubtotal($total);
                                 $quote->setGrandTotal(($total + $totalTax));
-                                $quote->setTotalsCollectedFlag(true)->collectTotals();
-                                $quote->collectTotals();
+                                if(method_exists($quote->setTotalsCollectedFlag(true), 'collectTotals')){
+                                    $quote->setTotalsCollectedFlag(true)->collectTotals();
+                                    $quote->collectTotals();
+                                }                                
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
                                 $this->stockCheck($quote, $zresults);
