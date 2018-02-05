@@ -298,6 +298,7 @@ class AdminOrderSimulator
         if(isset($_SESSION['items'])){
             //foreach ($_SESSION['items'] as $sessionItem) {
                 if($this->checkItemAddPreviously($itemSku)){    
+                    $sessionItem = $this->getSessionItem($itemSku);
                     if($sessionItem['itemQty'] !== $itemQty){
                         $this->addMessage($itemName, $messageType);
                     }
@@ -316,7 +317,6 @@ class AdminOrderSimulator
             );
             $this->addMessage($itemName, $messageType);
         }
-
     }
 
     public function checkItemAddPreviously($itemSku){
@@ -336,6 +336,14 @@ class AdminOrderSimulator
             ' to your shopping cart.');
         }elseif($messageType == 'licence'){
             $this->messageManager->addError("Youre Liquor Licence Is Expired For Product: ".$itemName);
+        }
+    }
+
+    public function getSessionItem($itemSku){
+        foreach ($_SESSION['items'] as $sessionItem) {
+            if($itemSku == $sessionItem['itemSku']){
+                return $sessionItem;
+            }
         }
     }
 }
