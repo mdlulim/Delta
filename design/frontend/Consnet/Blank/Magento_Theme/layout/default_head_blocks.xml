@@ -11,7 +11,7 @@
         <css src="mage/calendar.css"/>
         <css src="plugins/datepicker/datepicker3.css" order="99">
         <script src="requirejs/require.js"/>
-        <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script src="plugins/datepicker/bootstrap-datepicker.js">
     </head>
     <body>
         <referenceContainer name="after.body.start">
