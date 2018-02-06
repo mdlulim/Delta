@@ -194,12 +194,19 @@ require(["jqueryNoConflict"], function(){
 });
 </script>
 <script type="text/javascript">
-    $(function() {
-        console.log('!!! PAGE READY !!!');
-        $('.datepicker').datepicker({
-            format: 'yyyy/mm/dd',
-            // endDate: '-1d',
-            autoclose: true
-        });
-    });
+    require(
+        [
+            'jquery'
+        ],
+        function($) {
+            $(function() {
+                console.log('!!! PAGE READY !!!');
+                $('.datepicker').datepicker({
+                    format: 'yyyy/mm/dd',
+                    // endDate: '-1d',
+                    autoclose: true
+                });
+            });
+        }
+    );
 </script>
