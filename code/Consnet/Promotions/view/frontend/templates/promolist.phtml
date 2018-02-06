@@ -13,7 +13,7 @@
 <br />
 <?php 
 $promolist = $block->getPromotionList();
-if(($promolist[0])    || (is_object($promolist)) ) { ?>
+if($promolist[0]){ ?>
 <div style="padding-top: 0px;" class="dashboard-store-stats">
    <div id="grid_tab" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
        <ul class="tabs-horiz ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
@@ -25,36 +25,13 @@ if(($promolist[0])    || (is_object($promolist)) ) { ?>
                array('Customers','grid_tab_customers','grid_tab_customers_content')
            );
            $myCount=0;
-           $colPromotionList = $block->getPromotionList()  ;
-         //  $colPromotions = $block->getPromotionLists()  ;
-         //  var_dump ($block->getIs_single_obj()) ;
-           
-         //  if($block->getIs_single_obj()) {
-            if(is_object($colPromotionList)) {
-            //    if($myCount == 0){ 
-                    ?>
-                <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="<?php echo $arrayIds[$myCount][0]; ?>" aria-labelledby="<?php echo $arrayIds[$myCount][1]; ?>" aria-selected="true">
-                   <a href="#<?php echo $arrayIds[$myCount][0]; ?>" id="<?php echo $arrayIds[$myCount][1]; ?>" class="ui-tabs-anchor" tabindex="-1">
-                       <span> <?php echo $colPromotionList->getTitle() ; ?> </span></a>
-                </li>
-
-               <?php 
-            //    }  
-                 $myCount++;
-             
-
-           }else{
-
-           
-           foreach ($colPromotionList as $item): 
-              if($myCount == 0){
-                   ?>
+           foreach ($block->getPromotionList() as $item): 
+              if($myCount == 0){ ?>
                <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="<?php echo $arrayIds[$myCount][0]; ?>" aria-labelledby="<?php echo $arrayIds[$myCount][1]; ?>" aria-selected="true">
                    <a href="#<?php echo $arrayIds[$myCount][0]; ?>" id="<?php echo $arrayIds[$myCount][1]; ?>" class="ui-tabs-anchor" tabindex="-1">
                        <span> <?php echo $item; ?> </span></a>
                </li>
-             <?php }else //if ($myCount < 4 )
-                { ?>
+             <?php }else{ ?>
                 <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="<?php echo $arrayIds[$myCount][0]; ?>" aria-labelledby="<?php echo $arrayIds[$myCount][1]; ?>" aria-selected="false">
                    <a href="#<?php echo $arrayIds[$myCount][0]; ?>" id="<?php echo $arrayIds[$myCount][1]; ?>" class="ui-tabs-anchor" tabindex="-1">
                        <span> <?php echo $item; ?> </span></a>
@@ -66,8 +43,7 @@ if(($promolist[0])    || (is_object($promolist)) ) { ?>
                
            <?php  }
             $myCount++;
-            endforeach;
-            } ?>
+            endforeach; ?>
         </ul>
      </div>
      <script>
@@ -90,149 +66,9 @@ if(($promolist[0])    || (is_object($promolist)) ) { ?>
                array('Customers','grid_tab_customers')
            );
            $myCount2=0;
-
-
-
-        if(   is_object ( $block->getPromotionList() )  ) {
-           ?>
- 
-
-
-               <div id="<?php echo $divIds[$myCount2][0]; ?>" aria-labelledby="<?php echo $divIds[$myCount2][1]; ?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: block;">
-                   <div class="dashboard-item-content">
-                      <div class="empty-text">
-                          <br /> <br />
-                          <?php 
-                                $collectionList = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
-                                $skuIds = $block->getSku($colPromotionList->getTitle());
-                                // $skuIds = array(6210, 3030,3230,1010,6166,6466);
-                               $_productCollection = $collectionList->addAttributeToFilter('sku', array('in' =>$skuIds));
-                                
-                                $_helper = $this->helper('Magento\Catalog\Helper\Output');
-                                ?>
-                                <?php if (!$_productCollection->count()): ?>
-                                    <div class="message info empty"><div><?= /* @escapeNotVerified */ __('We can\'t find products matching the selection.') ?></div></div>
-                                <?php else: ?>
-                                    <?= $block->getToolbarHtml() ?>
-                                    <?= $block->getAdditionalHtml() ?>
-                                    <?php
-                                    if ('get-grid' == 'grid') {
-                                        $viewMode = 'grid';
-                                        $image = 'category_page_grid';
-                                        $showDescription = false;
-                                        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
-                                    } else {
-                                        $viewMode = 'list';
-                                        $image = 'category_page_list';
-                                        $showDescription = true;
-                                        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
-                                    }
-                                    /**
-                                    * Position for actions regarding image size changing in vde if needed
-                                    */
-                                    $pos = null;
-                                    ?>
-                                    <div class="products wrapper grid products-grid">
-                                        <?php $iterator = 1; ?>
-                                        <ol class="products list items product-items">
-                                            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
-                                            <?php foreach ($_productCollection as $_product): 
-                                               //var_dump(get_class_methods($_product));
-                                            ?>
-                                            
-                                                <?= /* @escapeNotVerified */ ($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
-                                                <div class="product-item-info" data-container="product-grid">
-                                                    <?php 
-                                                    // Product Image 
-                                                    $product_ = $productRepository->get( $_product->getSku());
-                                                    ?>
-                                                    <a href="<?= $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
-                                                    <img class="photo image"  src="<?php echo $imageHelper->init($product_, 'product_page_image_small')
-                                                            ->setImageFile($product_->getFile())->resize('250', '300')->getUrl(); ?>"/>
-                                                    </a>
-                                                    <div class="product details product-item-details">
-                                                        
-                                                        <strong class="product name product-item-name">
-                                                            <a class="product-item-link"
-                                                            href="<?= $_product->getProductUrl() ?>">
-                                                                <?= $product_->getName(); ?>
-                                                            </a>
-                                                        </strong>
-                                                    
-                                                        <div class="product-item-inner">
-                                                            <div class="product actions product-item-actions"<?= strpos($pos, $viewMode . '-actions') ? $position : '' ?>>
-                                                                <div class="actions-primary"<?= strpos($pos, $viewMode . '-primary') ? $position : '' ?>>
-                                                                    <?php if ($product_->isSaleable()): ?>
-                                                                        <?php $postParams = $block->getAddToCartPostParams($_product); ?>
-                                                                        <form data-role="tocart-form" data-product-sku="<?= $product_->getSku() ?>" action="<?= $postParams['action'] ?>" method="post">
-                                                                            <input type="hidden" name="product" value="<?= $postParams['data']['product'] ?>">
-                                                                            <input type="hidden" name="<?= Action::PARAM_NAME_URL_ENCODED ?>" value="<?= $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
-                                                                            <?= $block->getBlockHtml('formkey') ?>
-                                                                            <button type="submit"
-                                                                                    title="<?= $block->escapeHtml(__('Add to Cart')) ?>"
-                                                                                    class="action tocart primary">
-                                                                                <span><?= /* @escapeNotVerified */ __('Add to Cart') ?></span>
-                                                                            </button>
-                                                                        </form>
-                                                                    <?php else: ?>
-                                                                        <?php if ($_product->isAvailable()): ?>
-                                                                            <div class="stock available"><span><?= /* @escapeNotVerified */ __('In stock') ?></span></div>
-                                                                        <?php else: ?>
-                                                                            <div class="stock unavailable"><span><?= /* @escapeNotVerified */ __('Out of stock') ?></span></div>
-                                                                        <?php endif; ?>
-                                                                    <?php endif; ?>
-                                                                </div>
-                                                                <div data-role="add-to-links" class="actions-secondary"<?= strpos($pos, $viewMode . '-secondary') ? $position : '' ?>>
-                                                                    <?php if ($addToBlock = $block->getChildBlock('addto')): ?>
-                                                                        <?= $addToBlock->setProduct($_product)->getChildHtml() ?>
-                                                                    <?php endif; ?>
-                                                                </div>
-                                                            </div>
-                                                            <?php if ($showDescription):?>
-                                                                <div class="product description product-item-description">
-                                                                    <?= /* @escapeNotVerified */ $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
-                                                                    <a href="<?= /* @escapeNotVerified */ $_product->getProductUrl() ?>" title="<?= /* @escapeNotVerified */ $_product->getName() ?>"
-                                                                    class="action more"><?= /* @escapeNotVerified */ __('Learn More') ?></a>
-                                                                </div>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                                <?= ($iterator == count($_productCollection)+1) ? '</li>' : '' ?>
-                                            <?php endforeach; ?>
-                                        </ol>
-                                    </div>
-                                    <?= $block->getToolbarHtml() ?>
-
-                                <?php endif; ?>
-                          </div>
-                   </div>
-                </div>
-
-
-
-
-
-
-       <?php  }
-
-
-
-
-
-
-
-
-
-
-
-          
            foreach ($block->getPromotionList() as $item): 
-                 
-               if(   is_object ( $block->getPromotionList() )  ) {
-             //  if($myCount2 == 0){ 
-              ?>
+                
+              if($myCount2 == 0){ ?>
                <div id="<?php echo $divIds[$myCount2][0]; ?>" aria-labelledby="<?php echo $divIds[$myCount2][1]; ?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: block;">
                    <div class="dashboard-item-content">
                       <div class="empty-text">
@@ -240,7 +76,7 @@ if(($promolist[0])    || (is_object($promolist)) ) { ?>
                           <?php 
                                 $collectionList = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
                                 $skuIds = $block->getSku($item);
-                                // $skuIds = array(6210, 3030,3230,1010,6166,6466);
+                             // $skuIds = array(6210, 3030,3230,1010,6166,6466);
                                $_productCollection = $collectionList->addAttributeToFilter('sku', array('in' =>$skuIds));
                                 
                                 $_helper = $this->helper('Magento\Catalog\Helper\Output');
@@ -344,11 +180,7 @@ if(($promolist[0])    || (is_object($promolist)) ) { ?>
                           </div>
                    </div>
                 </div>
-             <?php }
-             
-             else{ if( ! is_object ( $block->getPromotionList() )  ) { 
-                 
-                  ?>
+             <?php }else{ ?>
                  <div id="<?php echo $divIds[$myCount2][0]; ?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom" aria-live="polite" aria-labelledby="<?php echo $divIds[$myCount2][1]; ?>" role="tabpanel" style="display: none;" aria-expanded="false" aria-hidden="true">
                     <div class="dashboard-item-content">
                          <br /> <br />
@@ -456,8 +288,7 @@ if(($promolist[0])    || (is_object($promolist)) ) { ?>
                                 <?php endif; ?>
                     </div>
                 </div>
-           <?php  
-             }  }
+           <?php  }
             $myCount2++;
             endforeach; ?>
 </div>

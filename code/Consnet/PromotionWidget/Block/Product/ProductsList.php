@@ -12,39 +12,25 @@ class ProductsList extends \Magento\CatalogWidget\Block\Product\ProductsList
      */
     public function createCollection()
     {  
-
-    //    $SalesOrg = $_SESSION['VKORG'];
-
-    //     $om = \Magento\Framework\App\ObjectManager::getInstance();
-    //     $resource = $om->get('Magento\Framework\App\ResourceConnection');
-    //     $connection = $resource->getConnection();
-    //     $tableName = $resource->getTableName('delta_promotion');
-
-    //     $custID = $_SESSION['kunnr'];
-    //     $sql = "Select spart_distribution FROM " . $tableName." WHERE  vkorg_salesorg = '$SalesOrg'    and kunnr = $custID  ";
-    //     $result = $connection->fetchAll($sql); 
-      
-    //     $productsIds = [];
-    //     $id = 0;
-    //     foreach($result as $arr){
-    //         $productsIds[$id] = $arr['spart_distribution'];
-    //         $id++;
-    //     } 
-     $myJob =  new \Consnet\Promotions\Controller\Index\CronJobPromotion() ;
-    $productsIds =  $myJob->getMyListOfMatErp($_SESSION['kunnr']) ;
-
+  
+            $myJob =  new \Consnet\Promotions\Controller\Index\CronJobPromotion() ;
+            $productsIds =  $myJob->getMyListOfMatErp($_SESSION['kunnr']) ;
+ 
+  
         $collection = $this->productCollectionFactory->create();
         $collection->setVisibility($this->catalogProductVisibility->getVisibleInCatalogIds());
         
         $collection = $this->_addProductAttributesAndPrices($collection)
             ->addStoreFilter() ;
-            // ->setPageSize($this->getPageSize())
-            // ->setCurPage($this->getRequest()->getParam($this->getData('page_var_name'), 1))
-            // ->setOrder($this->getSortBy(), $this->getSortOrder());
-            //var_dump($productsIds);die();
+            
        if($collection == null){
            return "there is no promotions for this customer";
        }else{
+
+           if(! is_array ($tab_result->ExPromoList->item)) {
+            return  $collection->addAttributeToFilter('sku' , productsIds[0] ) ;
+           }
+
           return $collection->addAttributeToFilter('sku', array('in' =>$productsIds) );
          
        }
