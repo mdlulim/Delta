@@ -49,16 +49,18 @@ $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
 </form>
 
 <script type="text/javascript">
-viewCartFunc = function() {
-    var span = document.getElementById('itemcounter');
-    if(span.textContent == null || span.textContent == '' || span.textContent == 'underfined'){
-        console.log(span.textContent.' Thato');
-    }else{
-        require(['jquery'], function($){
-            $('viewCartForm').submit(function (event){
-                console.log();
+
+var proceed = document.getElementById('proceed_to_checkout');
+    proceed.addEventListener("click", function () {
+        var span = document.getElementById('itemcounter');
+        if(span.textContent == null || span.textContent == '' || span.textContent == 'underfined'){
+            console.log(span.textContent.' Thato');
+        }else{
+            require(['jquery'], function($){
+                $('viewCartForm').submit(function (event){
+                    console.log();
+                });
             });
-        });
-    }
-}
+        }
+    });
 </script>
