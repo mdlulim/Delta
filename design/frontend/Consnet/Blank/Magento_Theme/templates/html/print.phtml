@@ -14,6 +14,10 @@
                 // change company logo
                 $('#maincontent > a.logo > img').attr('src', getSiteUrl() + 'resources/loginLogo.png');
 
+                //hide the edit and cancel order buttons
+                $('#edit').hide();
+                $('#cancelorder').hide();
+
                 // change page title
                 var newPageTitle = 'Print ' + $('h1.page-title span.base:first').html();
                 $(document).attr("title", newPageTitle);
