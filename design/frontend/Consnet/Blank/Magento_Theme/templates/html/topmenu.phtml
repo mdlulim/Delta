@@ -54,7 +54,7 @@ var proceed = document.getElementById('proceed_to_checkout');
     proceed.addEventListener("click", function () {
         var span = document.getElementById('itemcounter');
         if(span.textContent == null || span.textContent == '' || span.textContent == 'underfined'){
-            console.log(span.textContent.' Thato');
+            console.log(span.textContent);
         }else{
             window.location = <?php echo "http://".$NAMESPACE_ID."checkout/cart/";?>;
             /*require(['jquery'], function($){
