@@ -26,8 +26,8 @@ $om = \Magento\Framework\App\ObjectManager::getInstance();
 $helper = $om->create('Consnet\Api\Helper\Data'); 
 $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
 $quote = $om->get('\Magento\Checkout\Model\Session')->getQuote();
-$count = sizeof($quote);
-
+$count = count($quote->getAllVisibleItems());
+var_dump($count);//die();
  $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
 <?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
 
