@@ -187,8 +187,15 @@ define([
         getCartLineItemsCount: function () {
             var items = this.getCartParam('items') || [];
             if(items.length == 0){
-                alert(hide);
+                console.log('hide');
             }
+            console.log(items);
+            var total = 0;
+            for (var i = 0; i < items.length; i++) {
+                total += items[i].qty;
+            }
+            console.log(total);
+            document.getElementById('itemcounter').textContent = total;
             return parseInt(items.length, 10);
         }
     });
