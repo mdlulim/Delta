@@ -197,13 +197,13 @@
             </argument>
         </column -->
      
-        <column name="base_grand_total" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+        <!-- <column name="base_grand_total" class="Magento\Sales\Ui\Component\Listing\Column\Price">
             <settings>
                 <filter>textRange</filter>
                 <label translate="true">Grand Total (Base)</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <column name="grand_total" class="Magento\Sales\Ui\Component\Listing\Column\PurchasedPrice">
             <settings>
                 <filter>textRange</filter>
@@ -227,21 +227,21 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="shipping_address" class="Magento\Sales\Ui\Component\Listing\Column\Address">
+        <!-- <column name="shipping_address" class="Magento\Sales\Ui\Component\Listing\Column\Address">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Shipping Address</label>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <visible>false</visible>
             </settings>
-        </column>
-        <column name="shipping_information">
+        </column> -->
+        <!-- <column name="shipping_information">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Thato</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
        
         <column name="customer_group" component="Magento_Ui/js/grid/columns/select">
             <settings>
@@ -259,13 +259,13 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="shipping_and_handling" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+        <!-- <column name="shipping_and_handling" class="Magento\Sales\Ui\Component\Listing\Column\Price">
             <settings>
                 <filter>textRange</filter>
                 <label translate="true">Shipping and Handling</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <column name="customer_name">
             <settings>
                 <filter>text</filter>
@@ -273,7 +273,7 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <column name="payment_method" component="Magento_Ui/js/grid/columns/select">
+        <!-- <column name="payment_method" component="Magento_Ui/js/grid/columns/select">
             <settings>
                 <filter>select</filter>
                 <options class="Magento\Payment\Ui\Component\Listing\Column\Method\Options"/>
@@ -288,7 +288,7 @@
                 <label translate="true">Total Refunded</label>
                 <visible>false</visible>
             </settings>
-        </column>
+        </column> -->
         <actionsColumn name="actions" class="Magento\Sales\Ui\Component\Listing\Column\ViewAction">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
