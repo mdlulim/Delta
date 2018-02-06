@@ -252,7 +252,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
             [
                 'filter' => false,
                 'sortable' => false,
-                'header' => __('Quantity'),
+                'header' => __('Cases'),
                 'renderer' => \Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Qty::class,
                 'name' => 'qty',
                 'inline_css' => 'qty',

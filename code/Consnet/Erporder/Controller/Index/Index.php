@@ -146,6 +146,9 @@ class Index extends \Magento\Framework\App\Action\Action
             }
 
             
-        }       
+        }    
+        if(isset($_POST['view'])){
+            return $this->resultRedirectFactory->create()->setPath("checkout/cart/");
+        }   
     }
 }
