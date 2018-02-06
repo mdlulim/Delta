@@ -209,8 +209,7 @@ class Index extends \Magento\Customer\Controller\AbstractAccount
 
          $this->cart->truncate();
          $this->cart->save();
-
-                $this->session->logout();
+         $this->session->logout();
                 
                 $types = array('config','layout','block_html','collections','reflection','db_ddl','eav','config_integration','config_integration_api','full_page','translate','config_webservice');
                 foreach ($types as $type) {
