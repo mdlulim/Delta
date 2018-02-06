@@ -115,10 +115,10 @@ require(['prototype'], function(){
 </div>
 </div>
 <script>
-    console.log('!!! GETS HERE !!!');
-    
-    $(function() {
-        console.log('!!! GETS HERE !!!');
+    $('.datepicker').datepicker({
+        format: 'yyyy/mm/dd',
+        //endDate: '-1d',
+        autoclose: true
     });
   /*function confirmDate(){
 
