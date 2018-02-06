@@ -11,6 +11,9 @@
         ],
         function($) {
             $(function() {
+                // change page logo
+                $('#maincontent > a.logo > img').attr('src', getSiteUrl() + 'resources/loginLogo.png');
+
                 // change page title
                 var newPageTitle = 'Print ' + $('h1.page-title span.base:first').html();
                 $(document).attr("title", newPageTitle);
@@ -31,13 +34,13 @@
                 //show formatted order details
                 $('#orderDetails').show();
 
-                //hide unformatted order details
+                // hide unformatted order details
                 $('#hiddenOrderDetails').hide();
 
                 var customerDetails = $('#orderInformationSection > address').html();
                 $('#customerDetails').html(customerDetails);
 
-                //hide order information section
+                // hide order information section
                 $('#orderInformationSection').hide();
 
                 // align all amounts to the right 
@@ -56,7 +59,7 @@
     // }
     function getSiteUrl() {
         var slashIndex = getNthPosition(window.location.href, '/', 4);
-        return window.location.href.substring(0, slashIndex);
+        return window.location.href.substring(0, slashIndex) + '/';
     }
 
     function getNthPosition(string, subString, index) {
