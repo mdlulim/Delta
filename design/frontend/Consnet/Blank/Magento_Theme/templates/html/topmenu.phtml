@@ -51,8 +51,8 @@ $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
 <script type="text/javascript">
 function viewCart() {
     var span = document.getElementById('itemcounter');
-    if(span.textContent == null || span.textContent == '' || span.textContent == underfined){
-
+    if(span.textContent == null || span.textContent == '' || span.textContent == 'underfined'){
+        console.log(span.textContent.' Thato');
     }else{
         require(['jquery'], function($){
             $('viewCart').submit(function (event){
