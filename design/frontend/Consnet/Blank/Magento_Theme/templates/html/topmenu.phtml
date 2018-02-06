@@ -49,7 +49,7 @@ $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
 </form>
 
 <script type="text/javascript">
-function viewCart() {
+viewCart = function() {
     var span = document.getElementById('itemcounter');
     if(span.textContent == null || span.textContent == '' || span.textContent == 'underfined'){
         console.log(span.textContent.' Thato');
