@@ -18,7 +18,7 @@
                 // get order date
                 var orderDate = $('#hiddenOrderDetails > div.order-date').html().replace('<strong>Created: </strong>', '');
                 orderDate = orderDate.slice(0, orderDate.indexOf('(') - 1);
-                $('#orderDate').html(': ' + orderDate);
+                $('#orderDate').html(getSiteUrl() + ' : ' + orderDate);
 
                 // get order number
                 var orderNumber = $('#hiddenOrderDetails > h1 > span').html().replace('Order # ', '');
@@ -54,4 +54,12 @@
     //     var re = new RegExp(/^.*\//);
     //     return re.exec(window.location.href);
     // }
+    function getSiteUrl() {
+        var slashIndex = getNthPosition(window.location.href, '/', 4);
+        return window.location.href.substring(0, slashIndex);
+    }
+
+    function getNthPosition(string, subString, index) {
+        return string.split(subString, index).join(subString).length;
+    }
 </script>
