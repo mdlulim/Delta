@@ -176,8 +176,9 @@
         });
     }
 
+    // Initialize the datepicker field
     jQuery('.datepicker').datepicker({
-      format: 'yyyy/mm/dd',
+      format: 'yyyy-mm-dd',
       //endDate: '-1d',
       autoclose: true
     });
