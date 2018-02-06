@@ -19,7 +19,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 
 <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
     <label for="delivery_date">Delivery Date:</label>
-    <input type="date" class="form-control" name="delivery_date" id="delivery_date" 
+    <input type="text" class="form-control datepicker" name="delivery_date" id="delivery_date" 
      value="<?php echo $defualt_delivery_date; ?>">
     <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>-->
 </div>
