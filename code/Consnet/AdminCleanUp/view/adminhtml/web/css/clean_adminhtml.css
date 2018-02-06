@@ -116,7 +116,7 @@ note needed are hidden using css
   font-family: 16pt;
 }
 
-@media (max-width:600px) {
+@media (max-width:600px){
   #admin-dashboard{
     padding:20px;
     width:98%;
@@ -131,8 +131,8 @@ note needed are hidden using css
     #admin-header{
       font-size: 25pt;
     }
-#admin-text{
-  text-align:justify;
-  font-family: 11pt;
-}
+    #admin-text{
+    text-align:justify;
+    font-family: 11pt;
+    }
 }
