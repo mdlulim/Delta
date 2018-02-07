@@ -103,7 +103,7 @@ $month = substr ($db_deliverydate, 2, 2);
                     echo "<tr class='form-group'>";
                     echo "<td><input type='text' class='form-control' onkeypress ='return event.charCode >= 48 && event.charCode <= 57' name='sku".$i."' value='".$singleitem->getSku()."'/></td>";
                     echo "<td><input type='text' class='form-control' onkeypress ='return event.charCode >= 48 && event.charCode <= 57' name='qty".$i."' value='".(int)$singleitem->getQtyOrdered()."'/></td>";
-                    echo "<td><a id='".$i."' onclick='removerow(this.id)'>Remove<a/></td>";      
+                    echo "<td><a id='".$i."' onclick='removerow(this.id)'>Remove<a/></td>";
                     echo "</tr>";
                     $i++;
             }?>
