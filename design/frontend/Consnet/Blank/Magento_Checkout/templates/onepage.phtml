@@ -137,7 +137,7 @@
                 date_modify($defualt_delivery_date, '+1 day');
                 $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
             ?>
-            <div class="form-group">
+            <div class="form-group hidden">
                 <label for="delivery_date">Delivery Date:</label>
                 <input type="date" class="form-control" name="delivery_date" onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>" value="<?php echo $defualt_delivery_date; ?>">
             </div>
