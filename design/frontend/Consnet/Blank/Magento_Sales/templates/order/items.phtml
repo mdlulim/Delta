@@ -118,10 +118,10 @@ $month = substr ($db_deliverydate, 2, 2);
 </div>
 
 <div class="col-lg-3">
-    <div class="form-group pull-right">
+    <!-- <div class="form-group pull-right">
         <label for="delivery_date">Delivery Date:</label>
         <input id="delivery_date" type="text" class="form-control datepicker" value="<?php echo date('Y-m-d',strtotime("$month/$day/$year")) ?>" disabled/>
-    </div>
+    </div> -->
     <table class="data table table-order-items">
         <tfoot>
             <?php echo $block->getChildHtml('order_totals') ?>
