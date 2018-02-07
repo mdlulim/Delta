@@ -133,12 +133,13 @@ class AdminOrderSimulator
                                     $quote->collectTotals();
                                 }                                
                             }
-                            if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
-                                $this->stockCheck($quote, $zresults);
-                            }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
                                 $this->licenseCheck($quote);
                             }
+                            if($this->hasValue($zresults->ZSTATUS->MESSAGE_V1)){                           
+                                $this->stockCheck($quote, $zresults);
+                            }
+                            
                         }else{
                             return $this->OfflineECCPricing($quote);
                         }
