@@ -11,8 +11,12 @@
         ],
         function($) {
             $(function() {
-                // change page logo
+                // change company logo
                 $('#maincontent > a.logo > img').attr('src', getSiteUrl() + 'resources/loginLogo.png');
+
+                //hide the edit and cancel order buttons
+                $('#edit').hide();
+                $('#cancelorder').hide();
 
                 // change page title
                 var newPageTitle = 'Print ' + $('h1.page-title span.base:first').html();
@@ -62,7 +66,7 @@
         return window.location.href.substring(0, slashIndex) + '/';
     }
 
-    function getNthPosition(string, subString, index) {
-        return string.split(subString, index).join(subString).length;
+    function getNthPosition(string, subString, occurrence) {
+        return string.split(subString, occurrence).join(subString).length;
     }
 </script>

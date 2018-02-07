@@ -10,7 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
         <css src="css/bootstrap.css" order="99"/>
         <css src="css/bootstrap-theme.css" order="99"/>
+        <!-- <css src="plugins/datepicker/datepicker3.css" order="100"> -->
         <script src="css/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.js"></script>
+        <!-- <script src="plugins/datepicker/bootstrap-datepicker.js"></script> -->
     </head>
 </page>

@@ -32,7 +32,7 @@
                                 <item name="product" xsi:type="string" translate="true">Product</item>
                                 <item name="status" xsi:type="string" translate="true">Item Status</item>
                                 <item name="price" xsi:type="string" translate="true">Price</item>
-                                <item name="ordered-qty" xsi:type="string" translate="true">Qty</item>
+                                <item name="ordered-qty" xsi:type="string" translate="true">CS</item>
                                 <item name="subtotal" xsi:type="string" translate="true">Subtotal</item>
                                 <item name="tax-amount" xsi:type="string" translate="true">Tax Amount</item>
                                 <item name="tax-percent" xsi:type="string" translate="true">Tax Percent</item>

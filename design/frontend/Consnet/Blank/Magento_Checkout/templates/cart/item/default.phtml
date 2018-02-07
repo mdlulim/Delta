@@ -82,10 +82,10 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
                 <?= $block->getUnitPriceHtml($_item) ?>
             </td>
         <?php endif; ?>
-        <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+        <td class="col qty" data-th="<?= $block->escapeHtml(__('Case(s)')) ?>">
             <div class="field qty">
                 <label class="label" for="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty">
-                    <span><?= /* @escapeNotVerified */ __('Qty') ?></span>
+                    <span><?= /* @escapeNotVerified */ __('Case(s)') ?></span>
                 </label>
                 <div class="control qty">
                     <input id="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty"
@@ -94,7 +94,7 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
                            value="<?= /* @escapeNotVerified */ $block->getQty() ?>"
                            type="number"
                            size="4"
-                           title="<?= $block->escapeHtml(__('Qty')) ?>"
+                           title="<?= $block->escapeHtml(__('Case(s)')) ?>"
                            class="input-text qty"
                            data-validate="{required:true,'validate-greater-than-zero':true}"
                            data-role="cart-item-qty"/>

@@ -56,7 +56,7 @@ $month = substr ($db_deliverydate, 2, 2);
                     <th class="col name"><?php /* @escapeNotVerified */ echo __('Product Name') ?></th>
                     <th class="col sku"><?php /* @escapeNotVerified */ echo __('SKU') ?></th>
                     <th class="col price text-right"><?php /* @escapeNotVerified */ echo __('Price') ?></th>
-                    <th class="col qty text-right"><?php /* @escapeNotVerified */ echo __('Qty') ?></th>
+                    <th class="col qty text-right"><?php /* @escapeNotVerified */ echo __('Case(s)') ?></th>
                     <th class="col subtotal text-right"><?php /* @escapeNotVerified */ echo __('Subtotal') ?></th>
                 </tr>
             </thead>
@@ -94,7 +94,7 @@ $month = substr ($db_deliverydate, 2, 2);
         <table id="neworder" class="hidden fields additional deletableItem">
             <thead>
             <td>SKU</td>
-            <td>Qty</td>
+            <td>Case(s)</td>
             <td></td>
             </thead>
             <tbody>
@@ -118,10 +118,10 @@ $month = substr ($db_deliverydate, 2, 2);
 </div>
 
 <div class="col-lg-3">
-    <div class="form-group pull-right">
+    <!-- <div class="form-group pull-right">
         <label for="delivery_date">Delivery Date:</label>
-        <input id="delivery_date" type="date" class="form-control" value="<?php echo date('Y-m-d',strtotime("$month/$day/$year")) ?>" disabled/>
-    </div>
+        <input id="delivery_date" type="text" class="form-control datepicker" value="<?php echo date('Y-m-d',strtotime("$month/$day/$year")) ?>" disabled/>
+    </div> -->
     <table class="data table table-order-items">
         <tfoot>
             <?php echo $block->getChildHtml('order_totals') ?>

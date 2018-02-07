@@ -23,7 +23,7 @@ class Items extends \Magento\Sales\Block\Adminhtml\Items\AbstractItems
     {
         $columns = array_key_exists('columns', $this->_data) ? $this->_data['columns'] : [];
         $columns = array('product' => 'Product', 'status'=> '','|'=>'<spam style="color: white;">|</spam>' , 'price'=> 'Price', 
-        'ordered-qty'=> 'Qty', 'subtotal' => 'Subtotal', ''=> '', 'tax-percent'=> '<spam style="color: white;">|</spam>','discount-amount'=> '<spam style="color: white;">|</spam>') ;
+        'ordered-qty'=> 'Case(s)', 'subtotal' => 'Subtotal', ''=> '', 'tax-percent'=> '<spam style="color: white;">|</spam>','discount-amount'=> '<spam style="color: white;">|</spam>') ;
 
         /*$columns = array('product' => 'Product', 'status'=> 'Item Status','|'=>'<spam style="color: white;">|</spam>' , 'price'=> 'Price', 
         'ordered-qty'=> 'Qty', 'subtotal' => 'Subtotal', ''=> '', 'tax-percent'=> '<spam style="color: white;">|</spam>','discount-amount'=> '<spam style="color: white;">|</spam>', 'total'=> 'Row Total') ;*/

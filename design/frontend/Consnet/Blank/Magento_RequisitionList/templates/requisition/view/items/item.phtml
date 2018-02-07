@@ -57,7 +57,7 @@ $item = $block->getItem();
         <?php endif; ?>
     <?php endif ?>
 </td>-->
-<td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+<td class="col qty" data-th="<?= $block->escapeHtml(__('Case(s)')) ?>">
     <input id="item-<?= $block->escapeHtml($item->getId()) ?>-qty"
            name="qty[<?= $block->escapeHtml($item->getSku()) ?>]"
            value="<?= $block->escapeHtml($item->getQty() * 1) ?>"

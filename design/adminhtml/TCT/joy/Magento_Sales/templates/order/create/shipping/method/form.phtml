@@ -14,15 +14,16 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 <?php /** @var $block \Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Method\Form */ ?>
 <?php $_shippingRateGroups = $block->getShippingRates(); ?>
 <div class="bootstrap-iso">
-<h3>Delivery Date Confirmaion</h3>
+<h3>Calculate Totals</h3>
 <link rel="stylesheet" type="text/css" href="<?php echo '../../../../../resources/bootstrap/css/bootstrap-iso.css';?>"/>
+<link rel="stylesheet" type="text/css" href="<?php echo '../../../../../pub/static/frontend/Consnet/Blank/en_US/plugins/datepicker/datepicker3.css';?>"/>
 
-<div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
+<!-- <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"--
     <label for="delivery_date">Delivery Date:</label>
-    <input type="date" class="form-control" name="delivery_date" id="delivery_date" 
+    <input type="text" class="form-control datepicker" name="delivery_date" id="delivery_date" 
      value="<?php echo $defualt_delivery_date; ?>">
-    <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>-->
-</div>
+    <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>--
+</div> -->
 
 
 <?php if ($_shippingRateGroups): ?>
@@ -49,7 +50,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
                             id="s_method_<?= /* @escapeNotVerified */ $_code ?>" <?= /* @escapeNotVerified */ $_checked ?>
                             class="admin__control-radio"/>
                             <label class="admin__field-label" for="s_method_<?= /* @escapeNotVerified */ $_code ?>">
-                               Confirm Delivery Date
+                               Calculate Grand Total
                                <strong style="display: none;">
                                     <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
                                     <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
@@ -72,7 +73,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
         <div id="order-shipping-method-info" class="order-shipping-method-info">
             <dl class="admin__order-shipment-methods">
                 <dd class="admin__order-shipment-methods-options">
-                   <b>Delivery Date confirmed </b>
+                   <b>Calculate Totals</b>
                     <strong style="display: none;">
                         <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
                         <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
@@ -104,7 +105,7 @@ require(['prototype'], function(){
 <?php else: ?>
     <div id="order-shipping-method-summary" class="order-shipping-method-summary">
         <a id="ship-method" href="#" onclick="order.loadShippingRates();return true" class="action-default">
-            <span><?= /* @escapeNotVerified */ __('Confirm Delivery Date') ?></span>
+            <span><?= /* @escapeNotVerified */ __('Calculate Grand Total') ?></span>
         </a>
         <input type="hidden" name="order[has_shipping]" value="" class="required-entry" />
     </div>
@@ -115,7 +116,11 @@ require(['prototype'], function(){
 </div>
 </div>
 <script>
-
+    $('.datepicker').datepicker({
+        format: 'yyyy/mm/dd',
+        //endDate: '-1d',
+        autoclose: true
+    });
   /*function confirmDate(){
 
     var delivery_date = document.getElementById('delivery_date').value;

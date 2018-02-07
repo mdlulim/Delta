@@ -176,6 +176,13 @@
         });
     }
 
+    // Initialize the datepicker field
+    jQuery('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      //endDate: '-1d',
+      autoclose: true
+    });
+
       console.log("Ajax call on pageload");
       jQuery.ajax({
         type: 'post',
