@@ -14,7 +14,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 <?php /** @var $block \Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Method\Form */ ?>
 <?php $_shippingRateGroups = $block->getShippingRates(); ?>
 <div class="bootstrap-iso">
-<h3>Delivery Date Confirmaion</h3>
+<h3>Calculate Totals</h3>
 <link rel="stylesheet" type="text/css" href="<?php echo '../../../../../resources/bootstrap/css/bootstrap-iso.css';?>"/>
 
 <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
@@ -49,7 +49,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
                             id="s_method_<?= /* @escapeNotVerified */ $_code ?>" <?= /* @escapeNotVerified */ $_checked ?>
                             class="admin__control-radio"/>
                             <label class="admin__field-label" for="s_method_<?= /* @escapeNotVerified */ $_code ?>">
-                               Confirm Delivery Date
+                               Calculate Grand Total
                                <strong style="display: none;">
                                     <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
                                     <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
@@ -72,7 +72,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
         <div id="order-shipping-method-info" class="order-shipping-method-info">
             <dl class="admin__order-shipment-methods">
                 <dd class="admin__order-shipment-methods-options">
-                   <b>Delivery Date confirmed </b>
+                   <b>Calculate Totals</b>
                     <strong style="display: none;">
                         <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
                         <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
@@ -104,7 +104,7 @@ require(['prototype'], function(){
 <?php else: ?>
     <div id="order-shipping-method-summary" class="order-shipping-method-summary">
         <a id="ship-method" href="#" onclick="order.loadShippingRates();return true" class="action-default">
-            <span><?= /* @escapeNotVerified */ __('Confirm Delivery Date') ?></span>
+            <span><?= /* @escapeNotVerified */ __('Calculate Grand Total') ?></span>
         </a>
         <input type="hidden" name="order[has_shipping]" value="" class="required-entry" />
     </div>
