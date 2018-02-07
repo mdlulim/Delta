@@ -21,7 +21,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
     <label for="delivery_date">Delivery Date:</label>
     <input type="text" class="form-control datepicker" name="delivery_date" id="delivery_date" 
-     value="<?php echo $defualt_delivery_date; ?>">
+     value="<?php echo $defualt_delivery_date; ?>" onclick="testFunction01()">
     <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>-->
 </div>
 
@@ -116,6 +116,9 @@ require(['prototype'], function(){
 </div>
 </div>
 <script>
+    function testFunction01() {
+        alert('SAAL SAAL SAAL');
+    }
     // $('.datepicker').datepicker({
     //     format: 'yyyy/mm/dd',
     //     //endDate: '-1d',
