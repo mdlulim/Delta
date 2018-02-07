@@ -52,20 +52,7 @@ class AdminOrderSimulator
             
             $company_data = $this->getCompanyData($this->magCustomerId);
 
-            $addressInfo=[
-                'shipping_address' =>[
-                       'firstname'    => $customer_data['firstname'], //address Details
-                       'lastname'     => $customer_data['lastname'],
-                               'street' => $company_data['street'],
-                               'city' => $company_data['city'],
-                       'country_id' => $company_data['country_id'],
-                       'region' => $company_data['region'],
-                       'postcode' => $company_data['postcode'],
-                       'telephone' => $company_data['telephone'],
-                       'fax' => '',
-                       'save_in_address_book' => 0
-                            ]
-           ];
+            $addressInfo= $this->setAddressInformation($customer_data, $company_data);
            
             $quote->getBillingAddress()->addData($addressInfo['shipping_address']);
             $quote->getShippingAddress()->addData($addressInfo['shipping_address']);
@@ -335,6 +322,24 @@ class AdminOrderSimulator
                 return $sessionItem;
             }
         }
+    }
+
+    public function setAddressInformation($customer_data, $company_data){
+        $addressInfo=[
+            'shipping_address' =>[
+                   'firstname'    => $customer_data['firstname'], //address Details
+                   'lastname'     => $customer_data['lastname'],
+                           'street' => $company_data['street'],
+                           'city' => $company_data['city'],
+                   'country_id' => $company_data['country_id'],
+                   'region' => $company_data['region'],
+                   'postcode' => $company_data['postcode'],
+                   'telephone' => $company_data['telephone'],
+                   'fax' => '',
+                   'save_in_address_book' => 0
+                        ]
+       ];
+       return $addressInfo;
     }
 }
 ?>
