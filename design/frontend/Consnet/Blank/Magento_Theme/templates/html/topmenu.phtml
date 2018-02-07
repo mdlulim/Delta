@@ -26,23 +26,29 @@ $om = \Magento\Framework\App\ObjectManager::getInstance();
 $helper = $om->create('Consnet\Api\Helper\Data'); 
 $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
 $quote = $om->get('\Magento\Checkout\Model\Session')->getQuote();
-$count = count($quote->getItemsCount());
- $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
+$count = 0;//count($quote->getItemsCount());
+foreach ($quote->getAllVisibleItems() as $items) {
+    $count = $count + 1;
+}
+//isset($_SESSION['kunnr']) && 
+
+$columnsLimit = $block->getColumnsLimit() ?: 0; ?>
 <?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
 
 <nav class="navigation" data-action="navigation">
     <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
         <?= /* @escapeNotVerified */ $_menu ?>
         <?= /* @escapeNotVerified */ $block->getChildHtml() ?>
-        <?php if(isset($_SESSION['kunnr']) && $count >0){ ?>
+        <?php if($count > 0){ ?>
         <li style="float:right; margin-top: 5px;" class="level0 nav-5 last level-top ui-menu-item" role="presentation">
             
-        <a id="ui-id-8" class="level-top ui-corner-all" tabindex="-1" role="menuitem">
-        Cart: <span id='itemcounter' class="counter-number"></span> items
+        <a class="level-top ui-corner-all" tabindex="-1" role="menuitem">
+                Cart: 
+                <span id='itemcounter' class="counter-number"></span> 
+                items
                 <button type="button" class="action primary checkout"  id="proceed_to_checkout" style="">
                     CHECKOUT 
-                </button>
-               
+                </button>               
             </a>
         </li>
         <?php } ?>
@@ -56,6 +62,7 @@ $count = count($quote->getItemsCount());
 <script type="text/javascript">
 
 var proceed = document.getElementById('proceed_to_checkout');
+if(proceed != null){
     proceed.addEventListener("click", function () {
         var span = document.getElementById('itemcounter');
         if(span.textContent == null || span.textContent == '' || span.textContent == 'underfined'){
@@ -69,4 +76,5 @@ var proceed = document.getElementById('proceed_to_checkout');
             });*/
         }
     });
+}    
 </script>
