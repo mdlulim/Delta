@@ -116,11 +116,22 @@ require(['prototype'], function(){
 </div>
 </div>
 <script>
-    $('.datepicker').datepicker({
-        format: 'yyyy/mm/dd',
-        //endDate: '-1d',
-        autoclose: true
+    // Dynamicaly load the datepicker css dependency
+    $(document).ready(function(){
+        $("head").append("<link>");
+        var css = $("head").children(":last");
+        css.attr({
+            rel:  "stylesheet",
+            type: "text/css",
+            href: "../../../../../pub/static/frontend/Consnet/Blank/en_US/plugins/datepicker/datepicker3.css"
+        });
     });
+
+    // $('.datepicker').datepicker({
+    //     format: 'yyyy/mm/dd',
+    //     //endDate: '-1d',
+    //     autoclose: true
+    // });
   /*function confirmDate(){
 
     var delivery_date = document.getElementById('delivery_date').value;
