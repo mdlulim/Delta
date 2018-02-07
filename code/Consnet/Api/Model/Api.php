@@ -10,6 +10,9 @@ class Api extends \Magento\Framework\Model\AbstractModel
   public function __construct() {
       
 
+
+
+    
    }
 
     public function getClass($url) {
@@ -23,7 +26,7 @@ class Api extends \Magento\Framework\Model\AbstractModel
         $result = json_decode($result, 1);
         curl_close($ch);
  }
- 
+
 
  protected function authApi() {
   $userData = array("username" => "admin", "password" => "Consnet01");
