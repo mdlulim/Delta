@@ -350,15 +350,15 @@ class AdminOrderSimulator
         foreach($quote->getAllVisibleItems() as $item){
             $price_per_item =  null;
             $subtotal = array();
-            $price_per_item = 0.0;
+            $price_per_item = 0;
             $item->setPrice($price_per_item);		
             $item->setCustomPrice($price_per_item);
             $item->setOriginalCustomPrice($price_per_item);
-            $item->setRowTotal(0.0);
+            $item->setRowTotal(0);
             $item->getProduct()->setIsSuperMode(true);
 
-            $totalTax = 0.0; 
-            $total = 0.0;
+            $totalTax = 0; 
+            $total = 0;
             
             $this->showItemMessage($item->getName(), $item->getSku(), 
             $item->getQty(), 'success');            
