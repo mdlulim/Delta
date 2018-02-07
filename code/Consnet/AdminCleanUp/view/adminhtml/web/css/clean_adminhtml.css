@@ -137,6 +137,7 @@ note needed are hidden using css
   background:url(../img/Call-Centre-img-royalty-free.jpg) no-repeat;
   background-size:cover;
   width: 100%;
+  height: 400px;
 }
 
 #admin-dashboard .jumbotron{
