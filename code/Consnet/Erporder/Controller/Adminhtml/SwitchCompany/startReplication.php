@@ -127,6 +127,8 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             $this->init_repl = null;
         }
 
+        
+
         $dataExist = $this->getTable('ERP_CUSTOMER');
 
         if(count( $dataExist) > 0 ){
@@ -135,7 +137,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             $this->deleteTable('ERP_CONTACT');
             $this->deleteTable('ERP_ORG');
             $this->deleteTable('ERP_ADDRESS');
-            
+
 
             $dataExist = $this->getTable('ERP_CUSTOMER');
            }

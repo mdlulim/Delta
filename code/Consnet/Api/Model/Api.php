@@ -8,11 +8,8 @@ class Api extends \Magento\Framework\Model\AbstractModel
 
 
   public function __construct() {
-      
-
-
-
     
+
    }
 
     public function getClass($url) {
