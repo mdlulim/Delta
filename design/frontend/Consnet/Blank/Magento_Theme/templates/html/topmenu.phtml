@@ -25,11 +25,27 @@
 $om = \Magento\Framework\App\ObjectManager::getInstance();
 $helper = $om->create('Consnet\Api\Helper\Data'); 
 $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
-$quote = $om->get('\Magento\Checkout\Model\Session')->getQuote();
-$count = 0;//count($quote->getItemsCount());
-foreach ($quote->getAllVisibleItems() as $items) {
-    $count = $count + 1;
+
+//$quote = $om->create('\Magento\Checkout\Model\Cart')->getQuote();
+$customerModel = $om->create('Magento\Customer\Model\Customer')->setWebsiteId(0);
+//$customerModel
+$count = 0;
+if(isset($_SESSION['email'])){
+    $customerSession = $om->get('Magento\Customer\Model\Session');
+    //$companydata = $block->getCompanyData($customerSession->getId());
+    //var_dump($customerSession->getId());
+    $customer = $customerModel->load($customerSession->getId());//loadByEmail($_SESSION['email']);
+    $quoteFactory = $om->create('\Magento\Quote\Model\QuoteFactory');
+    $quote = $quoteFactory->create()->loadByCustomer($customer);
+    //var_dump($customer->getId());
+    //$quote = $om->get('\Magento\Checkout\Model\Session')->getQuote();
+    //count($quote->getItemsCount());
+    foreach ($quote->getAllVisibleItems() as $items) {
+        $count = $count + 1;
+    }//var_dump($quote->getId());
 }
+
+//var_dump($count);
 //isset($_SESSION['kunnr']) && 
 
 $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
