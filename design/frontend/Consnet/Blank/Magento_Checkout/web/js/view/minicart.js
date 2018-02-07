@@ -195,7 +195,10 @@ define([
                 total += items[i].qty;
             }
             console.log(total);
-            document.getElementById('itemcounter').textContent = total;
+            var itemcounter = document.getElementById('itemcounter');
+            if(itemcounter != null){
+                itemcounter.textContent = total;
+            }
             return parseInt(items.length, 10);
         }
     });
