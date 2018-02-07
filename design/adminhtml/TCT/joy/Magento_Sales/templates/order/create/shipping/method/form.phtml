@@ -21,7 +21,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
     <label for="delivery_date">Delivery Date:</label>
     <input type="text" class="form-control datepicker" name="delivery_date" id="delivery_date" 
-     value="<?php echo $defualt_delivery_date; ?>" onclick="testFunction01()">
+     value="<?php echo $defualt_delivery_date; ?>">
     <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>-->
 </div>
 
@@ -116,9 +116,17 @@ require(['prototype'], function(){
 </div>
 </div>
 <script>
-    function testFunction01() {
-        alert('SAAL SAAL SAAL');
-    }
+    // Dynamicaly load the datepicker css dependency
+    $(document).ready(function(){
+        $("head").append("<link>");
+        var css = $("head").children(":last");
+        css.attr({
+            rel:  "stylesheet",
+            type: "text/css",
+            href: "../../../../../pub/static/frontend/Consnet/Blank/en_US/plugins/datepicker/datepicker3.css"
+        });
+    });
+
     // $('.datepicker').datepicker({
     //     format: 'yyyy/mm/dd',
     //     //endDate: '-1d',
