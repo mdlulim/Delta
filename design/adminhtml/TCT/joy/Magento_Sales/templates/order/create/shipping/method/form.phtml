@@ -115,7 +115,7 @@ require(['prototype'], function(){
     <input type="text" name="quote_number" id="quote_number" value="<?php echo $block->getQuote()->getId(); ?>"/>
 </div>
 </div>
-<!-- <script type="text/javascript" src="../../../../app/design/frontend/Consnet/Blank/Magento_Theme/web/plugins/datepicker/bootstrap-datepicker.js"></script> -->
+<script type="text/javascript" src="../../../../app/design/frontend/Consnet/Blank/Magento_Theme/web/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- deltaqa01\app\design\frontend\Consnet\Blank\Magento_Theme\web\plugins\datepicker\datepicker3.css -->
 <script>
 
@@ -129,15 +129,15 @@ require(['prototype'], function(){
     }
 
     // Dynamicaly load the datepicker css dependency
-    // $(document).ready(function(){
-    //     $("head").append("<link>");
-    //     var css = $("head").children(":last");
-    //     css.attr({
-    //         rel:  "stylesheet",
-    //         type: "text/css",
-    //         href: getSiteUrl() + "pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css"
-    //     });
-    // });
+    $(document).ready(function(){
+        $("head").append("<link>");
+        var css = $("head").children(":last");
+        css.attr({
+            rel:  "stylesheet",
+            type: "text/css",
+            href: "../../../../app/design/frontend/Consnet/Blank/Magento_Theme/web/plugins/datepicker/datepicker3.css"
+        });
+    });
 
 //../../../../../app/design/frontend/Consnet/Blank/Magento_Theme/web/plugins/datepicker/datepicker3.css
 //../../../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css
