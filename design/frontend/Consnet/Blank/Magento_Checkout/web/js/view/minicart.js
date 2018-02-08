@@ -190,11 +190,11 @@ define([
             if(parseInt(items.length, 10) == 0){
                 console.log('hide');
                 if(liCheckout != null){
-                    liCheckout.addClass('hidden');
+                    liCheckout.style.display = 'none';
                 }
             }else{
                 if(liCheckout != null){
-                    liCheckout.removeClass('hidden');   
+                    liCheckout.style.display = 'block';  
                 }
             }
             console.log(items);
