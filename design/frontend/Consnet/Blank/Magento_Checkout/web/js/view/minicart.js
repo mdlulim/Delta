@@ -195,13 +195,19 @@ define([
             }
             if(total == 0){
                 console.log('hide');
-                if(liCheckout != null){
+                jQuery(document).ready(function (){
+                    jQuery('liCheckout').style.display = 'none';
+                });
+                /*if(liCheckout != null){
                     liCheckout.style.display = 'none';
-                }
+                }*/
             }else{
-                if(liCheckout != null){
+                jQuery(document).ready(function (){
+                    jQuery('liCheckout').style.display = 'block';
+                });
+                /*if(liCheckout != null){
                     liCheckout.style.display = 'block';  
-                }
+                }*/
             }
             console.log(total);
             var itemcounter = document.getElementById('itemcounter');
