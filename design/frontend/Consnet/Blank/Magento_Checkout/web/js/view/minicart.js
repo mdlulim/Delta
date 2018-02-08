@@ -187,7 +187,13 @@ define([
         getCartLineItemsCount: function () {
             var items = this.getCartParam('items') || [];
             var liCheckout = document.getElementById('liCheckout');
-            if(parseInt(items.length, 10) == 0){
+            
+            console.log(items);
+            var total = 0;
+            for (var i = 0; i < items.length; i++) {
+                total += items[i].qty;
+            }
+            if(total == 0){
                 console.log('hide');
                 if(liCheckout != null){
                     liCheckout.style.display = 'none';
@@ -196,11 +202,6 @@ define([
                 if(liCheckout != null){
                     liCheckout.style.display = 'block';  
                 }
-            }
-            console.log(items);
-            var total = 0;
-            for (var i = 0; i < items.length; i++) {
-                total += items[i].qty;
             }
             console.log(total);
             var itemcounter = document.getElementById('itemcounter');
