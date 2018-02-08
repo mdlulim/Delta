@@ -20,7 +20,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 
 <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
     <label for="delivery_date">Delivery Date:</label>
-    <input type="date" class="form-control" name="delivery_date" id="delivery_date" 
+    <input type="text" class="form-control datepicker" name="delivery_date" id="delivery_date" 
      value="<?php echo $defualt_delivery_date; ?>">
     <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>-->
 </div>
@@ -115,6 +115,7 @@ require(['prototype'], function(){
     <input type="text" name="quote_number" id="quote_number" value="<?php echo $block->getQuote()->getId(); ?>"/>
 </div>
 </div>
+<script type="text/javascript" src="../../../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script>
     // Dynamicaly load the datepicker css dependency
     $(document).ready(function(){
@@ -123,15 +124,19 @@ require(['prototype'], function(){
         css.attr({
             rel:  "stylesheet",
             type: "text/css",
-            href: "../../../../../pub/static/frontend/Consnet/Blank/en_US/plugins/datepicker/datepicker3.css"
+            href: "../../../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css"
         });
     });
 
-    // $('.datepicker').datepicker({
-    //     format: 'yyyy/mm/dd',
-    //     //endDate: '-1d',
-    //     autoclose: true
-    // });
+    // Initialise the date picker field
+    $(function() {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            //endDate: '-1d',
+            autoclose: true
+        });
+    });
+    
   /*function confirmDate(){
 
     var delivery_date = document.getElementById('delivery_date').value;
