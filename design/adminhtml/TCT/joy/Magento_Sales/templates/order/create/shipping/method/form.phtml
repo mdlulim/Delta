@@ -20,7 +20,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
     <label for="delivery_date">Delivery Date:</label>
     <input type="text" class="form-control datepicker" name="delivery_date" id="delivery_date" 
-     value="<?php echo $defualt_delivery_date; ?>">
+     value="<?php echo $defualt_delivery_date; ?>" style="display: block !important;">
     <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>-->
 </div>
 
@@ -134,13 +134,13 @@ require(['prototype'], function(){
                 });
 
                 // Initialise the date picker field
-                // $(function() {
-                //     $('.datepicker').datepicker({
-                //         format: 'yyyy-mm-dd',
-                //         //endDate: '-1d',
-                //         autoclose: true
-                //     });
-                // });
+                $(function() {
+                    $('.datepicker').datepicker({
+                        format: 'yyyy-mm-dd',
+                        //endDate: '-1d',
+                        autoclose: true
+                    });
+                });
             });
         }
     );
