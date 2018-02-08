@@ -129,15 +129,22 @@ require(['prototype'], function(){
     }
 
     // Dynamicaly load the datepicker css dependency
-    $(document).ready(function(){
-        $("head").append("<link>");
-        var css = $("head").children(":last");
-        css.attr({
-            rel:  "stylesheet",
-            type: "text/css",
-            href: "../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css"
-        });
-    });
+    require(
+        [
+            'jquery'
+        ],
+        function($) {
+            $(function() {
+                $("head").append("<link>");
+                var css = $("head").children(":last");
+                css.attr({
+                    rel:  "stylesheet",
+                    type: "text/css",
+                    href: "../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css"
+                });
+            });
+        }
+    );
 
 //../../../../../app/design/frontend/Consnet/Blank/Magento_Theme/web/plugins/datepicker/datepicker3.css
 //../../../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css
