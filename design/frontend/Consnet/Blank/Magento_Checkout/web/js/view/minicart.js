@@ -186,8 +186,16 @@ define([
          */
         getCartLineItemsCount: function () {
             var items = this.getCartParam('items') || [];
+            var liCheckout = document.getElementById('liCheckout');
             if(items.length == 0){
                 console.log('hide');
+                if(liCheckout != null){
+                    liCheckout.addClass('hidden');
+                }
+            }else{
+                if(liCheckout != null){
+                    liCheckout.removeClass('hidden');   
+                }
             }
             console.log(items);
             var total = 0;
@@ -196,6 +204,7 @@ define([
             }
             console.log(total);
             var itemcounter = document.getElementById('itemcounter');
+            
             if(itemcounter != null){
                 itemcounter.textContent = total;
             }
