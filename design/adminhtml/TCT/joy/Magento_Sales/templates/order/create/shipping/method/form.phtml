@@ -114,8 +114,9 @@ require(['prototype'], function(){
     <input type="text" name="quote_number" id="quote_number" value="<?php echo $block->getQuote()->getId(); ?>"/>
 </div>
 </div>
+
+<!-- load the bootstrap datepicker js dependency -->
 <script type="text/javascript" src="../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- deltaqa01\app\design\frontend\Consnet\Blank\Magento_Theme\web\plugins\datepicker\datepicker3.css -->
 
 <script>
     require(
@@ -137,21 +138,18 @@ require(['prototype'], function(){
                 $(function() {
                     $('.datepicker').datepicker({
                         format: 'yyyy-mm-dd',
-                        //endDate: '-1d',
+                        startDate: '+1d',
                         autoclose: true
                     });
                 });
 
-                // force the input not to hide
+                // [Work Around] force the input not to disappear after the user has changed the date.
                 $( "#delivery_date" ).change(function() {
                     $('#delivery_date').style('display', 'block !important');
                 });
             });
         }
     );
-
-//../../../../../app/design/frontend/Consnet/Blank/Magento_Theme/web/plugins/datepicker/datepicker3.css
-//../../../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css
     
   /*function confirmDate(){
 
