@@ -187,7 +187,7 @@ define([
         getCartLineItemsCount: function () {
             var items = this.getCartParam('items') || [];
             var liCheckout = document.getElementById('liCheckout');
-            if(items.length == 0){
+            if(parseInt(items.length, 10) == 0){
                 console.log('hide');
                 if(liCheckout != null){
                     liCheckout.addClass('hidden');
