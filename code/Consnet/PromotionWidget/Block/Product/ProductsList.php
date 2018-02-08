@@ -27,7 +27,7 @@ class ProductsList extends \Magento\CatalogWidget\Block\Product\ProductsList
            return "there is no promotions for this customer";
        }else{
 
-           if(! is_array ($tab_result->ExPromoList->item)) {
+           if(! is_array ( $productsIds)) {
             return  $collection->addAttributeToFilter('sku' , productsIds[0] ) ;
            }
 
