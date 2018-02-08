@@ -16,7 +16,6 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 <div class="bootstrap-iso">
 <h3>Calculate Totals</h3>
 <link rel="stylesheet" type="text/css" href="<?php echo '../../../../../resources/bootstrap/css/bootstrap-iso.css';?>"/>
-<!-- <link rel="stylesheet" type="text/css" href="<?php //echo '../../../../../pub/static/frontend/Consnet/Blank/en_US/plugins/datepicker/datepicker3.css';?>"/> -->
 
 <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
     <label for="delivery_date">Delivery Date:</label>
@@ -117,24 +116,15 @@ require(['prototype'], function(){
 </div>
 <script type="text/javascript" src="../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- deltaqa01\app\design\frontend\Consnet\Blank\Magento_Theme\web\plugins\datepicker\datepicker3.css -->
+
 <script>
-
-    // heleper functions
-    function getSiteUrl() {
-        var slashIndex = getNthPosition(window.location.href, '/', 4);
-        return window.location.href.substring(0, slashIndex) + '/';
-    }
-    function getNthPosition(string, subString, occurrence) {
-        return string.split(subString, occurrence).join(subString).length;
-    }
-
-    // Dynamicaly load the datepicker css dependency
     require(
         [
             'jquery'
         ],
         function($) {
             $(function() {
+                // Dynamicaly load the datepicker css dependency
                 $("head").append("<link>");
                 var css = $("head").children(":last");
                 css.attr({
@@ -142,21 +132,21 @@ require(['prototype'], function(){
                     type: "text/css",
                     href: "../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css"
                 });
+
+                // Initialise the date picker field
+                $(function() {
+                    $('.datepicker').datepicker({
+                        format: 'yyyy-mm-dd',
+                        //endDate: '-1d',
+                        autoclose: true
+                    });
+                });
             });
         }
     );
 
 //../../../../../app/design/frontend/Consnet/Blank/Magento_Theme/web/plugins/datepicker/datepicker3.css
 //../../../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css
-
-    // Initialise the date picker field
-    // $(function() {
-    //     $('.datepicker').datepicker({
-    //         format: 'yyyy-mm-dd',
-    //         //endDate: '-1d',
-    //         autoclose: true
-    //     });
-    // });
     
   /*function confirmDate(){
 
