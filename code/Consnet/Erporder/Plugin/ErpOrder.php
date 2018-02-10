@@ -402,6 +402,7 @@ class ErpOrder
             $this->erpOrderId = 0;
             $this->erpOrderCreated = 0;
             $this->messageManager->addSuccessMessage("Soap call error".$e->getMessage());
+            return null;
         }   
     }
 
