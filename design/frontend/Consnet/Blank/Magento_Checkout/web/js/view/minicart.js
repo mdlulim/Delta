@@ -186,7 +186,7 @@ define([
          */
         getCartLineItemsCount: function () {
             var items = this.getCartParam('items') || [];
-            var liCheckout = document.getElementById('liCheckout');
+            /*var liCheckout = document.getElementById('liCheckout');
             
             console.log(items);
             var total = 0;
@@ -196,25 +196,25 @@ define([
             if(total == 0){
                 console.log('hide');
                 jQuery(document).ready(function (){
-                    jQuery('liCheckout').style.display = 'none';
+                    jQuery('#liCheckout').style.display = 'none';
                 });
-                /*if(liCheckout != null){
+                if(liCheckout != null){
                     liCheckout.style.display = 'none';
-                }*/
+                }
             }else{
                 jQuery(document).ready(function (){
-                    jQuery('liCheckout').style.display = 'block';
+                    jQuery('#liCheckout').style.display = 'block';
                 });
-                /*if(liCheckout != null){
+                if(liCheckout != null){
                     liCheckout.style.display = 'block';  
-                }*/
+                }
             }
             console.log(total);
             var itemcounter = document.getElementById('itemcounter');
             
             if(itemcounter != null){
                 itemcounter.textContent = total;
-            }
+            }*/
             return parseInt(items.length, 10);
         }
     });

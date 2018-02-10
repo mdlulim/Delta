@@ -22,9 +22,9 @@
 
 </style>
 <?php
-$om = \Magento\Framework\App\ObjectManager::getInstance();
+/*$om = \Magento\Framework\App\ObjectManager::getInstance();
 $helper = $om->create('Consnet\Api\Helper\Data'); 
-$NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
+$NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');*/
 
 /*//$quote = $om->create('\Magento\Checkout\Model\Cart')->getQuote();
 $customerModel = $om->create('Magento\Customer\Model\Customer')->setWebsiteId(0);
@@ -55,9 +55,9 @@ $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
     <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
         <?= /* @escapeNotVerified */ $_menu ?>
         <?= /* @escapeNotVerified */ $block->getChildHtml() ?>
-        <li id='liCheckout' style="float:right; margin-top: 4px; display:none;" class="level0 nav-5 last level-top ui-menu-item hidden" role="presentation">
+        <!--<li id='liCheckout' style="float:right; margin-top: 4px; display:none;" class="level0 nav-5 last level-top ui-menu-item hidden" role="presentation">-->
             
-        <a class="level-top ui-corner-all" tabindex="-1" role="menuitem">
+        <!--<a class="level-top ui-corner-all" tabindex="-1" role="menuitem">
                 Cart: 
                 <span id='itemcounter' class="counter-number"></span> 
                 items
@@ -65,17 +65,17 @@ $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
                     CHECKOUT 
                 </button>               
             </a>
-        </li>
+        </li>-->
     </ul>
 </nav>
 
-<?php echo "<form id='viewCartForm' action='http://".$NAMESPACE_ID."/erporder/Index/Index' method='post'>"; ?>
+<!--<?php echo "<form id='viewCartForm' action='http://".$NAMESPACE_ID."/erporder/Index/Index' method='post'>"; ?>
     <input type="text" id="view" value='1' class="hidden"/>
-</form>
+</form>-->
 
 <script type="text/javascript">
 
-var proceed = document.getElementById('proceed_to_checkout');
+/*var proceed = document.getElementById('proceed_to_checkout');
 if(proceed != null){
     proceed.addEventListener("click", function () {
         var span = document.getElementById('itemcounter');
@@ -83,12 +83,12 @@ if(proceed != null){
             console.log(span.textContent);
         }else{
             window.location = "<?php echo "http://".$NAMESPACE_ID."/checkout/ ";?>";
-            /*require(['jquery'], function($){
+            require(['jquery'], function($){
                 $('viewCartForm').submit(function (event){
                     console.log();
                 });
-            });*/
+            });
         }
     });
-}    
+}*/    
 </script>
