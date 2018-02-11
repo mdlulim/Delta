@@ -149,13 +149,15 @@ require(['prototype'], function(){
                 });
 
                 //hide the grand total section if its less than 0
-                showGrandTotalSection();
+                var grandTotal = $('#delTolal > table.admin__table-secondary > tr:last > td:last > strong > span.price').html().substr(1);
+                console.log('grand total = ' + grandTotal);
+                //showGrandTotalSection();
             });
 
             // function to show/hide totals section if the grand total is > 0
             function showGrandTotalSection() {
-                var grandTotal = $('#delTolal > table.admin__table-secondary > tr:last > td:last > strong > span.price').html().substr(1);
-                console.log('grand total = ' + grandTotal);
+                // var grandTotal = $('#delTolal > table.admin__table-secondary > tr:last > td:last > strong > span.price').html().substr(1);
+                // console.log('grand total = ' + grandTotal);
                 // grandTotal = parseFloat(grandTotal);
                 // if(grandTotal > 0) {
                 //     $('#delTolal').show();
