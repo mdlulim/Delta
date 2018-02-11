@@ -140,7 +140,34 @@ class AdminOrderSimulator
                                 $this->licenseCheck($quote);
                             }
                         }else{
-                            return $this->OfflineECCPricing($quote);
+                            //return $this->OfflineECCPricing($quote);
+                            $totalTax = 0;
+                            $total = 0;		        
+                            foreach($quote->getAllVisibleItems() as $item){
+                                $price_per_item =  null;
+                                $subtotal = array();
+                                $price_per_item = 0;
+                                $item->setPrice($price_per_item);		
+                                $item->setCustomPrice($price_per_item);
+                                $item->setOriginalCustomPrice($price_per_item);
+                                $item->setRowTotal(0);
+                                $item->getProduct()->setIsSuperMode(true);
+                    
+                                $totalTax = 0; 
+                                $total = 0;
+                                
+                                $this->showItemMessage($item->getName(), $item->getSku(), 
+                                $item->getQty(), 'success');            
+                            }
+                            $quote->setTaxAmount($totalTax);
+                            $quote->setSubtotal($total);
+                            $quote->setGrandTotal(($total + $totalTax));
+                            if(method_exists($quote->setTotalsCollectedFlag(true), 'collectTotals')){
+                                $quote->setTotalsCollectedFlag(true)->collectTotals();
+                                $quote->collectTotals();
+                            }
+                    
+                            return $quote;
                         }
                     }
                  }
