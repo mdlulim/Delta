@@ -43,7 +43,11 @@ action.primary {
     border: 1px solid #1979c3;
     color: #fff;
 }
-
+#ui-id-8{
+    margin-left: 1080%;
+    background-color: #417cf3;
+    border-radius: 2px;
+  }
 .blog-small { margin-bottom: 50px; }
 
 .blog-small .post-title,
