@@ -47,6 +47,9 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     protected $fileLocation;
     protected $soapClient2;
 
+    protected $admin_user ;
+    protected $admin_pass;
+
     /**
      * @var \Magento\Company\Model\UserRoleFactory
      */
@@ -119,6 +122,8 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         $this->next_batch_min = $helper->getGeneralConfig('last_row_text');
         $this->NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
         $this->fileLocation = $helper->getGeneralConfig('customer_file_location_text');
+        $this->admin_user  =  $helper->getGeneralConfig('admin_user');
+        $this->admin_pass  =  $helper->getGeneralConfig('admin_password');
 
 
         if ($this->init_repl == 'X') {
@@ -254,7 +259,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     
 
     protected function authApi() {
-        $userData = array("username" => "admin", "password" => "Consnet01");
+        $userData = array("username" => $this->admin_user , "password" => $this->admin_pass );
         $ch = curl_init( $this->NAMESPACE_ID . "/index.php/rest/V1/integration/admin/token");
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
@@ -262,6 +267,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Content-Lenght: " . strlen(json_encode($userData))));
 
         $this->token = curl_exec($ch);
+        
     }
 
 
@@ -563,13 +569,13 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
     }
 
-    public function joinTable($table,$key,$val){
+    public function joinTable($table,$key,$val , $and = '' ){
 
-      $sql  = 'SELECT * FROM '.$table.' WHERE `'.$key.'` = "'.$val.'"';
+      $sql  = 'SELECT * FROM '.$table.' WHERE `'.$key.'` = "'.$val.'" '. $and;
 
       $res =  $this->_connection->fetchAll($sql);
       if(count($res) > 0 ){
-          return $res;
+          return $res[0];
       }
       return  false;
    }
@@ -600,6 +606,22 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     public function createAdminUsers() {
 
         $users = $this->getTable('ERP_CONTACT');
+      
+        $roleId =   0;
+
+        $sql = "SELECT * FROM `authorization_role` WHERE `role_name` = 'sales_rep'  ";
+        $roles = $this->_connection->fetchAll($sql);
+
+        foreach($roles as $role ){
+            $roleId = $role['role_id'];
+
+        }
+        if($roleId == 0 ){
+
+            var_dump('Please maintain admin roles for users');
+            die();
+         
+         }
 
         if(!$users){
         foreach ($users as $user) {
@@ -624,7 +646,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                     $admin->setFirstname($this->cleanStr($user['NAME1']));
                     $admin->setLastname($this->cleanStr($user['NAMEV']));
                     $admin->setIsActive(1);
-                    $admin->setRoleId(2);
+                    $admin->setRoleId($roleId);
                     $admin->setEmail($email);
                     try{
                     $admin->save();
@@ -642,7 +664,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                     $admin->setEmail($email);
                     $admin->setPassword('Consnet01');
                     $admin->setIsActive(1);
-                    $admin->setRoleId(2);
+                    $admin->setRoleId($roleId);
                     try{
                         $admin->save();
                         }catch(\Exception $e)
@@ -667,29 +689,52 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
             $loopcount++;
 
+            //get ompany address
+            $address = $this->joinTable('ERP_ADDRESS','ADDRNUMBER',$erp_customer['ADRNR']) ;
+            $_cust_email = '';
 
-            $_cust_email = $erp_customer['KUNNR'] . self::COMPANY_EMAIL;
+            //check if email is used by contact person
+            if(isset($address['NAME4']) ){
+                 $user = $this->joinTable('ERP_ADDRESS','NAME4',$address['NAME4'] ,  'AND CLIENT = ""' ) ;
+
+                    if(isset($user['NAME4']))
+                    {  
+                        //var_dump($user['NAME4']);
+                        $address['NAME4']  = $erp_customer['KUNNR'].SELF::COMPANY_EMAIL ;
+                    }
+                     $_cust_email = $address['NAME4'];
+           }else{
+
+            $_cust_email =  $erp_customer['KUNNR'].SELF::COMPANY_EMAIL ;
             $_cust_email = $this->cleanStr($_cust_email);
+           }
+
+           if (!filter_var($_cust_email, FILTER_VALIDATE_EMAIL)) {
+              $_cust_email  =  $erp_customer['KUNNR'].SELF::COMPANY_EMAIL ;
+           }
+
+           
 
             //get business data
             $extededAttr = $this->joinTable('ERP_ORG','KUNNR',$erp_customer['KUNNR']);
-
+            
             if (!$extededAttr) {
                 $cgroup = $this->getCustomerGroup($extededAttr['VKORG']);
             }else {
                 $cgroup = 1;
             }
 
-           // $cgroup = $this->getCustomerGroup($extededAttr['VKORG']);
-
-
+    
             $companyRepo = $this->objectManager->get('\Magento\Company\Model\CompanyRepository');
             $comp_id = $this->_connection->fetchRow("SELECT * FROM company  WHERE company_email = '" . $_cust_email . "' ");
+            
             $company = $this->companyFactory->create();
             $company->load($comp_id['entity_id']);
 
+            
+
             //get ompany address
-            $address = $this->joinTable('ERP_ADDRESS','ADDRNUMBER',$erp_customer['ADRNR']) ;
+           
             $salesuser = $this->getSalesRep($erp_customer['KONZS']) ;
 
 
@@ -734,36 +779,30 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                 $company->setSuperUserId($dummyUser);
                 $company->setSalesRepresentativeId($salesuser);
 
-                if (!$extededAttr) {
+                
 
-                    $company->setData('ZTERM', $erp_customer['KTOKD']);
-                    $company->setData('VKORG', $extededAttr['VKORG']);
-                    $company->setData('PARVW', $extededAttr['PARVW']);
-                    $company->setData('SPART', $extededAttr['SPART']);
-                    $company->setData('VTWEG', $extededAttr['VTWEG']);
-                    $company->setData('STP_ID',$extededAttr['KUNNR']);
-                    $company->setData('PLANT', $erp_customer['SORTL']);
-                    //GET AND SET  CUSTOMER GROUP
-                    //$company->setCustomerGroupId($this->getCustomerGroup($extededAttr['VKORG']));
-                    $company->save();
-                } else {
-
-                    $company->save();
-                }
-
+                $company->setData('ZTERM', $erp_customer['KTOKD']);
+                $company->setData('VKORG', $extededAttr['VKORG']);
+                $company->setData('PARVW', $extededAttr['PARVW']);
+                $company->setData('SPART', $extededAttr['SPART']);
+                $company->setData('VTWEG', $extededAttr['VTWEG']);
+                $company->setData('STP_ID',$extededAttr['KUNNR']);
+                $company->setData('PLANT', $erp_customer['SORTL']);
+                //GET AND SET  CUSTOMER GROUP
+                //$company->setCustomerGroupId($this->getCustomerGroup($extededAttr['VKORG']));
+                $company->save();
+               
                 $this->setCustomerAdmin($company->getId(),$dummyUser);
 
-                $creditRepo = $this->objectManager->create('\Magento\CompanyCredit\Model\CreditLimitRepository');
-                $credit = $this->objectManager->create('\Magento\CompanyCredit\Model\CreditLimit');
-                $credit->setCompanyId($company->getId());
-                if(!$credit->getId()){
-                    $credit->setCreditLimit(1);
-                    $credit->setExceedLimit(1);
-                    $credit->setCurrencyCode('USD');
-                    $creditRepo->save($credit);
-                    $_role = $this->createCompanyRole($company->getId());
-                    $cust_kunnr = $erp_customer['KUNNR'];
-                    }
+                $sql = "SELECT * FROM `company_credit` WHERE 	company_id = ".$company->getId();
+                $credit = $this->_connection->fetchAll($sql);
+                if( is_array($credit)){
+                    //credit exisit
+                 }else{
+                    $sql = "INSERT INTO `company_credit`( `company_id`, `credit_limit`, `balance`, `currency_code`, `exceed_limit`) VALUES (".$company->getId().",1,1,'USD',1)  ";
+                    $credit = $this->_connection->query($sql);
+
+                 }
 
                 $_role = $this->createCompanyRole($company->getId());
 
@@ -805,25 +844,18 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                 $company->setPostcode("99999");
                 $company->setTelephone($address['TEL_NUMBER']);
                 $company->setSalesRepresentativeId($salesuser);
-
-                if (!$extededAttr) {
-
-                                        $company->setData('ZTERM', $erp_customer['KTOKD']);
-                                        $company->setData('VKORG', $extededAttr['VKORG']);
-                                        $company->setData('PARVW', $extededAttr['PARVW']);
-                                        $company->setData('SPART', $extededAttr['SPART']);
-                                        $company->setData('VTWEG', $extededAttr['VTWEG']);
-                                        $company->setData('STP_ID',$extededAttr['KUNNR']);
-                                        $company->setData('PLANT', $erp_customer['SORTL']);
-                                        //GET AND SET  CUSTOMER GROUP
-                                       // $company->setCustomerGroupId($this->getCustomerGroup($extededAttr['VKORG']));
-                                        $company->save();
-                                    } else {
-
-                                        $company->save();
-                                    }
-
-
+               
+                $company->setData('ZTERM', $erp_customer['KTOKD']);
+                $company->setData('VKORG', $extededAttr['VKORG']);
+                $company->setData('PARVW', $extededAttr['PARVW']);
+                $company->setData('SPART', $extededAttr['SPART']);
+                $company->setData('VTWEG', $extededAttr['VTWEG']);
+                $company->setData('STP_ID',$extededAttr['KUNNR']);
+                $company->setData('PLANT', $erp_customer['SORTL']);
+                //GET AND SET  CUSTOMER GROUP
+               // $company->setCustomerGroupId($this->getCustomerGroup($extededAttr['VKORG']));
+                 $company->save();
+            
                 $this->setCustomerAdmin($company->getId(),$company->getSuperUserId());
                 try{
 
@@ -832,18 +864,22 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                 }catch(\Magento\Framework\Exception\NoSuchEntityException $ex){
                     $CreditData = null ;
                 }
-                $creditRepo = $this->objectManager->create('\Magento\CompanyCredit\Model\CreditLimitRepository')    ;
-                $credit = $this->objectManager->create('\Magento\CompanyCredit\Model\CreditLimit');
-                $credit->setCompanyId($company->getId());
-               
-                if(!(isset($CreditData))){
-                $credit->setCreditLimit(1);
-                $credit->setExceedLimit(1);
-                $credit->setCurrencyCode('USD');
-                $creditRepo->save($credit);
                 $_role = $this->createCompanyRole($company->getId());
                 $cust_kunnr = $erp_customer['KUNNR'];
-                }
+
+                $sql = "SELECT * FROM `company_credit` WHERE 	company_id = ".$company->getId();
+                $credit = $this->_connection->fetchAll($sql);
+                if( is_array($credit)){
+                    //credit exisit
+                 }else{
+                    $sql = "INSERT INTO `company_credit`( `company_id`, `credit_limit`, `balance`, `currency_code`, `exceed_limit`) VALUES (".$company->getId().",1,1,'USD',1)  ";
+                    $credit = $this->_connection->query($sql);
+
+                 }
+
+                
+              
+                
             }
 
             //var_dump( $company->getId());
@@ -896,14 +932,15 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
     public function createDummyAdminUser($name,$kunnr) {
 
-        $number = sprintf("%06d", mt_rand(1, 999999));
-        $number2 = sprintf("%04d", mt_rand(1, 999999));
+
 
         $email = $kunnr. self::COMPANYUSER_EMAIL;
 
 
         $websiteId = $this->storeManager->getWebsite()->getWebsiteId();
-        $customer = $this->customerFactory->create();
+        $customer = $this->customerFactory->create()->setWebsiteId($websiteId)->loadByEmail($email);
+
+        if(!$customer->getId()){
         $customer->setWebsiteId($websiteId);
         $customer->setEmail($email);
         $customer->setFirstname($name);
@@ -911,12 +948,16 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         $customer->setData('CONTACT_ID', $kunnr);
         $customer->save();
+        }
 
         return $customer->getId();
     }
 
     public function crearObject($url, $operation, $data, $log) {
+
+       
         $_result = null;
+        try{
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $operation);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -932,6 +973,9 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             // var_dump($data);
             // var_dump($_result);
         }
+    }catch(Exception $ex){
+        var_dump($ex->getMessage());
+    }
         return $_result;
     }
 
@@ -1015,6 +1059,8 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
     public function createCompanyUsers() {
 
+       
+
         $CONTACTS = $this->getTable('ERP_CONTACT');
         $loop_c = 0;
         $current_user_id = 0;
@@ -1043,12 +1089,21 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                     $contact['NAMEV'] = $contact['NAME1'];
                 }
 
-                $_cont_email = trim($contact['NAME1']) . trim($contact['NAMEV']) . self::CUSTOMER_EMAIL;
-                $_cont_email = $this->cleanStr($_cont_email);
+                $persn = $contact['UEPAR'];
+                
+                $address = $this->joinTable('ERP_ADDRESS','ADDRNUMBER',$persn) ;
+                $_cust_email = $address['NAME4'];
+               
+ 
+                $filePath = BP. '/var/log/replicatinlog.txt';
+                
+                $log  = fopen($filePath ,'a') or die('unable to open file');
+                fwrite($log,$_cust_email.': '.date('h:i:sa') ."\n");
+                fclose($log);
 
-                if (!filter_var($_cont_email, FILTER_VALIDATE_EMAIL)) {
-                    $_cont_email = trim($contact['PARNR']) . trim($contact['NAME1']) . self::CUSTOMER_EMAIL;
-                    $_cont_email = $this->cleanStr($_cont_email);
+
+                if (!filter_var($_cust_email, FILTER_VALIDATE_EMAIL)) {
+                   continue;
                 }
 
 
@@ -1056,7 +1111,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
                 $websiteId = $this->storeManager->getWebsite()->getWebsiteId();
                 $customer = $this->customerFactory->create();
-                $customer->setWebsiteId($websiteId)->loadByEmail($_cont_email);
+                $customer->setWebsiteId($websiteId)->loadByEmail($_cust_email);
 
                 $loop_c = $loop_c + 1;
                 $o_customer_Id = $customer->getId();
@@ -1069,7 +1124,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
                     $customer = $this->objectManager->create('\Magento\Customer\Api\CustomerRepositoryInterface')->getById($id);
                     $customer->setWebsiteId($websiteId);
-                    $customer->setEmail($_cont_email);
+                    $customer->setEmail($_cust_email);
                     $customer->setGroupId($company['customer_group_id']);
                     $customer->setFirstname($contact['NAME1']);
                     $customer->setLastname($contact['NAMEV']);
@@ -1134,13 +1189,19 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
                     $customer = $this->customerFactory->create();
                     $customer->setWebsiteId($websiteId);
-                    $customer->setEmail($_cont_email);
+                    $customer->setEmail($_cust_email);
                     $customer->setGroupId($company['customer_group_id']);
                     $customer->setFirstname($contact['NAME1']);
                     $customer->setLastname($contact['NAMEV']);
                     $customer->setData('CONTACT_ID', $contact['PARNR']);
                     $customer->setStoreId(1);
+
+                    try{
                     $id = $customer->save()->getId();
+                    }catch(\Magento\Framework\Exception\AlreadyExistsException $ex){
+                        var_dump($_cont_email);
+                        die();
+                    }
 
                     $customerExt = $customer->getExtensionAttributes();
 
@@ -1201,10 +1262,18 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     public function setCustomerAdmin($company,$customer)
     {
         $customer = $this->objectManager->create('\Magento\Customer\Api\CustomerRepositoryInterface')->getById($customer);
+
+       
         $customerExt = $customer->getExtensionAttributes();
+        //var_dump($customerExt->getCompanyAttributes()->getJobTitle());die();
+       // var_dump($customerExt);die();
         $repo = $this->objectManager->create('\Magento\Customer\Api\CustomerRepositoryInterface');
 
+    try{
+
         if ($customerExt == null) {
+
+            var_dump('in');die();
 
             $customerExt = $this->objectManager->create('\Magento\Customer\Api\Data\CustomerExtension');
             $customerCompanyExt = $this->objectManager->create('\Magento\Company\Api\Data\CompanyCustomerInterface');
@@ -1220,18 +1289,21 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         } else {
 
-            $customerExt = $this->objectManager->create('\Magento\Customer\Api\Data\CustomerExtension');
-            $customerCompanyExt = $this->objectManager->create('\Magento\Company\Api\Data\CompanyCustomerInterface');
+            // $customerExt = $this->objectManager->create('\Magento\Customer\Api\Data\CustomerExtension');
+            // $customerCompanyExt = $this->objectManager->create('\Magento\Company\Api\Data\CompanyCustomerInterface');
 
-            $customerCompanyExt->setCustomerId($customer);
-            $customerCompanyExt->setCompanyId($company);
-            $customerCompanyExt->setJobTitle("Company Admin");
-            $customerCompanyExt->setStatus(1);
-            $customerCompanyExt->setTelephone("000-000-0000");
-            $customerExt->setCompanyAttributes($customerCompanyExt);
-            $customer->setExtensionAttributes($customerExt);
-            $customer = $repo->save($customer);
+            // $customerCompanyExt->setCustomerId($customer);
+            // $customerCompanyExt->setCompanyId($company);
+            // $customerCompanyExt->setJobTitle("Company Admin");
+            // $customerCompanyExt->setStatus(1);
+            // $customerCompanyExt->setTelephone("000-000-0000");
+            // $customerExt->setCompanyAttributes($customerCompanyExt);
+            // $customer->setExtensionAttributes($customerExt);
+            // $customer = $repo->save($customer);
         }
+    }catch(\Magento\Framework\Exception\CouldNotSaveException $ex){
+        var_dump($ex->getMessage()); 
+    }
 
 
 

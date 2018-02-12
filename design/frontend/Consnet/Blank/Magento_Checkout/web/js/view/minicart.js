@@ -186,28 +186,35 @@ define([
          */
         getCartLineItemsCount: function () {
             var items = this.getCartParam('items') || [];
-            var liCheckout = document.getElementById('liCheckout');
-            if(items.length == 0){
-                console.log('hide');
-                if(liCheckout != null){
-                    liCheckout.addClass('hidden');
-                }
-            }else{
-                if(liCheckout != null){
-                    liCheckout.removeClass('hidden');   
-                }
-            }
+            /*var liCheckout = document.getElementById('liCheckout');
+            
             console.log(items);
             var total = 0;
             for (var i = 0; i < items.length; i++) {
                 total += items[i].qty;
+            }
+            if(total == 0){
+                console.log('hide');
+                jQuery(document).ready(function (){
+                    jQuery('#liCheckout').style.display = 'none';
+                });
+                if(liCheckout != null){
+                    liCheckout.style.display = 'none';
+                }
+            }else{
+                jQuery(document).ready(function (){
+                    jQuery('#liCheckout').style.display = 'block';
+                });
+                if(liCheckout != null){
+                    liCheckout.style.display = 'block';  
+                }
             }
             console.log(total);
             var itemcounter = document.getElementById('itemcounter');
             
             if(itemcounter != null){
                 itemcounter.textContent = total;
-            }
+            }*/
             return parseInt(items.length, 10);
         }
     });

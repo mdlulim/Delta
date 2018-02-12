@@ -20,7 +20,7 @@ $defualt_delivery_date = $defualt_delivery_date->format('Y-m-d');
 <div class="form-group"> <!-- onkeydown="return false" min="<?php echo $defualt_delivery_date; ?>"-->
     <label for="delivery_date">Delivery Date:</label>
     <input type="text" class="form-control datepicker" name="delivery_date" id="delivery_date" 
-     value="<?php echo $defualt_delivery_date; ?>" style="display: block !important;">
+     value="<?php echo $defualt_delivery_date; ?>">
     <!--<a <href="#" onclick="confirmDate();" id="conf_date" >Confirm date of delivery</a>-->
 </div>
 
@@ -103,7 +103,7 @@ require(['prototype'], function(){
     </div>
 <?php else: ?>
     <div id="order-shipping-method-summary" class="order-shipping-method-summary">
-        <a id="ship-method" href="#" onclick="order.loadShippingRates(); $('delTolal').style.display = 'block';    return true" class="action-default">
+        <a id="ship-method" href="#" onclick="order.loadShippingRates(); showGrandTotalSection(); return true" class="action-default">
             <span><?= /* @escapeNotVerified */ __('Calculate Grand Total') ?></span>
         </a>
         <input type="hidden" name="order[has_shipping]" value="" class="required-entry" />
@@ -114,8 +114,9 @@ require(['prototype'], function(){
     <input type="text" name="quote_number" id="quote_number" value="<?php echo $block->getQuote()->getId(); ?>"/>
 </div>
 </div>
-<script type="text/javascript" src="../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- deltaqa01\app\design\frontend\Consnet\Blank\Magento_Theme\web\plugins\datepicker\datepicker3.css -->
+
+<!-- load the bootstrap datepicker js dependency -->
+<script type="text/javascript" src="../../../../resources/plugins/datepicker/bootstrap-datepicker.js"></script>
 
 <script>
     require(
@@ -130,23 +131,40 @@ require(['prototype'], function(){
                 css.attr({
                     rel:  "stylesheet",
                     type: "text/css",
-                    href: "../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css"
+                    href: "../../../../resources/plugins/datepicker/datepicker3.css"
                 });
 
                 // Initialise the date picker field
                 $(function() {
                     $('.datepicker').datepicker({
                         format: 'yyyy-mm-dd',
-                        //endDate: '-1d',
+                        startDate: '+1d',
                         autoclose: true
                     });
                 });
+
+                // [Work Around] force the input not to dissappear after the user has changed the date.
+                $( "#delivery_date" ).change(function() {
+                    $('#delivery_date').style('display', 'block !important');
+                });
+
+                //hide the grand total section if its less than 0
+                showGrandTotalSection();
             });
+
+            // function to show/hide totals section if the grand total is > 0
+            function showGrandTotalSection() {
+                var grandTotal = $('#delTolal > table.admin__table-secondary > tbody > tr:last > td:last > strong > span.price').html().trim().substr(1);
+                //console.log('grand total = ' + grandTotal);
+                grandTotal = parseFloat(grandTotal);
+                if(grandTotal > 0) {
+                    $('#delTolal').show();
+                } else {
+                    $('#delTolal').hide();
+                }
+            }
         }
     );
-
-//../../../../../app/design/frontend/Consnet/Blank/Magento_Theme/web/plugins/datepicker/datepicker3.css
-//../../../../../pub/static/frontend/Consnet/Blank/en_US/Magento_Theme/plugins/datepicker/datepicker3.css
     
   /*function confirmDate(){
 
