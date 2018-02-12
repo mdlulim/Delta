@@ -4,9 +4,12 @@
  * See COPYING.txt for license details.
  */
 
+// style="<?php  $stMsg =  ( $block->renderTotals() > 0 ) ? 'display:block' : 'display:none' ; echo $stMsg ;  
+
+
 // @codingStandardsIgnoreFile
 ?>
-<div id="delTolal" style="<?php  echo ( ( $block->renderTotals() > 0 ) ? 'display:block' : 'display:none' )  ?>"> 
+<div id="delTolal"      <?php if ($block->renderTotals() < 0): ?> style="display: none;" <?php endif; ?>    > 
 <legend class="admin__legend" ><span><?php /* @escapeNotVerified */ echo __('Order Totals') ?></span></legend>
 <br>
 
