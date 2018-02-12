@@ -47,6 +47,9 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     protected $fileLocation;
     protected $soapClient2;
 
+    protected $admin_user ;
+    protected $admin_pass;
+
     /**
      * @var \Magento\Company\Model\UserRoleFactory
      */
@@ -119,6 +122,8 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         $this->next_batch_min = $helper->getGeneralConfig('last_row_text');
         $this->NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');
         $this->fileLocation = $helper->getGeneralConfig('customer_file_location_text');
+        $this->admin_user  =  $helper->getGeneralConfig('admin_user');
+        $this->admin_pass  =  $helper->getGeneralConfig('admin_password');
 
 
         if ($this->init_repl == 'X') {
@@ -254,7 +259,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     
 
     protected function authApi() {
-        $userData = array("username" => "admin", "password" => "Consnet01");
+        $userData = array("username" => $this->admin_user , "password" => $this->admin_pass );
         $ch = curl_init( $this->NAMESPACE_ID . "/index.php/rest/V1/integration/admin/token");
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
@@ -948,7 +953,10 @@ class startReplication extends \Magento\Framework\App\Action\Action {
     }
 
     public function crearObject($url, $operation, $data, $log) {
+
+       
         $_result = null;
+        try{
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $operation);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -964,6 +972,9 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             // var_dump($data);
             // var_dump($_result);
         }
+    }catch(Exception $ex){
+        var_dump($ex->getMessage());
+    }
         return $_result;
     }
 

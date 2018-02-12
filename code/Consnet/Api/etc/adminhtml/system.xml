@@ -58,6 +58,16 @@
                     <label>SAP  ECC RFC PASSWORD</label>
                     <comment>sap ecc rfc password  </comment>
                 </field>
+
+
+                <field id="admin_user" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Magnento Background Username </label>
+                    <comment>Magnento Background Username </comment>
+                </field>
+                <field id="admin_password" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Magnento Background User password</label>
+                    <comment>Magnento Background User password </comment>
+                </field>
             
                 <field id="replication_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Replication Wsdl </label>

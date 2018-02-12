@@ -5,7 +5,10 @@ namespace Consnet\Api\Model;
 
 class Api extends \Magento\Framework\Model\AbstractModel
 {
+ 
 
+  protected $admin_user ;
+  protected $admin_pass;
 
   public function __construct() {
     
@@ -16,7 +19,7 @@ class Api extends \Magento\Framework\Model\AbstractModel
 
         $token  = $this->authApi();
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->getNamespace().$url);
+        curl_setopt($ch, CURLOPT_URL, $this->getHelper()->getGeneralConfig('namespace_text').$url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer " . json_decode($token)));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER , true );
         $result = curl_exec($ch);
@@ -26,7 +29,8 @@ class Api extends \Magento\Framework\Model\AbstractModel
 
 
  protected function authApi() {
-  $userData = array("username" => "admin", "password" => "Consnet01");
+
+  $userData = array("username" => $this->getHelper()->getGeneralConfig('admin_user') , "password" => $this->getHelper()->getGeneralConfig('admin_pass') );
   $ch = curl_init( $this->getNamespace()."/index.php/rest/V1/integration/admin/token");
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
@@ -35,10 +39,10 @@ class Api extends \Magento\Framework\Model\AbstractModel
   $this->token = curl_exec($ch);
 }
 
-public function getNamespace(){
+public function getHelper(){
   $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
   $helper = $objectManager->create('Consnet\Api\Helper\Data');
-  return  $helper->getGeneralConfig('namespace_text');
+  return  $helper;
 }
   
 
