@@ -2,7 +2,7 @@
 <wsdl:documentation>
 <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl"/>
 </wsdl:documentation>
-<wsp:UsingPolicy wsdl:required="true"/>
+<wsp:UsingPolicy wsdl:required="false"/>
 <wsp:Policy wsu:Id="BN__ZZ_MAGENTO_BINDING">
 <wsp:ExactlyOne>
 <wsp:All>
@@ -329,7 +329,7 @@
 <wsdl:input>
 <wsoap12:body use="literal"/>
 </wsdl:input>
-<wsdl:output>
+<wsdl:output> 
 <wsoap12:body use="literal"/>
 </wsdl:output>
 </wsdl:operation>
