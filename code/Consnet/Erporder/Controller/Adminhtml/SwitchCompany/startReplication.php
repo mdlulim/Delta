@@ -267,6 +267,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Content-Lenght: " . strlen(json_encode($userData))));
 
         $this->token = curl_exec($ch);
+        
     }
 
 
