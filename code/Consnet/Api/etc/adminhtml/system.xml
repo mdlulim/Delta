@@ -61,12 +61,12 @@
 
 
                 <field id="admin_user" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Magnento Background Username </label>
-                    <comment>Magnento Background Username </comment>
+                    <label>Magento Background Username </label>
+                    <comment>Magento Background Username </comment>
                 </field>
                 <field id="admin_password" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Magnento Background User password</label>
-                    <comment>Magnento Background User password </comment>
+                    <label>Magento Background User password</label>
+                    <comment>Magento Background User password </comment>
                 </field>
             
                 <field id="replication_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">

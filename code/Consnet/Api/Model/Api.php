@@ -30,8 +30,8 @@ class Api extends \Magento\Framework\Model\AbstractModel
 
  protected function authApi() {
 
-  $userData = array("username" => $this->getHelper()->getGeneralConfig('admin_user') , "password" => $this->getHelper()->getGeneralConfig('admin_pass') );
-  $ch = curl_init( $this->getNamespace()."/index.php/rest/V1/integration/admin/token");
+  $userData = array("username" => $this->getHelper()->getGeneralConfig('admin_user') , "password" => $this->getHelper()->getGeneralConfig('admin_password') );
+  $ch = curl_init(  $this->getHelper()->getGeneralConfig('namespace_text')."/index.php/rest/V1/integration/admin/token");
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
