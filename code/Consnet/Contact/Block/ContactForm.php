@@ -85,15 +85,15 @@ class ContactForm extends \Magento\Contact\Block\ContactForm   //Template
        $tickets = $this->_connection->fetchAll("SELECT * FROM crm_service_requests WHERE customer ='".$company->getData('STP_ID')."'");
 
 
-
-
-
-            $wsdlUrl = dirname(__FILE__)."/wsdl/zzget_serv_req_details_v1_binding.xml";
-            $soapClient  = new \Zend\Soap\Client($wsdlUrl,array("soap_version" => SOAP_1_2));
+            // /$wsdlUrl = dirname(__FILE__)."/wsdl/zzget_serv_req_details_v1_binding.xml";
+             $wsdlUrl = $this->getHelper()->getGeneralConfig('crm_service_text');
+            
+            //Start Remove
+            $soapClient  = new Client($wsdlUrl,array("soap_version" => SOAP_1_2));
 
             //Set Login details
-            $soapClient->setHttpLogin('magentorfc');
-            $soapClient->setHttpPassword('Consnet01');
+            $soapClient->setHttpLogin($this->getHelper()->getGeneralConfig('user_name'));
+            $soapClient->setHttpPassword($this->getHelper()->getGeneralConfig('password'));
             
 
             foreach ($tickets as $value) {
@@ -132,5 +132,11 @@ class ContactForm extends \Magento\Contact\Block\ContactForm   //Template
 
             return $crm_data;
 
+    }
+
+    public function getHelper(){
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $helper = $objectManager->create('Consnet\Api\Helper\Data');
+        return  $helper;
     }
 }
