@@ -87,7 +87,7 @@ class ContactForm extends \Magento\Contact\Block\ContactForm   //Template
 
 
             // /$wsdlUrl = dirname(__FILE__)."/wsdl/zzget_serv_req_details_v1_binding.xml";
-             $wsdlUrl = $this->getHelper()->getGeneralConfig('crm_service_text');
+             $wsdlUrl = $this->getHelper()->getGeneralConfig('crm_service_get');
             
             //Start Remove
             $soapClient  = new Client($wsdlUrl,array("soap_version" => SOAP_1_2));
@@ -102,7 +102,7 @@ class ContactForm extends \Magento\Contact\Block\ContactForm   //Template
             
                 //Set Parameters
             $parameters = array(
-                            "RequestId" => $value['request_id']///"0000000003"//
+                            " " => $value['request_id']///"0000000003"//
                             );        
             
             $result      = $soapClient->ZzgetServReqDetails($parameters);

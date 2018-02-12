@@ -90,7 +90,12 @@
                 </field>
 
                 <field id="crm_service_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>CRM Service Requests Wsdl </label>
+                    <label>CRM Service Requests POST Wsdl </label>
+                    <comment>for Module /Contact </comment>
+                </field>
+
+                <field id="crm_service_get" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>CRM Service Requests GET Wsdl </label>
                     <comment>for Module /Contact </comment>
                 </field>
 
