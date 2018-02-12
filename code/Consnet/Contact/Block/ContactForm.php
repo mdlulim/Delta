@@ -4,6 +4,7 @@
  * See COPYING.txt for license details.
  */
 namespace Consnet\Contact\Block;
+use Zend\Soap\Client;
 
 use Magento\Framework\View\Element\Template;
 
