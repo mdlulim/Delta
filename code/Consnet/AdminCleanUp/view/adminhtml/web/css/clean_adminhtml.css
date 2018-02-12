@@ -37,7 +37,13 @@ note needed are hidden using css
 #tab_customer_edit_tab_rma_content, .admin__page-nav-link{
     display: none;
 }
+#order_invoice, .action-default .scalable .invoice{
+    display: none;
+}
 
+#send_notification, .action-default .scalable .send-email{
+    display: none;
+}
 
 /**----------------------------------Orders---------------------------------- 
 .order-view-billing-shipping{
