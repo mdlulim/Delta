@@ -200,52 +200,44 @@ class ErpOrder
                                         $order->getPayment()->getPoNumber());
 
                 $totalTax = 0.0;
-                if($zresults->ZRESULT !== 'FAILED'){
-                    if(is_array($zresults->ZTT_ORDER_TOTALS->item)){
+                
+                if($zresults != NULL){
+                    if($zresults->ZRESULT !== 'FAILED'){
                         if(is_array($zresults->ZTT_ORDER_TOTALS->item)){
-                            foreach($zresults->ZTT_ORDER_TOTALS->item as $orderitm){
-                                $totalTax = $totalTax + $orderitm->MWSBP ;
-                                //$i++;
+                            if(is_array($zresults->ZTT_ORDER_TOTALS->item)){
+                                foreach($zresults->ZTT_ORDER_TOTALS->item as $orderitm){
+                                    $totalTax = $totalTax + $orderitm->MWSBP ;
+                                    //$i++;
+                                }
+                                $order->setTaxAmount($totalTax);
+                                $order->setSubtotal($zresults->TOTAL);
+                                $order->setGrandTotal(($zresults->TOTAL + $totalTax));
+                                $order->save();
                             }
-                            $order->setTaxAmount($totalTax);
+                        }else{
+                            $line = $zresults->ZTT_ORDER_TOTALS->item ;               
+                            $order->setTaxAmount($zresults->ZTT_ORDER_TOTALS->item->MWSBP);
                             $order->setSubtotal($zresults->TOTAL);
-                            $order->setGrandTotal(($zresults->TOTAL + $totalTax));
-                                        
-                            //$order->setData("DELIVERY_DATE", $delivery_date);
-                            //$order->setData("STP_ID", $stp);
-                            //$order->setStatus(\Magento\Sales\Model\Order::STATE_NEW);$zresults->ZRESULT
-                            //$order->setData('ECC_ORDER', $zresults->ZRESULT);//11111);//$this->erpOrderId);//$zresults->ZRESULT);
-                            //$order->setData('erp_order', $zresults->ZRESULT);//22222);//$this->erpOrderId);
+                            $order->setGrandTotal(($zresults->TOTAL + $line->MWSBP) );
                             $order->save();
                         }
-                    }else{
-                        $line = $zresults->ZTT_ORDER_TOTALS->item ;    
-                        //var_dump($zresults->ZTT_ORDER_TOTALS->item->MWSBP);die();               
-                        $order->setTaxAmount($zresults->ZTT_ORDER_TOTALS->item->MWSBP);
-                        $order->setSubtotal($zresults->TOTAL);
-                        $order->setGrandTotal(($zresults->TOTAL + $line->MWSBP) );
-                        //$order->setData("DELIVERY_DATE", $delivery_date);
-                        //$order->setData("STP_ID", $stp);
-                        //$order->setStatus(\Magento\Sales\Model\Order::STATE_NEW);
-                        //$order->setData('ECC_ORDER', $zresults->ZRESULT);//7777);//$this->erpOrderId);//$zresults->ZRESULT);
-                        //$order->setData('erp_order', $zresults->ZRESULT);//6666);//$this->erpOrderId);
+                        
+                        $order->setData("DELIVERY_DATE", $delivery_date);
                         $order->save();
-                    }
-                    
-                    $order->setData("DELIVERY_DATE", $delivery_date);
-                    $order->save();
-                    $order->setData("STP_ID", $stp);
-                    $order->save();                    
-                    $order->setData('ECC_ORDER', $zresults->ZRESULT);//7777);//$this->erpOrderId);//$zresults->ZRESULT);
-                    $order->save();
-                    $order->setData('erp_order', $zresults->ZRESULT);//6666);//$this->erpOrderId);
-                    $order->save();
-                    return NULL;$this->om->create('\Magento\Sales\Model\Order')->load($order_id);
-                    //$this->_connection->query('UPDATE sales_order SET STP_ID = "'.$stp.'" ,DELIVERY_DATE = "'.$delivery_date.'" ,ECC_ORDER = "'.$zresults->ZRESULT.'"  WHERE increment_id = '.$this->magOrderId);
-                }elseif ($zresults->ZRESULT == 'FAILED') {
-                    $this->messageManager->addErrorMessage("Could Not Create Order");
+                        $order->setData("STP_ID", $stp);
+                        $order->save();                    
+                        $order->setData('ECC_ORDER', $zresults->ZRESULT);//7777);//$this->erpOrderId);//$zresults->ZRESULT);
+                        $order->save();
+                        $order->setData('erp_order', $zresults->ZRESULT);//6666);//$this->erpOrderId);
+                        $order->save();
+                        return NULL;$this->om->create('\Magento\Sales\Model\Order')->load($order_id);
+                    }elseif ($zresults->ZRESULT == 'FAILED') {
+                        $this->messageManager->addErrorMessage("Could Not Create Order");
+                        return null;
+                    } 
+                }else{
                     return null;
-                } 
+                }
             }
         }
     }
