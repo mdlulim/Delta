@@ -91,9 +91,11 @@ $orderStoreDate = $block->formatDate(
 
                             $status = $_order->getStatus();
                             
-                            if($status !== 'confirmed' || $status !== 'dispatched'){
-                                $ecc_status = $mageorder->get_ecc_order_status($realOrderId);                    
-                                if($status !== $ecc_status){
+                            if($status !== 'dispatched'){
+                                $ecc_status = $mageorder->get_ecc_order_status($realOrderId); 
+                                if($ecc_status == NULL || $ecc_status == ''){
+
+                                }elseif($status !== $ecc_status){
 
                                         switch ($ecc_status) {
                                             case "open":
