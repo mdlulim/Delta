@@ -387,6 +387,7 @@ class ErpOrder
         catch (SoapFault $e){
             $this->erpOrderId = 0;
             $this->erpOrderCreated = 0;
+            $this->writeToDB();
             //$this->messageManager->addSuccessMessage("Soap call error".$e->getMessage());
             return null;
         }   
