@@ -70,7 +70,13 @@ class Title extends Template
             $connection = $resources->getConnection();
             $query = "SELECT `erpOrderId` FROM `erp_magento` WHERE `magOrderId` = '".$magento_order."'";
             $erporder =  $connection->fetchRow($query)['erpOrderId'];*/
-            
+            $sales_order = $om->create('\Magento\Sales\Model\Order')->loadByIncrementId($magento_order);
+            if($sales_order->getData('ECC_ORDER') == null || 
+               $sales_order->getData('ECC_ORDER') == ''){
+                $messageManager = $om->create('\Magento\Framework\Message\ManagerInterface');
+                $messageManager->addWarningMessage('Pricing Is Still To Be Proccessed');
+                return __("Temporary Order # ".$sales_order->getIncrementId());
+            }
             return __("Order # ".$sales_order->getData('ECC_ORDER'));
         }
         if (strpos($this->pageConfig->getTitle()->getShortHeading(), "Requisition Lists") !== false) {
