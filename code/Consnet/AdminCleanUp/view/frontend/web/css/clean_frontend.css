@@ -48,8 +48,17 @@ action.primary {
     background-color: #417cf3;
     border-radius: 5px;
     margin-top: 2px !important;
-
+    
   }
+  @media (max-width: 1024px) {
+    .nav-6{
+        margin-left: 36% !important;
+        background-color: #417cf3;
+        border-radius: 5px;
+        margin-top: 2px !important;
+        
+      }
+}
 .blog-small { margin-bottom: 50px; }
 
 .blog-small .post-title,
@@ -74,14 +83,6 @@ action.primary {
 
 #ie8 .blog-small .thumbnail .image-wrap + div { width: 370px; }
 
-@media (min-width:1024px) {
-    .nav-6 {
-        margin-left: 36% !important;
-        background-color: #417cf3;
-        border-radius: 5px;
-        margin-top: 2px !important;
-    }
-}
 @media (min-width: 979px) and (max-width: 1199px) {
     .blog-small .thumbnail .image-wrap + div {
         width: 370px;
