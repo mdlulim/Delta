@@ -3,6 +3,7 @@ namespace Consnet\Erporder\Plugin;
 
 use Magento\Framework\Message\ManagerInterface as MessageManager;
 use Zend\Soap\Client;
+use SoapFault;
 
 class AdminOrderSimulator
 {
@@ -275,7 +276,7 @@ class AdminOrderSimulator
         }catch (SoapFault $e){
             $this->erpOrderId = 0;
             $this->erpOrderCreated = 0;
-            $this->messageManager->addErrorMessage("Soap call error".$e->getMessage());
+            //$this->messageManager->addErrorMessage("Soap call error".$e->getMessage());
             return null;
         }        
     }
