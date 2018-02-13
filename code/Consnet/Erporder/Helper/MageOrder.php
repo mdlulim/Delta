@@ -282,7 +282,7 @@ class MageOrder
 		         
         }
         catch (SoapFault $e){
-            $this->messageManager->addErrorMessage("Soap call error".$e->getMessage());
+            //$this->messageManager->addErrorMessage("Soap call error".$e->getMessage());
             return null;
         }        
     }

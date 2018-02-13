@@ -198,7 +198,7 @@ class ErpOrder
                                         $order->getId(),
                                         $customer_data['email'],//$customer->getEmail(),
                                         $order->getPayment()->getPoNumber());
-
+                $this->messageManager->addSuccessMessage("Thank you for placing the order, our agents will verify the order.");
                 $totalTax = 0.0;
                 
                 if($zresults != NULL){
@@ -382,7 +382,6 @@ class ErpOrder
             $this->erpOrderId = $result->ZRESULT;
             $this->erpOrderCreated = 1;
             $this->writeToDB();
-            $this->messageManager->addSuccessMessage("Thank you for placing the order, our agents will get back to you after confirmation");
             return $result;
         }
         catch (SoapFault $e){
