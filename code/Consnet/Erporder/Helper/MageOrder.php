@@ -303,8 +303,7 @@ class MageOrder
         
 		//Set SOAP Options
         $options = array(
-                            "soap_version" => SOAP_1_2 /*,
-                            "exception" => 0*/      							
+                            "soap_version" => SOAP_1_2							
 						);		
                       
         //Creat SOAP client instance
@@ -314,6 +313,7 @@ class MageOrder
         $soapClient->setHttpLogin($this->helper->getGeneralConfig('user_name'));
         $soapClient->setHttpPassword($this->helper->getGeneralConfig('password'));
 
+        $ecc_order_id = $this->get_ecc_order_number($order_number);
         //Set Parameters
         $parameters = array(
                             "E_STATUS_INFO" => array(
@@ -357,12 +357,16 @@ class MageOrder
                                 "REA_FOR_RE" => "",
                                 "PURCH_NO_C" => "",
                             )),
-                         "P_DOC_NO" => $this->get_ecc_order_number($order_number)
+                         "P_DOC_NO" => $ecc_order_id
                            );
+
+        if($ecc_order_id == NULL || $ecc_order_id == ''){
+            return NULL;
+        }
 
         //Call Funtion (passing in parameters)        
         try{
-            $result = null;
+            $result = NULL;
 
             $result = $soapClient->ZGET_ORDER_STATUS($parameters);
             if(isset($result->ZSTATUS)){
@@ -383,8 +387,7 @@ class MageOrder
             }            	         
         }
         catch (SoapFault $e){
-            //$this->messageManager->addErrorMessage("Required quantity is not available");
-            return 0; 
+            return NULL; 
         }
     }
 }
