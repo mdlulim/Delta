@@ -12,7 +12,7 @@
  * @var $block \Magento\Backend\Block\Widget\Button
  */
 ?>
-<?php if(($block->getLabel() != 'Hold') && ($block->getLabel() != 'Ship') && ($block->getLabel() != 'Create New Customer') && ($block->getLabel() != 'Create New Order')){ ?>
+<?php if(($block->getLabel() != 'Hold') && ($block->getLabel() != 'Ship') && ($block->getLabel() != 'Create New Customer')){ ?>
 <?php echo $block->getBeforeHtml(); ?>
 <button <?php echo $block->getAttributesHtml(), $block->getUiId(); ?>>
     <span><?php echo $block->getLabel(); ?></span>
