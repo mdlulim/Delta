@@ -3,6 +3,7 @@ namespace Consnet\Erporder\Helper;
 
 use Magento\Framework\Message\ManagerInterface as MessageManager;
 use Zend\Soap\Client;
+use SoapFault;
 
 class MageOrder
 {
@@ -381,7 +382,7 @@ class MageOrder
                 }
             }            	         
         }
-        catch (Exception $e){
+        catch (SoapFault $e){
             //$this->messageManager->addErrorMessage("Required quantity is not available");
             return 0; 
         }
