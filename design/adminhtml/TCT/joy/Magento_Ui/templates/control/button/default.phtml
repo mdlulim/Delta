@@ -13,7 +13,7 @@
  */
 ?>
 <?= $block->getBeforeHtml() ?>
-<?php if(($block->getLabel() != "Add New Company") && ($block->getLabel() != "Go to Archive") && ($block->getLabel() != "Add New Customer")){ ?>
+<?php if(($block->getLabel() != "Add New Company") && ($block->getLabel() != "Go to Archive") && ($block->getLabel() != "Add New Customer") && ($block->getLabel() != "Add New Order")){ ?>
 <button <?= /* @escapeNotVerified */ $block->getAttributesHtml(), $block->getUiId() ?>>
     <span><?= /* @escapeNotVerified */ $block->getLabel() ?></span>
 </button>
