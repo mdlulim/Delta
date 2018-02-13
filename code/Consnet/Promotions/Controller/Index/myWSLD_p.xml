@@ -1,10 +1,160 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:n1="urn:sap-com:document:sap:rfc:functions" xmlns:tns="urn:sap-com:document:sap:soap:functions:mc-style" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="urn:sap-com:document:sap:soap:functions:mc-style" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:n1="urn:sap-com:document:sap:rfc:functions" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
     <wsdl:documentation>
         <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl"/>
     </wsdl:documentation>
+    <wsp:UsingPolicy wsdl:required="false"/>
+    <wsp:Policy wsu:Id="BN__ZZ_MAGENTO_BINDING">
+        <wsp:ExactlyOne>  
+            <wsp:All>
+                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+                <saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true"/>
+                <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
+                <wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+                        <wsp:Policy>
+                            <sp:TransportToken>
+                                <wsp:Policy>    
+                                    <sp:HttpsToken>
+                                        <wsp:Policy>
+                                            <sp:HttpBasicAuthentication/>
+                                        </wsp:Policy>
+                                    </sp:HttpsToken>
+                                </wsp:Policy>
+                            </sp:TransportToken>
+                            <sp:AlgorithmSuite>
+                                <wsp:Policy>
+                                    <sp:Basic128Rsa15/>
+                                </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                                <wsp:Policy>
+                                    <sp:Strict/>
+                                </wsp:Policy>
+                            </sp:Layout>
+                        </wsp:Policy>
+                    </sp:TransportBinding>
+                </wsp:All>
+            </wsp:All>
+            <wsp:All>
+                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+                <saptrnbnd:OptimizedXMLTransfer xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/" uri="http://xml.sap.com/2006/11/esi/esp/binxml" wsp:Optional="true"/>
+                <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
+                <wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+                        <wsp:Policy>
+                            <sp:TransportToken>
+                                <wsp:Policy>
+                                    <sp:HttpsToken>
+                                        <wsp:Policy>
+                                            <sp:HttpBasicAuthentication/>
+                                        </wsp:Policy>
+                                    </sp:HttpsToken>
+                                </wsp:Policy>
+                            </sp:TransportToken>
+                            <sp:AlgorithmSuite>
+                                <wsp:Policy>
+                                    <sp:Basic128Rsa15/>
+                                </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                                <wsp:Policy>
+                                    <sp:Strict/>
+                                </wsp:Policy>
+                            </sp:Layout>
+                        </wsp:Policy>
+                    </sp:TransportBinding>
+                </wsp:All>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="BN__ZZ_MAGENTO_BINDING_soap12">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+                <saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true"/>
+                <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
+                <wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+                        <wsp:Policy>
+                            <sp:TransportToken>
+                                <wsp:Policy>
+                                    <sp:HttpsToken>
+                                        <wsp:Policy>
+                                            <sp:HttpBasicAuthentication/>
+                                        </wsp:Policy>
+                                    </sp:HttpsToken>
+                                </wsp:Policy>
+                            </sp:TransportToken>
+                            <sp:AlgorithmSuite>
+                                <wsp:Policy>
+                                    <sp:Basic128Rsa15/>
+                                </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                                <wsp:Policy>
+                                    <sp:Strict/>
+                                </wsp:Policy>
+                            </sp:Layout>
+                        </wsp:Policy>
+                    </sp:TransportBinding>
+                </wsp:All>
+            </wsp:All>
+            <wsp:All>
+                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+                <saptrnbnd:OptimizedXMLTransfer xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/" uri="http://xml.sap.com/2006/11/esi/esp/binxml" wsp:Optional="true"/>
+                <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
+                <wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+                        <wsp:Policy>
+                            <sp:TransportToken>
+                                <wsp:Policy>
+                                    <sp:HttpsToken>
+                                        <wsp:Policy>
+                                            <sp:HttpBasicAuthentication/>
+                                        </wsp:Policy>
+                                    </sp:HttpsToken>
+                                </wsp:Policy>
+                            </sp:TransportToken>
+                            <sp:AlgorithmSuite>
+                                <wsp:Policy>
+                                    <sp:Basic128Rsa15/>
+                                </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                                <wsp:Policy>
+                                    <sp:Strict/>
+                                </wsp:Policy>
+                            </sp:Layout>
+                        </wsp:Policy>
+                    </sp:TransportBinding>
+                </wsp:All>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="IF__ZZ_MAGENTO_GET_PROMO_WSDL_1">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
+                    <sapsession:enableSession>false</sapsession:enableSession>
+                </sapsession:Session>
+                <sapcentraladmin:CentralAdministration xmlns:sapcentraladmin="http://www.sap.com/webas/700/soap/features/CentralAdministration/" wsp:Optional="true">
+                    <sapcentraladmin:BusinessApplicationID>005056B638561ED78DC8F08B8CF8140B</sapcentraladmin:BusinessApplicationID>
+                </sapcentraladmin:CentralAdministration>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="OP__ZzMagentoGetPromotions">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
+                <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
+                <sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
+                <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
     <wsdl:types>
-        <xsd:schema targetNamespace="urn:sap-com:document:sap:rfc:functions" attributeFormDefault="qualified">
+        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions">
             <xsd:simpleType name="char1">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="1"/>
@@ -79,7 +229,7 @@
                 </xsd:restriction>
             </xsd:simpleType>
         </xsd:schema>
-        <xsd:schema targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style" attributeFormDefault="qualified" xmlns:n0="urn:sap-com:document:sap:rfc:functions">
+        <xsd:schema xmlns:n0="urn:sap-com:document:sap:rfc:functions" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
             <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
             <xsd:complexType name="ZzmagentoPromotionsStructure">
                 <xsd:sequence>
@@ -117,7 +267,7 @@
             </xsd:complexType>
             <xsd:complexType name="ZzmagentoPromotionsTb">
                 <xsd:sequence>
-                    <xsd:element name="item" type="tns:ZzmagentoPromotionsStructure" maxOccurs="unbounded" minOccurs="0"/>
+                    <xsd:element name="item" type="tns:ZzmagentoPromotionsStructure" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:element name="ZzMagentoGetPromotions">
@@ -143,15 +293,24 @@
         <wsdl:part name="parameter" element="tns:ZzMagentoGetPromotionsResponse"/>
     </wsdl:message>
     <wsdl:portType name="ZZ_MAGENTO_GET_PROMO_WSDL_1">
+        <wsp:Policy>
+            <wsp:PolicyReference URI="#IF__ZZ_MAGENTO_GET_PROMO_WSDL_1"/>
+        </wsp:Policy>
         <wsdl:operation name="ZzMagentoGetPromotions">
+            <wsp:Policy>
+                <wsp:PolicyReference URI="#OP__ZzMagentoGetPromotions"/>
+            </wsp:Policy>
             <wsdl:input message="tns:ZzMagentoGetPromotions"/>
             <wsdl:output message="tns:ZzMagentoGetPromotionsResponse"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="zz_magento_binding" type="tns:ZZ_MAGENTO_GET_PROMO_WSDL_1">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:binding name="ZZ_MAGENTO_BINDING" type="tns:ZZ_MAGENTO_GET_PROMO_WSDL_1">
+        <wsp:Policy>
+            <wsp:PolicyReference URI="#BN__ZZ_MAGENTO_BINDING"/>
+        </wsp:Policy>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <wsdl:operation name="ZzMagentoGetPromotions">
-            <soap:operation style="document" soapAction="urn:sap-com:document:sap:soap:functions:mc-style:ZZ_MAGENTO_GET_PROMO_WSDL_1:ZzMagentoGetPromotionsRequest"/>
+            <soap:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:ZZ_MAGENTO_GET_PROMO_WSDL_1:ZzMagentoGetPromotionsRequest" style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -160,24 +319,27 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:binding name="zz_magento_binding_soap12" type="tns:ZZ_MAGENTO_GET_PROMO_WSDL_1">
-        <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:binding name="ZZ_MAGENTO_BINDING_soap12" type="tns:ZZ_MAGENTO_GET_PROMO_WSDL_1">
+        <wsp:Policy>
+            <wsp:PolicyReference URI="#BN__ZZ_MAGENTO_BINDING_soap12"/>
+        </wsp:Policy>
+        <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <wsdl:operation name="ZzMagentoGetPromotions">
-            <wsoap12:operation style="document" soapAction="urn:sap-com:document:sap:soap:functions:mc-style:ZZ_MAGENTO_GET_PROMO_WSDL_1:ZzMagentoGetPromotionsRequest"/>
+            <wsoap12:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:ZZ_MAGENTO_GET_PROMO_WSDL_1:ZzMagentoGetPromotionsRequest" style="document"/>
             <wsdl:input>
                 <wsoap12:body use="literal"/>
             </wsdl:input>
-            <wsdl:output>
+            <wsdl:output> 
                 <wsoap12:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="zz_magento_service">
-        <wsdl:port name="zz_magento_binding" binding="tns:zz_magento_binding">
-            <soap:address location="http://deltapq01.delta.co.zw/sap/bc/srt/rfc/sap/zz_magento_get_promo_wsdl_1/300/zz_magento_service/zz_magento_binding"/>
+    <wsdl:service name="ZZ_MAGENTO_GET_PROMO_WSDL_1">
+        <wsdl:port name="ZZ_MAGENTO_BINDING" binding="tns:ZZ_MAGENTO_BINDING">
+            <soap:address location="http://deltadev01.delta.co.zw/sap/bc/srt/rfc/sap/zz_magento_get_promo_wsdl_1/220/zz_magento_get_promo_wsdl_1/zz_magento_binding"/>
         </wsdl:port>
-        <wsdl:port name="zz_magento_binding_soap12" binding="tns:zz_magento_binding_soap12">
-            <wsoap12:address location="http://deltapq01.delta.co.zw/sap/bc/srt/rfc/sap/zz_magento_get_promo_wsdl_1/300/zz_magento_service/zz_magento_binding"/>
+        <wsdl:port name="ZZ_MAGENTO_BINDING_soap12" binding="tns:ZZ_MAGENTO_BINDING_soap12">
+            <wsoap12:address location="http://deltadev01.delta.co.zw/sap/bc/srt/rfc/sap/zz_magento_get_promo_wsdl_1/220/zz_magento_get_promo_wsdl_1/zz_magento_binding"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
