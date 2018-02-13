@@ -111,7 +111,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $ecc_status = "2";
             $status = $order->getStatus();
 
-            if(strtolower($status) != 'confirmed' && strtolower($status) != 'dispatched'){
+            if(strtolower($status) != 'dispatched'){
                 $ecc_status = $mageorder->get_ecc_order_status($realOrderId);
                 if($status != $ecc_status){
                     switch ($ecc_status) {
