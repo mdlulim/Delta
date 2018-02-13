@@ -71,17 +71,17 @@ class Post extends \Magento\Contact\Controller\Index
            "PPartner" => $post['stp_id']
             ); 
           
-          //var_dump(//$parameters1);
+         
             
             $this->module_path = "app/code/Consnet/Contact/";
-            $wsdlUrl = $this->module_path."wsdl/zcreate_serv_reqv2_bind.xml";
+            $wsdlUrl = $this->getHelper()->getGeneralConfig('crm_service_text');
             
 				//Start Remove
 				   $soapClient  = new Client($wsdlUrl,array("soap_version" => SOAP_1_2));
 
         		//Set Login details
-        		$soapClient->setHttpLogin('tmadihlaba');
-        		$soapClient->setHttpPassword('Consnet01');
+        		$soapClient->setHttpLogin($this->getHelper()->getGeneralConfig('user_name'));
+        		$soapClient->setHttpPassword($this->getHelper()->getGeneralConfig('password'));
         		
              
        
@@ -94,15 +94,10 @@ class Post extends \Magento\Contact\Controller\Index
 
             $this->saveRequestLocaly($_reference ,  $_title , $post['stp_id'] );
 
-            
-
-            
 
             $_SESSION['Type'] = 'success' ;
             $_SESSION['Message'] = 'Thanks for contacting us , your Reference number is  : '.$_reference;
-           // $this->messageManager->addSuccess(
-           //     __('Thanks for contacting us with your query , your Reference number is : '.$_reference )
-           // );
+       
             $_reference = '';
             $this->getDataPersistor()->clear('contact_us');
             $this->_redirect('contact/');
@@ -114,29 +109,13 @@ class Post extends \Magento\Contact\Controller\Index
             $_SESSION['Type'] = 'warning' ;
             $_SESSION['Message'] = 'We can\'t process your request right now. Sorry, that\'s all we know. >> '.$e->getMessage() ;
 
-            //$this->messageManager->addError(
-            //    __('We can\'t process your request right now. Sorry, that\'s all we know.'.$e->getMessage())
-            //);
             $this->getDataPersistor()->set('contact_us', $post);
             $this->_redirect('contact/');
             return;
         }
     }
     
-    public function get_ecc_data($wsdlUrl, $function, $parameters ){
-        //Creat SOAP client instance
-        $soapClient  = new Client($wsdlUrl,array("soap_version" => SOAP_1_2));
-
-        //Set Login details
-        $soapClient->setHttpLogin('magentorfc');
-        $soapClient->setHttpPassword('Consnet01');
-
-        //Set Parameters
-       
-
-        //Call Funtion (Can pass in parameters)
-        return $soapClient->__call($function, $parameters)->TId;
-    }   
+   
     
 
     /**
@@ -163,5 +142,11 @@ class Post extends \Magento\Contact\Controller\Index
         $connection->query($sql);
         $sql = '';
 
+    }
+
+    public function getHelper(){
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $helper = $objectManager->create('Consnet\Api\Helper\Data');
+        return  $helper;
     }
 }

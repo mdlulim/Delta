@@ -9,7 +9,11 @@
 
 // @codingStandardsIgnoreFile
 ?>
+<<<<<<< HEAD
+<div id="delTolal"      <?php if ($block->renderTotals() < 0): ?> style="display: none;" <?php endif; ?>    > 
+=======
 <div id="delTolal"> <!-- style="<?php  echo ( ( $block->renderTotals() > 0 ) ? 'display:block' : 'display:none' )  ?>" -->
+>>>>>>> 8b9cef85a8df5fd6bc54e358821505e83f4552d8
 <legend class="admin__legend" ><span><?php /* @escapeNotVerified */ echo __('Order Totals') ?></span></legend>
 <br>
 

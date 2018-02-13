@@ -13,6 +13,8 @@ class PromoList extends Template {
     protected $_demoColFactory;
     protected $_productCollectionFactory;
     protected $listProductBlock;
+
+      protected $_is_single_obj;
     
     public function __construct(
     \Magento\Backend\Block\Template\Context $context, 
@@ -27,6 +29,8 @@ class PromoList extends Template {
         parent::__construct(
                 $context, $data
         );
+
+      //  $this->$_is_single_obj = false ;
     }
 
     /**
@@ -50,20 +54,11 @@ class PromoList extends Template {
 
     public function getPromoItems() {
         if (null === $this->_demoCollection) {
-          //   $this->_demoCollection = $this->_demoColFactory->create();
-          //  ->addAttributeToFilter('kunnr',['eq'=>100000000]);
-         
+           
           $om = \Magento\Framework\App\ObjectManager::getInstance();
           $customerSession = $om->get('Magento\Customer\Model\Session');
 
-       //    $customer_model = $om->create('Magento\Customer\Model\Customer'); 
-       //    $customer = $customer_model->load($customerSession->getId());
-       //    $customerData = $customer->getData();
-
-         //   $companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
-        //    $stp_id = $companymanagement->getByCustomerId($customerSession->getId())->getData("STP_ID");
-       //     $soldtoparty_number = $stp_id;//$customerData['stp_id'];
-          
+        
         $myJob =  new \Consnet\Promotions\Controller\Index\CronJobPromotion() ;
         $this->_demoCollection =  $this->_demoCollection =  $myJob->getDataFromErp($_SESSION['kunnr']) ;
         }
@@ -79,8 +74,24 @@ class PromoList extends Template {
              $this->_demoCollection =  $this->_demoCollection =  $myJob->getDataFromErp($_SESSION['kunnr']) ;
         }
         
+
+       
+
         $skuList = array();
         $count=0;
+
+       if(is_object($this->_demoCollection )){
+
+          
+           if($this->_demoCollection->getTitle() == $promotionName){
+              $skuList[$count] = $this->_demoCollection->getMatnr_product(); 
+           }
+ 
+           return $skuList; 
+         }
+
+
+
         foreach ($this->_demoCollection as $item): 
            if($item->getTitle() == $promotionName){
               $skuList[$count] = $item->getMatnr_product();
@@ -91,23 +102,30 @@ class PromoList extends Template {
         return $skuList;  
     }
     public function getPromotionList()
-    {   
-         if (null === $this->_demoCollection) {
+    {          
+
+       //  if (null === $this->_demoCollection) {
              $om = \Magento\Framework\App\ObjectManager::getInstance();
              $customerSession = $om->get('Magento\Customer\Model\Session');
              $myJob =  new \Consnet\Promotions\Controller\Index\CronJobPromotion() ;
              $this->_demoCollection =  $this->_demoCollection =  $myJob->getDataFromErp($_SESSION['kunnr']) ; //61900
-        }
-        
+      //  }
+       //  echo  $this->_demoCollection->getTitle()  ;
+
+         if(is_object($this->_demoCollection )){
+           return $this->_demoCollection ;
+         }
+
         $promoList = array();
-       
+        
         $count=0;
         foreach ($this->_demoCollection as $item):
            if($count == 0){
                     $promoList[$count] =  $item->getTitle();
                     $count++;
-               
+               $this->_is_single_obj = true ;
            }else{
+               $this->_is_single_obj = false ;
                $flag = true;
                for($i=0; $i < $count; $i++){
                     if($promoList[$i] == $item->getTitle()){
@@ -121,6 +139,25 @@ class PromoList extends Template {
 
           endforeach; 
         return $promoList;  
+    }
+    public function getIs_single_obj(){
+          $list = $this->getPromotionList() ;
+        //   var_dump ($this->_is_single_obj ) ;
+         return $this->_is_single_obj  ;
+    } 
+
+    public function getPromotionLists()
+    {   
+         if (null === $this->_demoCollection) {
+             $om = \Magento\Framework\App\ObjectManager::getInstance();
+             $customerSession = $om->get('Magento\Customer\Model\Session');
+             $myJob =  new \Consnet\Promotions\Controller\Index\CronJobPromotion() ;
+             $this->_demoCollection =  $this->_demoCollection =  $myJob->getDataFromErp($_SESSION['kunnr']) ; //61900
+        }
+           
+          
+         //  var_dump (sizeof ($this->_demoCollection) ) ;
+        return $this->_demoCollection  ;  
     }
 
     public function getAddToCartPostParams($product)

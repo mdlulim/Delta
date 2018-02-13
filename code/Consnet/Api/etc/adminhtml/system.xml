@@ -58,6 +58,16 @@
                     <label>SAP  ECC RFC PASSWORD</label>
                     <comment>sap ecc rfc password  </comment>
                 </field>
+
+
+                <field id="admin_user" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Magento Background Username </label>
+                    <comment>Magento Background Username </comment>
+                </field>
+                <field id="admin_password" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Magento Background User password</label>
+                    <comment>Magento Background User password </comment>
+                </field>
             
                 <field id="replication_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Replication Wsdl </label>
@@ -80,8 +90,14 @@
                 </field>
 
                 <field id="crm_service_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>CRM Service Requests Wsdl </label>
+                    <label>CRM Service Requests POST Wsdl </label>
                     <comment>for Module /Contact </comment>
+                </field>
+
+                <field id="crm_service_get" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>CRM Service Requests GET Wsdl </label>
+                    <comment>for Module /Contact </comment>
+                    
                 </field>
 
                  <field id="promotions_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
