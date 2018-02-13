@@ -43,10 +43,11 @@ action.primary {
     border: 1px solid #1979c3;
     color: #fff;
 }
-#ui-id-8{
-    margin-left: 1080%;
+  .nav-6{
+    margin-left: 52% !important;
     background-color: #417cf3;
-    border-radius: 2px;
+    border-radius: 5px;
+    margin-top: 2px !important;
   }
 .blog-small { margin-bottom: 50px; }
 
