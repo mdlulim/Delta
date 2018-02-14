@@ -292,7 +292,7 @@ class AdminOrderSimulator
 	    return $httpcode;
 	} 
     
-    private function hasValue($string){
+    public function hasValue($string){
         if(!isset($string) || $string == null){
             return false;
         }
