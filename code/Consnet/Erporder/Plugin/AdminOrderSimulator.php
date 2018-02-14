@@ -140,6 +140,9 @@ class AdminOrderSimulator
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
                                 $this->licenseCheck($quote);
                             }
+                            if($this->hasValue($zresults->ZSTATUS->MESSAGE_V2)){
+                                $this->notAllowedCheck($quote);
+                            }
                         }else{
                             //return $this->OfflineECCPricing($quote);
                             $totalTax = 0;
@@ -191,6 +194,22 @@ class AdminOrderSimulator
                     $quote->save();
                     $this->showItemMessage($item->getName(), $item->getSku(), 
                     $item->getQty(), 'stock');                                        
+                }
+            }                                      
+        }
+    }
+
+    public function notAllowedCheck($quote, $zresults){
+        if($quote->hasItems()){
+            $matnr = $zresults->ZSTATUS->MESSAGE_V2;
+            
+            foreach($quote->getAllVisibleItems() as $item){
+                if($item->getSku() == $matnr){                                               
+                    $quote->deleteItem($item);
+                    $quote->setTotalsCollectedFlag(false)->collectTotals();
+                    $quote->save();
+                    $this->showItemMessage($item->getName(), $item->getSku(), 
+                    $item->getQty(), 'notAllowed');                                        
                 }
             }                                      
         }
