@@ -44,7 +44,9 @@ note needed are hidden using css
 #send_notification, .action-default .scalable .send-email{
     display: none;
 }
-
+#tab_customerbalance_content, .admin__page-nav-link{
+    display: none;
+}
 /**----------------------------------Orders---------------------------------- 
 .order-view-billing-shipping{
   display: none;

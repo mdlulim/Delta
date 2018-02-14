@@ -72,7 +72,7 @@ class Index extends \Magento\Framework\App\Action\Action
                   }            
                 if(count($orderitems) > 0){
                     $order = $objectManager->create('\Magento\Sales\Model\Order')->load($orderid);
-                    if($order->getStatus() == 'pending'){
+                    if($order->getStatus() !== 'dispatched'){
                         if($delivery_date == null){
                             $order_result = $mageorder->updateOrder($order, $orderitems, $order->getData('DELIVERY_DATE'), $order->getCustomerId(), 0);
                             $order_result = $mageorder->updateOrder($order, $orderitems, $order->getData('DELIVERY_DATE'), $order->getCustomerId(), 1);
@@ -83,12 +83,18 @@ class Index extends \Magento\Framework\App\Action\Action
                             echo $order_result;
                         }
                     }else {
+                        $messageManager = $objectManager->create('Magento\Framework\Message\ManagerInterface');
+                        $messageManager->addErrorMessage("Order Cant Be Edited");
                         echo 'edit_locked';
                     }                
                 }else {
+                    $messageManager = $objectManager->create('Magento\Framework\Message\ManagerInterface');
+                    $messageManager->addErrorMessage("No Add Items To Order");
                     echo 'no_items_set';
                 }
             }else {
+                $messageManager = $objectManager->create('Magento\Framework\Message\ManagerInterface');
+                $messageManager->addErrorMessage("No Add Items To Order");
                 echo 'no_items_set';
             }
             
@@ -145,9 +151,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 }
             }else {
                 echo "2";
-            }
-
-            
+            }            
         }    
         if(isset($_POST['view'])){
             return $this->resultRedirectFactory->create()->setPath("checkout/cart/");

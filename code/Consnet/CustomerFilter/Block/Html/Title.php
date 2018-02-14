@@ -74,7 +74,7 @@ class Title extends Template
             if($sales_order->getData('ECC_ORDER') == null || 
                $sales_order->getData('ECC_ORDER') == ''){
                 $messageManager = $om->create('\Magento\Framework\Message\ManagerInterface');
-                $messageManager->addWarningMessage('Pricing Is Still To Be Proccessed');
+                $messageManager->addWarningMessage('Pricing Will Be Determined Once Order Is Verified.');
                 return __("Temporary Order # ".$sales_order->getIncrementId());
             }
             return __("Order # ".$sales_order->getData('ECC_ORDER'));
