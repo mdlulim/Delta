@@ -47,6 +47,9 @@
                     for(i = 0; i < url.length - 2; i++) { 
                       newlocation += url[i] + '/';
                     }
+                    if(data == 'edit_locked' || data == 'no_items_set'){
+                      location.reload();
+                    }
                     newlocation += newordernumber + '/';
                     
                     window.location = newlocation;
