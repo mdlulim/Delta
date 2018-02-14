@@ -327,11 +327,16 @@ class AdminOrderSimulator
     }
 
     public function checkItemAddPreviously($itemSku){
-        foreach ($_SESSION['items'] as $sessionItem) {
-            if($itemSku == $sessionItem['itemSku']){
-                return 1;
-            }
-        }  
+        $om = \Magento\Framework\App\ObjectManager::getInstance();
+        $state =  $om->get('Magento\Framework\App\State');
+
+        if('adminhtml' != $state->getAreaCode()){
+            foreach ($_SESSION['items'] as $sessionItem) {
+                if($itemSku == $sessionItem['itemSku']){
+                    return 1;
+                }
+            } 
+        }         
         return 0;
     }
 
