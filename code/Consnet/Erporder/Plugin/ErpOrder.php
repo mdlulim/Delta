@@ -200,6 +200,10 @@ class ErpOrder
                                         $order->getPayment()->getPoNumber());
                 $this->messageManager->addSuccessMessage("Thank you for placing the order, our agents will verify the order.");
                 $totalTax = 0.0;
+                $order->setData("DELIVERY_DATE", $delivery_date);
+                $order->save();
+                $order->setData("STP_ID", $stp);
+                $order->save();  
                 
                 if($zresults != NULL){
                     if($zresults->ZRESULT !== 'FAILED'){
@@ -221,11 +225,7 @@ class ErpOrder
                             $order->setGrandTotal(($zresults->TOTAL + $line->MWSBP) );
                             $order->save();
                         }
-                        
-                        $order->setData("DELIVERY_DATE", $delivery_date);
-                        $order->save();
-                        $order->setData("STP_ID", $stp);
-                        $order->save();                    
+                                          
                         $order->setData('ECC_ORDER', $zresults->ZRESULT);//7777);//$this->erpOrderId);//$zresults->ZRESULT);
                         $order->save();
                         $order->setData('erp_order', $zresults->ZRESULT);//6666);//$this->erpOrderId);
