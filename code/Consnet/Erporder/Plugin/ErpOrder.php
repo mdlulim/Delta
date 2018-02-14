@@ -379,7 +379,7 @@ class ErpOrder
         //Call Funtion (passing in parameters)
         try{
             $result = $soapClient->ZCREATE_SALES_ORDER($parameters);
-            $this->erpOrderId = $result->ZRESULT;
+            $this->erpOrderId = ($result->ZRESULT == 'FAILED' ? 0 : 1);
             $this->erpOrderCreated = 1;
             $this->writeToDB();
             return $result;
