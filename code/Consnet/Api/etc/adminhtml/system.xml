@@ -102,7 +102,7 @@
 
                  <field id="promotions_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Promotions Wsdl </label>
-                    <comment>for Module /Promotuions </comment>
+                    <comment>for Module /Promotuions </comment>    
                 </field>
             </group>
 
