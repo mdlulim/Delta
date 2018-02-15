@@ -23,7 +23,7 @@
 </style>
 <?php
 /*$om = \Magento\Framework\App\ObjectManager::getInstance();
-$helper = $om->create('Consnet\Api\Helper\Data'); 
+$helper = $om->create('Consnet\Api\Helper\Data');
 $NAMESPACE_ID = $helper->getGeneralConfig('namespace_text');*/
 
 /*//$quote = $om->create('\Magento\Checkout\Model\Cart')->getQuote();
@@ -46,7 +46,7 @@ if(isset($_SESSION['email'])){
 }*/
 
 //var_dump($count);
-//isset($_SESSION['kunnr']) && 
+//isset($_SESSION['kunnr']) &&
 
 $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
 <?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
@@ -74,7 +74,6 @@ $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
 </form>-->
 
 <script type="text/javascript">
-
 /*var proceed = document.getElementById('proceed_to_checkout');
 if(proceed != null){
     proceed.addEventListener("click", function () {
@@ -90,5 +89,19 @@ if(proceed != null){
             });
         }
     });
-}*/    
+}*/
+    require(
+        [
+            'jquery'
+        ],
+        function($) {
+            $(function() {
+                // Dynamicaly load the datepicker css dependency
+                console.log('page loads successfully');
+            });
+
+            // function to show/hide totals section if the grand total is > 0
+            
+        }
+    );
 </script>
