@@ -1289,17 +1289,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
 
         } else {
 
-            // $customerExt = $this->objectManager->create('\Magento\Customer\Api\Data\CustomerExtension');
-            // $customerCompanyExt = $this->objectManager->create('\Magento\Company\Api\Data\CompanyCustomerInterface');
-
-            // $customerCompanyExt->setCustomerId($customer);
-            // $customerCompanyExt->setCompanyId($company);
-            // $customerCompanyExt->setJobTitle("Company Admin");
-            // $customerCompanyExt->setStatus(1);
-            // $customerCompanyExt->setTelephone("000-000-0000");
-            // $customerExt->setCompanyAttributes($customerCompanyExt);
-            // $customer->setExtensionAttributes($customerExt);
-            // $customer = $repo->save($customer);
+          
         }
     }catch(\Magento\Framework\Exception\CouldNotSaveException $ex){
         var_dump($ex->getMessage()); 
@@ -1358,13 +1348,13 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                             /* 1 */
                             $item->MATNR, '', 'Default', 'simple', $category,
                             /* 2 */
-                            'base', $item->MAKTX, '', '', '', 1,
+                            'base', $item->YMAKTX_LONG, '', '', '', 1,
                             /* 3 */
                             "Taxable Goods", "Catalog, Search", 1.0000, '', '',
                             /* 4 */
-                            '', '', $item->MAKTX, $item->MAKTX,
+                            '', '', $item->YMAKTX_LONG, $item->YMAKTX_LONG,
                             /* 5 */
-                            $item->MAKTX, $item->MATNR . '.jpg', '',
+                            $item->YMAKTX_LONG, $item->MATNR . '.jpg', '',
                             /* 6 */
                             $item->MATNR . '.jpg', '', $item->MATNR . '.jpg', '',
                             /* 7 */
