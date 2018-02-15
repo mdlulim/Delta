@@ -242,7 +242,7 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\DataObject\Copy $objectCopyService
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
-     * @param Product\Quote\Initializer $quoteInitializer
+     * @param Magento\Sales\Model\AdminOrder\Product\Quote\Initializer $quoteInitializer
      * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
      * @param \Magento\Customer\Api\AddressRepositoryInterface $addressRepository
      * @param \Magento\Customer\Api\Data\AddressInterfaceFactory $addressFactory
