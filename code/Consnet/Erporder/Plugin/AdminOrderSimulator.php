@@ -367,6 +367,8 @@ class AdminOrderSimulator
             ' to your shopping cart.');
         }elseif($messageType == 'licence'){
             $this->messageManager->addError("Youre Liquor Licence Is Expired For Product: ".$itemName);
+        }elseif($messageType == 'notAllowed'){
+            $this->messageManager->addError("Youre Not Allowed To Add Product: ".$itemName);
         }
     }
 
