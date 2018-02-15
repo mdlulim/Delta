@@ -29,7 +29,7 @@
                 </field>
 
                 <field id="customer_file_location_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Customer File Location</label>
+                    <label>Last Replication Error </label>
                     <comment>file pathe  e.g  /var/import/product/product.csv (must be writable/readable)</comment>
                 </field>
 
