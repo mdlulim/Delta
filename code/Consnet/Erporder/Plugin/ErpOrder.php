@@ -200,6 +200,10 @@ class ErpOrder
                                         $order->getPayment()->getPoNumber());
                 $this->messageManager->addSuccessMessage("Thank you for placing the order, our agents will verify the order.");
                 $totalTax = 0.0;
+                $order->setData("DELIVERY_DATE", $delivery_date);
+                $order->save();
+                $order->setData("STP_ID", $stp);
+                $order->save();  
                 
                 if($zresults != NULL){
                     if($zresults->ZRESULT !== 'FAILED'){
@@ -221,11 +225,7 @@ class ErpOrder
                             $order->setGrandTotal(($zresults->TOTAL + $line->MWSBP) );
                             $order->save();
                         }
-                        
-                        $order->setData("DELIVERY_DATE", $delivery_date);
-                        $order->save();
-                        $order->setData("STP_ID", $stp);
-                        $order->save();                    
+                                          
                         $order->setData('ECC_ORDER', $zresults->ZRESULT);//7777);//$this->erpOrderId);//$zresults->ZRESULT);
                         $order->save();
                         $order->setData('erp_order', $zresults->ZRESULT);//6666);//$this->erpOrderId);
@@ -379,14 +379,15 @@ class ErpOrder
         //Call Funtion (passing in parameters)
         try{
             $result = $soapClient->ZCREATE_SALES_ORDER($parameters);
-            $this->erpOrderId = $result->ZRESULT;
-            $this->erpOrderCreated = 1;
+            $this->erpOrderId = ($result->ZRESULT == 'FAILED' ? 0 : $result->ZRESULT);
+            $this->erpOrderCreated = ($result->ZRESULT == 'FAILED' ? 0 : 1);
             $this->writeToDB();
             return $result;
         }
         catch (SoapFault $e){
             $this->erpOrderId = 0;
             $this->erpOrderCreated = 0;
+            $this->writeToDB();
             //$this->messageManager->addSuccessMessage("Soap call error".$e->getMessage());
             return null;
         }   

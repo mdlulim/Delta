@@ -140,6 +140,9 @@ class AdminOrderSimulator
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V4)) {   
                                 $this->licenseCheck($quote);
                             }
+                            if($this->hasValue($zresults->ZSTATUS->MESSAGE_V2)){
+                                $this->notAllowedCheck($quote);
+                            }
                         }else{
                             //return $this->OfflineECCPricing($quote);
                             $totalTax = 0;
@@ -191,6 +194,22 @@ class AdminOrderSimulator
                     $quote->save();
                     $this->showItemMessage($item->getName(), $item->getSku(), 
                     $item->getQty(), 'stock');                                        
+                }
+            }                                      
+        }
+    }
+
+    public function notAllowedCheck($quote, $zresults){
+        if($quote->hasItems()){
+            $matnr = $zresults->ZSTATUS->MESSAGE_V2;
+            
+            foreach($quote->getAllVisibleItems() as $item){
+                if($item->getSku() == $matnr){                                               
+                    $quote->deleteItem($item);
+                    $quote->setTotalsCollectedFlag(false)->collectTotals();
+                    $quote->save();
+                    $this->showItemMessage($item->getName(), $item->getSku(), 
+                    $item->getQty(), 'notAllowed');                                        
                 }
             }                                      
         }
@@ -292,7 +311,7 @@ class AdminOrderSimulator
 	    return $httpcode;
 	} 
     
-    private function hasValue($string){
+    public function hasValue($string){
         if(!isset($string) || $string == null){
             return false;
         }
@@ -327,11 +346,16 @@ class AdminOrderSimulator
     }
 
     public function checkItemAddPreviously($itemSku){
-        foreach ($_SESSION['items'] as $sessionItem) {
-            if($itemSku == $sessionItem['itemSku']){
-                return 1;
-            }
-        }  
+        $om = \Magento\Framework\App\ObjectManager::getInstance();
+        $state =  $om->get('Magento\Framework\App\State');
+
+        if('adminhtml' != $state->getAreaCode()){
+            foreach ($_SESSION['items'] as $sessionItem) {
+                if($itemSku == $sessionItem['itemSku']){
+                    return 1;
+                }
+            } 
+        }         
         return 0;
     }
 
@@ -343,6 +367,8 @@ class AdminOrderSimulator
             ' to your shopping cart.');
         }elseif($messageType == 'licence'){
             $this->messageManager->addError("Youre Liquor Licence Is Expired For Product: ".$itemName);
+        }elseif($messageType == 'notAllowed'){
+            $this->messageManager->addError("Youre Not Allowed To Add Product: ".$itemName);
         }
     }
 
