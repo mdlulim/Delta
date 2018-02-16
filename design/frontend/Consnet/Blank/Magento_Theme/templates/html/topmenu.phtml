@@ -96,10 +96,15 @@ if(proceed != null){
         ],
         function($) {
             $(function() {
-                // Dynamicaly load the datepicker css dependency
                 console.log('page loads successfully');
-            });
+                var checkoutLink = $('#ui-id-8');
+                var initialContent = checkoutLink.html();
+                //var cartPrefix = 'Cart: ';
+                var cartItems = $('Cart: <span id="itemcounter" class="counter-number"></span> items');
 
+                checkoutLink.html(cartItems).append(initialContent);
+            });
+ 
             // function to show/hide totals section if the grand total is > 0
             
         }
