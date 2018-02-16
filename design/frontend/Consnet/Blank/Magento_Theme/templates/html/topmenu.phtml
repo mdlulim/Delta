@@ -94,23 +94,22 @@ if(proceed != null){
         [
             'jquery'
         ],
-        function($) {
-            $(window).load(function(){
-                console.log('TRACKING CHANGE 11');
-                // var checkoutLink = $('#ui-id-8');
-                var initialContent = $('#ui-id-8').html();
-                var cartPrefix = 'CART: ';
-                var cartItems = $('<span id="itemcounter" class="counter-number">0</span>');
-                var cartSuffix = $(' items');
-
-                var prependedText = cartPrefix + cartItems + cartSuffix;
-
-                // $('a#ui-id-8').hide();
-
-                console.log(initialContent);
-            });
+        function($) 
             $(function() {
-                
+                $(window).load(function() {
+                    console.log('TRACKING CHANGE 13');
+                    // var checkoutLink = $('#ui-id-8');
+                    var initialContent = $('#ui-id-8').html();
+                    var cartPrefix = 'CART: ';
+                    var cartItems = $('<span id="itemcounter" class="counter-number">0</span>');
+                    var cartSuffix = $(' items');
+
+                    var prependedText = cartPrefix + cartItems + cartSuffix;
+
+                    // $('a#ui-id-8').hide();
+
+                    console.log(initialContent);
+                });
             });
  
             // function to show/hide totals section if the grand total is > 0
