@@ -89,7 +89,9 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
               $ids++;
             } 
             }
-          
+            if($customerIds == null){
+                $customerIds =array(0, 0);
+            }
             //unset($_SESSION['company_id']);
             return $Collection->Where('entity_id IN (' . implode(',', $customerIds) . ')');
            
@@ -99,15 +101,17 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
 
                 $sql2 = "Select customer_id FROM " . $tableName2.' WHERE  company_id IN (' . implode(',', $arr) . ')';
                 $result2 = $connection->fetchAll($sql2); 
-                $customerIds = [];
+                $cusIds = [];
                 $ids=0;
                 foreach($result2 as $arr){
-                    $customerIds[$ids]=$arr['customer_id'];
+                    $cusIds[$ids]=$arr['customer_id'];
                     $ids++;
                 }
-                //var_dump($customerIds);
+               if($cusIds == null){
+                $cusIds =array(0, 0);
+               }
                 //unset($_SESSION['company_id']);
-                return $Collection->Where('entity_id IN (' . implode(',', $customerIds) . ')');
+                return $Collection->Where('entity_id IN (' . implode(',', $cusIds) . ')');
             }else{
                 return $Collection;
             }
@@ -123,6 +127,9 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
                     $customerIds[$ids]=$arr['customer_id'];
                     $ids++;
                 }
+                if($customerIds == null){
+                    $customerIds =array(0, 0);
+                   }
                 //unset($_SESSION['company_id']);
                 return $Collection->Where('entity_id IN (' . implode(',', $customerIds) . ')');
             }else{
