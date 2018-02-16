@@ -99,8 +99,8 @@ if(proceed != null){
                 console.log('> TRACKING CHANGE 15');
                 $(window).load(function() {
                     console.log('TRACKING CHANGE 15');
-                    // var checkoutLink = $('#ui-id-8');
-                    var initialContent = $('nav.navigation > ul > li.last').html();
+                    var cartNavBtn = $('nav.navigation > ul > li.last > a');
+                    var initialContent = cartNavBtn.html();
                     var cartPrefix = 'CART: ';
                     var cartItems = $('<span id="itemcounter" class="counter-number">0</span>');
                     var cartSuffix = $(' items');
@@ -108,6 +108,7 @@ if(proceed != null){
                     var prependedText = cartPrefix + cartItems + cartSuffix;
 
                     // $('a#ui-id-8').hide();
+                    cartNavBtn.prepend(prependedText);
 
                     console.log('cart content: ' + initialContent);
                 });
