@@ -96,13 +96,13 @@ if(proceed != null){
         ],
         function($) {
             $(function() {
-                console.log('TRACKING CHANGE 04');
+                console.log('TRACKING CHANGE 05');
                 var checkoutLink = $('#ui-id-8');
                 var initialContent = checkoutLink.html();
-                //var cartPrefix = 'Cart: ';
-                var cartItems = $('Cart: <span id="itemcounter" class="counter-number"></span> items');
+                var cartPrefix = 'Cart: ';
+                var cartItems = $('<span id="itemcounter" class="counter-number"></span> items');
 
-                checkoutLink.html(cartItems);
+                checkoutLink.html(cartPrefix).append(cartItems, initialContent);
             });
  
             // function to show/hide totals section if the grand total is > 0
