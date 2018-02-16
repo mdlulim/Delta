@@ -96,19 +96,19 @@ if(proceed != null){
         ],
         function($) {
             $(function() {
-                console.log('> TRACKING CHANGE 15');
+                console.log('> TRACKING CHANGE 16');
                 $(window).load(function() {
-                    console.log('TRACKING CHANGE 15');
-                    var cartNavBtn = $('nav.navigation > ul > li.last > a');
+                    console.log('TRACKING CHANGE 16');
+                    var cartNavBtn = $('nav.navigation > ul > li.last');
                     var initialContent = cartNavBtn.html();
                     var cartPrefix = 'CART: ';
-                    var cartItems = $('<span id="itemcounter" class="counter-number">0</span>');
-                    var cartSuffix = $(' items');
+                    var cartItems = '<span id="itemcounter" class="counter-number">0</span>';
+                    var cartSuffix = ' items';
 
-                    var prependedText = cartPrefix + cartItems + cartSuffix;
+                    //var prependedText = cartPrefix + cartItems + cartSuffix;
 
                     // $('a#ui-id-8').hide();
-                    cartNavBtn.prepend(prependedText);
+                    cartNavBtn.html(cartPrefix, cartPrefix, cartSuffix);
 
                     console.log('cart content: ' + initialContent);
                 });
