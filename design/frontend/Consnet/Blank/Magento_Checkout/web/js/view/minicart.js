@@ -215,6 +215,10 @@ define([
             if(itemcounter != null){
                 itemcounter.textContent = total;
             }*/
+            console.log('moved the code to a different file');
+            var initialContent = $('#ui-id-8').html();
+            console.log(initialContent);
+
             return parseInt(items.length, 10);
         }
     });
