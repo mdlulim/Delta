@@ -1,7 +1,7 @@
 ﻿<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <!--<preference for="Magento\Sales\Model\AdminOrder\Create" type="Consnet\OrderExtended\Model\AdminOrder\Create"/>
+    <preference for="Magento\Sales\Model\AdminOrder\Create" type="Consnet\OrderExtended\Model\AdminOrder\Create"/>
     <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form" type="Consnet\OrderExtended\Block\Adminhtml\Order\Create\Form"/>
-    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\AbstractCreate" type="Consnet\OrderExtended\Block\Adminhtml\Order\Create\AbstractCreate"/>-->
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\AbstractCreate" type="Consnet\OrderExtended\Block\Adminhtml\Order\Create\AbstractCreate"/>
     <type name="Magento\Framework\Message\ManagerInterface">
         <plugin name="order_message_plugin" type="Consnet\OrderExtended\Plugin\Message" sortOrder="1" disabled="false" />
     </type>    
