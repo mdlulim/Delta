@@ -95,8 +95,8 @@ if(proceed != null){
             'jquery'
         ],
         function($) {
-            $(function() {
-                console.log('TRACKING CHANGE 09');
+            $(window).load(function(){
+                console.log('TRACKING CHANGE 10');
                 // var checkoutLink = $('#ui-id-8');
                 var initialContent = $('#ui-id-8').html();
                 var cartPrefix = 'CART: ';
@@ -108,6 +108,9 @@ if(proceed != null){
                 // $('a#ui-id-8').hide();
 
                 console.log(initialContent);
+            });
+            $(function() {
+                
             });
  
             // function to show/hide totals section if the grand total is > 0
