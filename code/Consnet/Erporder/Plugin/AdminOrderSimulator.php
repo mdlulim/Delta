@@ -141,7 +141,7 @@ class AdminOrderSimulator
                                 $this->licenseCheck($quote);
                             }
                             if($this->hasValue($zresults->ZSTATUS->MESSAGE_V2)){
-                                $this->notAllowedCheck($quote);
+                                $this->notAllowedCheck($quote, $zresults);
                             }
                         }else{
                             //return $this->OfflineECCPricing($quote);
