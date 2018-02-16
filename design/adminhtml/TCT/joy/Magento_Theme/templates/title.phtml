@@ -13,8 +13,19 @@ $titleId = ($block->getTitleId()) ? ' id="' . $block->getTitleId() . '"' : '';
 $titleClass = ($block->getTitleClass()) ? ' ' . $block->getTitleClass() : '';
 $title = $block->escapeHtml($block->getPageTitle());
 ?>
-
+<?php if( $title == "Companies"){ $title ="Customers"; ?>
 <div class="page-title-wrapper<?= /* @escapeNotVerified */ $titleClass ?>">
     <h1 class="page-title"<?= /* @escapeNotVerified */ $titleId ?>><?= /* @escapeNotVerified */ $title ?></h1>
     <?= $block->getChildHtml() ?>
 </div>
+<?php }else if( $title == "Customers"){ $title ="Contact Person"; ?>
+    <div class="page-title-wrapper<?= /* @escapeNotVerified */ $titleClass ?>">
+    <h1 class="page-title"<?= /* @escapeNotVerified */ $titleId ?>><?= /* @escapeNotVerified */ $title ?></h1>
+    <?= $block->getChildHtml() ?>
+</div>
+<?php }else{ ?>
+    <div class="page-title-wrapper<?= /* @escapeNotVerified */ $titleClass ?>">
+    <h1 class="page-title"<?= /* @escapeNotVerified */ $titleId ?>><?= /* @escapeNotVerified */ $title ?></h1>
+    <?= $block->getChildHtml() ?>
+</div>
+<?php } ?>
