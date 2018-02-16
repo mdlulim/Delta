@@ -96,14 +96,14 @@ if(proceed != null){
         ],
         function($) {
             $(function() {
-                console.log('> TRACKING CHANGE 17');
+                console.log('> TRACKING CHANGE 18');
                 $(window).load(function() {
-                    console.log('TRACKING CHANGE 17');
-                    var cartNavBtn = $('nav.navigation > ul > li.last > a');
+                    console.log('TRACKING CHANGE 18');
+                    var cartNavBtn = $('nav.navigation > ul > li.last');
                     var initialContent = cartNavBtn.html();
-                    var cartPrefix = 'CART: ';
+                    var cartPrefix = 'Cart: ';
                     var cartItems = '<span id="itemcounter" class="counter-number">0</span>';
-                    var cartSuffix = ' items';
+                    var cartSuffix = ' items ';
 
                     var prependedText = cartPrefix + cartItems + cartSuffix;
 
