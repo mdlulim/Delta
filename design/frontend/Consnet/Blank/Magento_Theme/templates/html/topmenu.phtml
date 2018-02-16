@@ -96,11 +96,11 @@ if(proceed != null){
         ],
         function($) {
             $(function() {
-                console.log('> TRACKING CHANGE 13');
+                console.log('> TRACKING CHANGE 14');
                 $(window).load(function() {
-                    console.log('TRACKING CHANGE 13');
+                    console.log('TRACKING CHANGE 14');
                     // var checkoutLink = $('#ui-id-8');
-                    var initialContent = $('#ui-id-8').html();
+                    var initialContent = $('nav.navigation > ul#ui-id-2 > li.last ').html();
                     var cartPrefix = 'CART: ';
                     var cartItems = $('<span id="itemcounter" class="counter-number">0</span>');
                     var cartSuffix = $(' items');
@@ -109,7 +109,7 @@ if(proceed != null){
 
                     // $('a#ui-id-8').hide();
 
-                    console.log(initialContent);
+                    console.log('cart content: ' + initialContent);
                 });
             });
  
