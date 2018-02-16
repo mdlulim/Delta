@@ -44,7 +44,7 @@ action.primary {
     color: #fff;
 }
   .nav-6{
-    margin-left: 52% !important;
+    float: right !important;
     background-color: #417cf3;
     border-radius: 5px;
     margin-top: 2px !important;

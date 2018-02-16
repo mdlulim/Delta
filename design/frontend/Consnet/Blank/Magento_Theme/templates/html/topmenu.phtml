@@ -101,9 +101,9 @@ if(proceed != null){
                     console.log('TRACKING CHANGE 18');
                     var cartNavBtn = $('nav.navigation > ul > li.last');
                     var initialContent = cartNavBtn.html();
-                    var cartPrefix = 'Cart: ';
+                    var cartPrefix = '<i style="background-color: white; color: #417cf3;">Cart: ';
                     var cartItems = '<span id="itemcounter" class="counter-number">0</span>';
-                    var cartSuffix = ' items ';
+                    var cartSuffix = ' items</i> ';
 
                     var prependedText = cartPrefix + cartItems + cartSuffix;
 
