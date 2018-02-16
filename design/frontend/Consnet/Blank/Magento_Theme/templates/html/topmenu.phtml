@@ -100,7 +100,7 @@ if(proceed != null){
                 $(window).load(function() {
                     console.log('TRACKING CHANGE 15');
                     // var checkoutLink = $('#ui-id-8');
-                    var initialContent = $('nav.navigation').html();
+                    var initialContent = $('nav.navigation > ul > li.last').html();
                     var cartPrefix = 'CART: ';
                     var cartItems = $('<span id="itemcounter" class="counter-number">0</span>');
                     var cartSuffix = $(' items');
