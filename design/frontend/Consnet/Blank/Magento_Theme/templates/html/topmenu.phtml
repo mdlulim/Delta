@@ -96,13 +96,21 @@ if(proceed != null){
         ],
         function($) {
             $(function() {
-                console.log('TRACKING CHANGE 05');
-                var checkoutLink = $('#ui-id-8');
-                var initialContent = checkoutLink.html();
-                var cartPrefix = 'Cart: ';
-                var cartItems = $('<span id="itemcounter" class="counter-number"></span> items');
+                console.log('> TRACKING CHANGE 15');
+                $(window).load(function() {
+                    console.log('TRACKING CHANGE 15');
+                    // var checkoutLink = $('#ui-id-8');
+                    var initialContent = $('nav.navigation > ul > li.last').html();
+                    var cartPrefix = 'CART: ';
+                    var cartItems = $('<span id="itemcounter" class="counter-number">0</span>');
+                    var cartSuffix = $(' items');
 
-                checkoutLink.html(cartPrefix).append(cartItems, initialContent);
+                    var prependedText = cartPrefix + cartItems + cartSuffix;
+
+                    // $('a#ui-id-8').hide();
+
+                    console.log('cart content: ' + initialContent);
+                });
             });
  
             // function to show/hide totals section if the grand total is > 0
