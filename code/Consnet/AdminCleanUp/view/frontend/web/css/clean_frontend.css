@@ -52,7 +52,7 @@ action.primary {
   }
   @media (max-width: 1024px) {
     .nav-6{
-        margin-left: 36% !important;
+        /* margin-left: 36% !important; */
         /* background-color: #417cf3; */
         border-radius: 5px;
         margin-top: 2px !important;
