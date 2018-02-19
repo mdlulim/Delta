@@ -430,7 +430,7 @@ class Quote extends AbstractExtensibleModel implements \Magento\Quote\Api\Data\C
         \Magento\Framework\Api\ExtensibleDataObjectConverter $extensibleDataObjectConverter,
         \Magento\Quote\Model\Cart\CurrencyFactory $currencyFactory,
         JoinProcessorInterface $extensionAttributesJoinProcessor,
-        \Magento\Quote\Model\Quote\TotalsCollector $totalsCollector,
+        \Consnet\QuoteExtended\Model\Quote\TotalsCollector $totalsCollector,
         \Magento\Quote\Model\Quote\TotalsReader $totalsReader,
         \Magento\Quote\Model\ShippingFactory $shippingFactory,
         \Magento\Quote\Model\ShippingAssignmentFactory $shippingAssignmentFactory,
