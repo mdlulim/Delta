@@ -89,7 +89,7 @@ class TotalsCollector
         \Magento\Quote\Model\Quote\TotalsCollectorList $collectorList,
         \Magento\Quote\Model\ShippingFactory $shippingFactory,
         \Magento\Quote\Model\ShippingAssignmentFactory $shippingAssignmentFactory,
-        \Magento\Quote\Model\QuoteValidator $quoteValidator
+        \Consnet\QuoteExtended\Model\QuoteValidator $quoteValidator
     ) {
         $this->totalCollector = $totalCollector;
         $this->totalCollectorFactory = $totalCollectorFactory;
