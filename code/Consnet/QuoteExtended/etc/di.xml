@@ -2,4 +2,5 @@
     <preference for="Magento\Quote\Model\QuoteValidator" type="Consnet\QuoteExtended\Model\QuoteValidator"/>
     <preference for="Magento\Quote\Model\Quote\Address\Total\Subtotal" type="Consnet\QuoteExtended\Model\Quote\Address\Total\Subtotal"/>
     <preference for="Magento\Quote\Model\Quote\TotalsCollector" type="Consnet\QuoteExtended\Model\Quote\TotalsCollector"/>
+    <preference for="Magento\Quote\Model\Quote" type="Consnet\QuoteExtended\Model\Quote"/>
 </config> 
