@@ -23,7 +23,7 @@ class Subtotal extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
      */
     public function __construct(\Magento\Quote\Model\QuoteValidator $quoteValidator)
     {
-        $this->quoteValidator = $quoteValidator;assdfasdf
+        $this->quoteValidator = $quoteValidator;
     }
 
     /**
