@@ -367,9 +367,9 @@ class Menu extends \Magento\Backend\Block\Template
         $colStops = null;
         if ($level == 0 && $limit) {
             $name  = $this->_getAnchorLabel($menuItem) ;
-            if($name == 'Customers'){
-                $name  = 'Companies';
-            }
+            // if($name == 'Companies'){
+            //     $name  = 'Customers';
+            // }
             $colStops = $this->_columnBrake($menuItem->getChildren(), $limit);
             $output .= '<strong class="submenu-title">' . $name . '</strong>';
             $output .= '<a href="#" class="action-close _close" data-role="close-submenu"></a>';
@@ -459,9 +459,9 @@ class Menu extends \Magento\Backend\Block\Template
 
         if(in_array($menuItem->getId(),$arr_menu)){
             
-            if($menuItem->getTitle() == 'Customers'){
-                $menuItem->setTitle('Companies');
-            }
+             if($menuItem->getTitle() == 'Companies'){
+                 $menuItem->setTitle('Customers');
+             }
             if($menuItem->getTitle() == 'All Customers'){
                 $menuItem->setTitle('Contact Person');
             }
