@@ -507,7 +507,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         }elseif($count == 1){
             $row = array();
 
-            $line = $array['item'];
+            $line = $array;
             if(is_array($line)){
                 $columns = array_keys($line);
 
@@ -623,11 +623,12 @@ class startReplication extends \Magento\Framework\App\Action\Action {
          
          }
 
-        if(!$users){
+        if( $users != false){
         foreach ($users as $user) {
-
+               
             if (isset($user['ABTNR']) && $user['ABTNR'] == 'PF') {
 
+                
                 if(empty($user['NAME1'])){
                     $user['NAME1'] = $user['NAMEV'];
                 }
@@ -653,6 +654,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                     }catch(\Exception $e)
                     {
                         continue;
+                     
                     }
                 } else {
                     //create
@@ -667,10 +669,11 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                     $admin->setRoleId($roleId);
                     try{
                         $admin->save();
+                       
                         }catch(\Exception $e)
                         {
                             continue;
-                           // $admin = $this->userFactory->create()->loadByUsername($username);
+
                         }
                 }
             }
@@ -718,7 +721,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
             //get business data
             $extededAttr = $this->joinTable('ERP_ORG','KUNNR',$erp_customer['KUNNR']);
             
-            if (!$extededAttr) {
+            if ($extededAttr != false) {
                 $cgroup = $this->getCustomerGroup($extededAttr['VKORG']);
             }else {
                 $cgroup = 1;
@@ -904,7 +907,7 @@ class startReplication extends \Magento\Framework\App\Action\Action {
         $lv_pernr = ltrim($PERNR, '0');
         $user = $this->joinTable('ERP_CONTACT','PARNR',$lv_pernr);
         $uid = 0;
-        if(!$user){
+        if($user != false){
             $user = $user[0];
             $email = $user['NAME1'] . $user['NAMEV'] . '@delta.co.zw';
             $admin = $this->userFactory->create()->loadByUsername( $this->cleanStr( $user['NAME1'] ) );
@@ -1348,13 +1351,13 @@ class startReplication extends \Magento\Framework\App\Action\Action {
                             /* 1 */
                             $item->MATNR, '', 'Default', 'simple', $category,
                             /* 2 */
-                            'base', $item->YMAKTX_LONG, '', '', '', 1,
+                            'base', $item->MAKTX, '', '', '', 1,
                             /* 3 */
                             "Taxable Goods", "Catalog, Search", 1.0000, '', '',
                             /* 4 */
-                            '', '', $item->YMAKTX_LONG, $item->YMAKTX_LONG,
+                            '', '', $item->MAKTX, $item->MAKTX,
                             /* 5 */
-                            $item->YMAKTX_LONG, $item->MATNR . '.jpg', '',
+                            $item->MAKTX, $item->MATNR . '.jpg', '',
                             /* 6 */
                             $item->MATNR . '.jpg', '', $item->MATNR . '.jpg', '',
                             /* 7 */
