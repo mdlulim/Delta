@@ -15,6 +15,6 @@ class Message
             $error = 'Please Select Calculate Grand Total.';
             return [$error, $group];
         }
-        return null;
+        return [$error, $group];
     }
 }
