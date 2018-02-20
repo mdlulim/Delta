@@ -13,7 +13,7 @@ use Magento\Framework\App\ObjectManager;
  * Message manager model
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Manager implements Magento\Framework\Message\ManagerInterface
+class Manager implements \Magento\Framework\Message\ManagerInterface
 {
     /**
      * Default message group
