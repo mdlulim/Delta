@@ -64,14 +64,25 @@ class CronJobPromotion {
             $i = 0;
             $productsIds = [];
 
-              if(! is_array ($tab_result->ExPromoList->item)) {
-                   $productsIds[0] =        $tab_result->ExPromoList->item->Matnr ;
-                    return $productsIds;
-              }
+              
            
 
 
             if (property_exists($tab_result->ExPromoList, 'item')) {
+
+
+
+                 if(! is_array ($tab_result->ExPromoList->item)) {
+                   $productsIds[0] =        $tab_result->ExPromoList->item->Matnr ;
+                    return $productsIds;
+              }
+
+
+
+
+
+
+
                 try {
 
                     $id = 0;
