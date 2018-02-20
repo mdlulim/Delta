@@ -2,7 +2,8 @@
     <!--<preference for="Magento\Sales\Model\AdminOrder\Create" type="Consnet\OrderExtended\Model\AdminOrder\Create"/>
     <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form" type="Consnet\OrderExtended\Block\Adminhtml\Order\Create\Form"/>
     <preference for="Magento\Sales\Block\Adminhtml\Order\Create\AbstractCreate" type="Consnet\OrderExtended\Block\Adminhtml\Order\Create\AbstractCreate"/>-->
-    <type name="Magento\Framework\Message\Manager">
+    <preference for="Magento\Framework\Message\Manager" type="Consnet\OrderExtended\Framework\Message\Manager"/>
+    <!--<type name="Magento\Framework\Message\Manager">
         <plugin name="order_message_plugin" type="Consnet\OrderExtended\Plugin\Message" sortOrder="1" disabled="false" />
-    </type>    
+    </type>-->  
 </config>
