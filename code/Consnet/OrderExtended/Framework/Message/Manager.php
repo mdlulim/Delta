@@ -137,7 +137,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
      * @param string|null $group
      * @return $this
      */
-    public function addMessage(MessageInterface $message, $group = null)
+    public function addMessage(\Magento\Framework\Message\MessageInterface $message, $group = null)
     {
         $this->hasMessages = true;
         $this->getMessages(false, $group)->addMessage($message);
