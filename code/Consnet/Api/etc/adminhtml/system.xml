@@ -104,6 +104,10 @@
                     <label>Promotions Wsdl </label>
                     <comment>for Module /Promotuions </comment>    
                 </field>
+                <field id="plant_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Delivery Plant </label>
+                    <comment>for Module /Delivery Plant </comment>    
+                </field>
             </group>
 
         </section>
