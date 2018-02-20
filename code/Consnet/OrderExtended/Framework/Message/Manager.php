@@ -472,7 +472,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
         return $this->messageFactory->create($type)
             ->setIdentifier(
                 empty($identifier)
-                ? MessageInterface::DEFAULT_IDENTIFIER
+                ? \Magento\Framework\Message\MessageInterface::DEFAULT_IDENTIFIER
                 : $identifier
             );
     }
