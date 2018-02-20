@@ -172,7 +172,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     public function addError($message, $group = null)
     {
         if($message == 'Please specify a shipping method.'){
-            $this->addMessage($this->messageFactory->create(\Magento\Framework\Message\MessageInterface::TYPE_ERROR, 'Please Select Calculate Grand Total.'), $group);
+            $this->addMessage($this->messageFactory->create(\Magento\Framework\Message\MessageInterface::TYPE_ERROR, 'Please Select The Calculate Grand Total Option.'), $group);
             return $this;
         }
         if($message == 'Validation is failed.') {
