@@ -70,9 +70,9 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
      * @param ExceptionMessageFactoryInterface|null exceptionMessageFactory
      */
     public function __construct(
-        Session $session,
-        Factory $messageFactory,
-        CollectionFactory $messagesFactory,
+        \Magento\Framework\Message\Session $session,
+        \Magento\Framework\Message\Factory $messageFactory,
+        \Magento\Framework\Message\CollectionFactory $messagesFactory,
         Event\ManagerInterface $eventManager,
         LoggerInterface $logger,
         $defaultGroup = self::DEFAULT_GROUP,
