@@ -10,7 +10,7 @@ namespace Consnet\OrderExtended\Plugin;
 
 class Message 
 {
-    public function beforeAddError($error, $group){
+    public function beforeAddError($error, $group = null){
         if($error == 'Please specify a shipping method.'){
             $error = 'Please Select Calculate Grand Total.';
             return [$error, $group];
