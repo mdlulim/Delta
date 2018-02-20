@@ -17,7 +17,7 @@
 
 //###########################################CUSTOMER CREDIT
 $companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
-$stp_id = $companymanagement->getByCustomerId(746);//$customerSession->getId())->getData("STP_ID");
+$stp_id = $companymanagement->getByCustomerId($customerSession->getId());//$customerSession->getId())->getData("STP_ID");
 $soldtoparty_number = $stp_id['STP_ID'];//$customerData['stp_id'];
 
 $helper =  $om->create('Consnet\Api\Helper\Data');
