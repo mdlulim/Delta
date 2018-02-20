@@ -85,7 +85,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
         $this->logger = $logger;
         $this->defaultGroup = $defaultGroup;
         $this->exceptionMessageFactory = $exceptionMessageFactory ?: ObjectManager::getInstance()
-            ->get(ExceptionMessageLookupFactory::class);
+            ->get(\Magento\Framework\Message\ExceptionMessageLookupFactory::class);
     }
 
     /**
@@ -155,7 +155,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     public function addMessages(array $messages, $group = null)
     {
         foreach ($messages as $message) {
-            if ($message instanceof MessageInterface) {
+            if ($message instanceof \Magento\Framework\Message\MessageInterface) {
                 $this->addMessage($message, $group);
             }
         }
@@ -172,13 +172,13 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     public function addError($message, $group = null)
     {
         if($message == 'Please specify a shipping method.'){
-            $this->addMessage($this->messageFactory->create(MessageInterface::TYPE_ERROR, 'Please Select Calculate Grand Total.'), $group);
+            $this->addMessage($this->messageFactory->create(\Magento\Framework\Message\MessageInterface::TYPE_ERROR, 'Please Select Calculate Grand Total.'), $group);
             return $this;
         }
         if($message == 'Validation is failed.') {
             return $this;
         }        
-        $this->addMessage($this->messageFactory->create(MessageInterface::TYPE_ERROR, $message), $group);
+        $this->addMessage($this->messageFactory->create(\Magento\Framework\Message\MessageInterface::TYPE_ERROR, $message), $group);
         return $this;
     }
 
@@ -191,7 +191,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
      */
     public function addWarning($message, $group = null)
     {
-        $this->addMessage($this->messageFactory->create(MessageInterface::TYPE_WARNING, $message), $group);
+        $this->addMessage($this->messageFactory->create(\Magento\Framework\Message\MessageInterface::TYPE_WARNING, $message), $group);
         return $this;
     }
 
@@ -204,7 +204,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
      */
     public function addNotice($message, $group = null)
     {
-        $this->addMessage($this->messageFactory->create(MessageInterface::TYPE_NOTICE, $message), $group);
+        $this->addMessage($this->messageFactory->create(\Magento\Framework\Message\MessageInterface::TYPE_NOTICE, $message), $group);
         return $this;
     }
 
@@ -217,7 +217,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
      */
     public function addSuccess($message, $group = null)
     {
-        $this->addMessage($this->messageFactory->create(MessageInterface::TYPE_SUCCESS, $message), $group);
+        $this->addMessage($this->messageFactory->create(\Magento\Framework\Message\MessageInterface::TYPE_SUCCESS, $message), $group);
         return $this;
     }
 
@@ -233,7 +233,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
         $items = $this->getMessages(false, $group)->getItems();
 
         foreach ($messages as $message) {
-            if ($message instanceof MessageInterface and !in_array($message, $items, false)) {
+            if ($message instanceof \Magento\Framework\Message\MessageInterface and !in_array($message, $items, false)) {
                 $this->addMessage($message, $group);
             }
         }
@@ -317,7 +317,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     public function addErrorMessage($message, $group = null)
     {
         $this->addMessage(
-            $this->createMessage(MessageInterface::TYPE_ERROR)
+            $this->createMessage(\Magento\Framework\Message\MessageInterface::TYPE_ERROR)
                 ->setText($message),
             $group
         );
@@ -334,7 +334,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     public function addWarningMessage($message, $group = null)
     {
         $this->addMessage(
-            $this->createMessage(MessageInterface::TYPE_WARNING)
+            $this->createMessage(\Magento\Framework\Message\MessageInterface::TYPE_WARNING)
                 ->setText($message),
             $group
         );
@@ -351,7 +351,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     public function addNoticeMessage($message, $group = null)
     {
         $this->addMessage(
-            $this->createMessage(MessageInterface::TYPE_NOTICE)
+            $this->createMessage(\Magento\Framework\Message\MessageInterface::TYPE_NOTICE)
                 ->setText($message),
             $group
         );
@@ -368,7 +368,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     public function addSuccessMessage($message, $group = null)
     {
         $this->addMessage(
-            $this->createMessage(MessageInterface::TYPE_SUCCESS)
+            $this->createMessage(\Magento\Framework\Message\MessageInterface::TYPE_SUCCESS)
                 ->setText($message),
             $group
         );
@@ -388,7 +388,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     {
         $this->assertNotEmptyIdentifier($identifier);
         $this->addMessage(
-            $this->createMessage(MessageInterface::TYPE_ERROR, $identifier)
+            $this->createMessage(\Magento\Framework\Message\MessageInterface::TYPE_ERROR, $identifier)
                 ->setData($data),
             $group
         );
@@ -409,7 +409,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     {
         $this->assertNotEmptyIdentifier($identifier);
         $this->addMessage(
-            $this->createMessage(MessageInterface::TYPE_WARNING, $identifier)
+            $this->createMessage(\Magento\Framework\Message\MessageInterface::TYPE_WARNING, $identifier)
                 ->setData($data),
             $group
         );
@@ -430,7 +430,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     {
         $this->assertNotEmptyIdentifier($identifier);
         $this->addMessage(
-            $this->createMessage(MessageInterface::TYPE_NOTICE, $identifier)
+            $this->createMessage(\Magento\Framework\Message\MessageInterface::TYPE_NOTICE, $identifier)
                 ->setData($data),
             $group
         );
@@ -451,7 +451,7 @@ class Manager implements \Magento\Framework\Message\ManagerInterface
     {
         $this->assertNotEmptyIdentifier($identifier);
         $this->addMessage(
-            $this->createMessage(MessageInterface::TYPE_SUCCESS, $identifier)
+            $this->createMessage(\Magento\Framework\Message\MessageInterface::TYPE_SUCCESS, $identifier)
                 ->setData($data),
             $group
         );
