@@ -5,9 +5,65 @@
  */
 
 // @codingStandardsIgnoreFile
+   
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$helper = $om->get('Consnet\Api\Helper\Data');
+$WURL = $helper->getGeneralConfig('plant_text');
+$UserName = $helper->getGeneralConfig('user_name') ;
+$Password = $helper->getGeneralConfig('password') ;
+
+
+            $parameters = array("SalesOrg" => 'YW01', "Division" => 'Z1');
+            
+            $opts = array('http' => array('user_agent' => 'PHPSoapClient'));
+            $context = stream_context_create($opts);
+            $soapClientOptions = array('stream_context' => $context, 'cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_2);
+            libxml_disable_entity_loader(false);
+           
+            $soapClient2 = new \Zend\Soap\Client( $WURL , $soapClientOptions);
+ 
+            $soapClient2->setHttpLogin($UserName)  ;               
+            $soapClient2->setHttpPassword ($Password)  ;     
+
+             $tab_result = $soapClient2->ZgetPlantToMagento($parameters);
+
+          /////
+          $customerSession = $om->get('Magento\Customer\Model\Session');
+          $adminsessionquote = $om->get('Magento\Backend\Model\Session\Quote');
+        
+            $plant = '' ;  
+            $companymanagement = $om->create('Magento\Company\Model\CompanyManagement');
+            if (($adminsessionquote->getQuote()->getCustomerId()) != NULL) {
+                     $stp_id = $companymanagement->getByCustomerId($adminsessionquote->getCustomerId())->getData("PLANT");
+                    //  echo 'Customer STP: '.$companymanagement->getByCustomerId($adminsessionquote->getQuote()->getCustomerId())->getData("STP_ID");
+                    $plant  = $stp_id ;
+            }
+           
 
 ?>
+<fieldset class="fieldset admin__fieldset " id="base_fieldset">
+     
 
+
+   <div class="admin__field field field-interface_locale">
+        <label class="label admin__field-label"><span>Delivery Plant</span></label>
+        <div class="admin__field-control control">
+            <select id="delivery_plant" name="delivery_plant" class="select select admin__control-select">
+                <?php 
+                foreach ($tab_result->PlantList->item as $item ) {
+                    if($item->Werks  == $plant){
+                       echo "<option value='".$item->Werks."'>".$item->Werks . " ". $item->Name1 ."</option>";
+                    }
+                  }  
+                   foreach ($tab_result->PlantList->item as $item ) {
+                     echo "<option value='".$item->Werks."'>".$item->Werks . " ". $item->Name1 ."</option>";
+                   }
+                ?>
+                
+            </select>
+        </div>
+    </div>
+</fieldset>
 <div class="admin__page-section-title">
     <strong class="title"><?php /* @escapeNotVerified */ echo $block->getHeaderText() ?></strong>
     <div class="actions">

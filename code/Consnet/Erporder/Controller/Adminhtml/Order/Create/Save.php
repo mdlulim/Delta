@@ -21,10 +21,12 @@ class Save extends \Magento\Sales\Controller\Adminhtml\Order\Create
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $delivery_date = $this->getRequest()->getPost('delivery_date');
+        $delivery_plant = $this->getRequest()->getPost('delivery_plant');
         $COMPANY_ID = $this->getRequest()->getPost('COMPANY_ID');
         $_SESSION['DELIVERY_DATE'] = $delivery_date;
         $_SESSION['COMPANY_ID'] = $COMPANY_ID;
-
+        $_SESSION['PLANT'] = $delivery_plant;
+        
         try {
             // check if the creation of a new customer is allowed
             if (!$this->_authorization->isAllowed('Magento_Customer::manage')

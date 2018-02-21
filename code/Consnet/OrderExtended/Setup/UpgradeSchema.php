@@ -32,7 +32,16 @@ class UpgradeSchema implements UpgradeSchemaInterface {
                             ]
             );
         }
-
+        if ($setup->getConnection()->tableColumnExists($order , 'PLANT') === false) {
+            $setup->getConnection()
+                    ->addColumn(
+                            $setup->getTable($order), 'PLANT', [
+                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'length' => 255,
+                        'comment' => 'Delivery Plant Custom Attribute'
+                            ]
+            );
+        }
 
         if ($setup->getConnection()->tableColumnExists($order, 'ECC_ORDER') === false) {
             $setup->getConnection()
